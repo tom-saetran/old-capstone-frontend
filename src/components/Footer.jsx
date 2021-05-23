@@ -33,22 +33,22 @@ class Footer extends React.Component {
                         </Router.Link>
                     </Col>
                     <Col xs={{ span: 6 }} md={{ span: 2 }} className="d-flex flex-column">
-                        <Router.Link to="/out/linkedin" className="footer-link">
+                        <Router.Link target="_blank" to="/out/linkedin" className="footer-link">
                             <p>
                                 <Icon.Linkedin fill="#0a66c2" /> LinkedIn
                             </p>
                         </Router.Link>
-                        <Router.Link to="/out/githdub" className="footer-link">
+                        <Router.Link target="_blank" to="/out/githdub" className="footer-link">
                             <p>
                                 <Icon.Github fill="#333" /> GitHub
                             </p>
                         </Router.Link>
-                        <Router.Link to="/out/twitter" className="footer-link">
+                        <Router.Link target="_blank" to="/out/twitter" className="footer-link">
                             <p>
                                 <Icon.Twitter fill="#1DA1F2" /> Twitter
                             </p>
                         </Router.Link>
-                        <Router.Link to="/out/telegram" className="footer-link">
+                        <Router.Link target="_blank" to="/out/telegram" className="footer-link">
                             <p>
                                 <Icon.Telegram fill="#3ca2d9" /> Telegram
                             </p>
