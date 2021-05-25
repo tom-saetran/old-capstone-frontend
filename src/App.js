@@ -15,6 +15,10 @@ class App extends React.Component {
         //
     }
 
+    crud = {
+        endpoint: process.env.REACT_APP_ENDPOINT
+    }
+
     componentDidMount = () => {
         //
     }
