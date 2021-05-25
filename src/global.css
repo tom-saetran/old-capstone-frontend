@@ -1,3 +1,26 @@
+/* NAVBAR */
+.dropdown-toggle::after {
+    display: none !important; /* Removes Caret */
+}
+
+.navbar-avatar {
+    border: 1px solid dimgray;
+    border-radius: 50%;
+    object-fit: cover;
+    height: 36px;
+    width: 36px;
+    transition: transform 0.4s;
+}
+
+.navbar-avatar:hover {
+    transform: scale(1.25);
+}
+
+.bg-dim {
+    background-color: lightgrey;
+}
+
+/* FOOTER */
 .footer-link {
     text-decoration: none;
     color: #212529;
@@ -6,4 +29,12 @@
 .footer-link:hover {
     text-decoration: none;
     color: dimgray;
+}
+
+.center {
+    position: relative;
+    left: 50%;
+    top: 100%;
+    -webkit-transform: translate(-50%, 22.5%);
+    transform: translate(-50%, 22.5%);
 }

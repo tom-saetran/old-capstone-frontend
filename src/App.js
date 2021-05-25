@@ -4,11 +4,13 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "./global.css"
 
 import Footer from "./components/Footer"
-import Navbar from "./components/Navbar"
+import Navbar from "./components/NavBar"
 
 import Home from "./pages/Home"
 import HTTP404 from "./pages/HTTP404"
 import HTTP501 from "./pages/HTTP501"
+
+const tempAvatar = "https://res.cloudinary.com/tomsdata/image/upload/v1621955597/avatars/taechviyngxbwmnvwbiy.png"
 
 class App extends React.Component {
     state = {
@@ -32,7 +34,7 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                <Route render={routeProps => <Navbar {...routeProps} />} />
+                <Route render={routeProps => <Navbar location="Support" avatar={tempAvatar} {...routeProps} />} />
                 <Switch>
                     <Route render={routeProps => <Home {...routeProps} />} exact path="/" />
 
