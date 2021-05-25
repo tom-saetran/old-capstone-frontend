@@ -16,7 +16,9 @@ class App extends React.Component {
     }
 
     crud = {
-        endpoint: process.env.REACT_APP_ENDPOINT
+        endpoint: process.env.REACT_APP_ENDPOINT,
+
+        imageUpload: async () => {}
     }
 
     componentDidMount = () => {
