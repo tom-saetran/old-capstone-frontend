@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "./global.css"
 
 import Footer from "./components/Footer"
-import NavBar from "./components/NavBar"
+import NaviBar from "./components/NaviBar"
 
 import Home from "./pages/Home"
 import HTTP404 from "./pages/HTTP404"
@@ -34,7 +34,7 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                <Route render={routeProps => <NavBar location="Support" avatar={tempAvatar} {...routeProps} />} />
+                <Route render={routeProps => <NaviBar location="Support" avatar={tempAvatar} {...routeProps} />} />
                 <Switch>
                     <Route render={routeProps => <Home {...routeProps} />} exact path="/" />
 
