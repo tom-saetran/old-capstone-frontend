@@ -65,7 +65,10 @@ class Out extends React.Component {
 
     render() {
         return this.knownRoutes[this.props.match.params.id] ? (
-            <Redirect to={{ pathname: window.location.assign(this.knownRoutes[this.props.match.params.id]) }} />
+            <>
+                <h1 className="text-center">Redirecting...</h1>
+                <Redirect to={{ pathname: window.location.assign(this.knownRoutes[this.props.match.params.id]) }} />
+            </>
         ) : (
             <Redirect to={"/404"} />
         )

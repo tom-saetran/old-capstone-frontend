@@ -3,7 +3,7 @@ import { Navbar, Nav, Form, NavDropdown, FormControl, Button, InputGroup } from 
 import * as Icon from "react-bootstrap-icons"
 import { Link } from "react-router-dom"
 
-class NavBar extends React.Component {
+class NaviBar extends React.Component {
     state = {
         //
     }
@@ -102,4 +102,4 @@ class LoggedInAvatar extends React.Component {
     }
 }
 
-export default NavBar
+export default NaviBar
