@@ -1,5 +1,5 @@
 import React from "react"
-import { Card, Col, Container, Row, Form, Button, ButtonToolbar, ButtonGroup, Spinner } from "react-bootstrap"
+import { Card, Col, Container, Row, Form, Button, ButtonToolbar, ButtonGroup, Spinner, Badge } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import * as Icon from "react-bootstrap-icons"
 
@@ -30,7 +30,7 @@ class Blogs extends React.Component {
                     <Col xs={6}>
                         <Controls cover={this.state.cover} />
                         <hr />
-                        <Posts posts={this.state.posts} loading={this.state.loading} />
+                        <Posts user={this.props.user} posts={this.state.posts} loading={this.state.loading} />
                     </Col>
                     <Col xs={2}>
                         <Tools />
@@ -188,16 +188,40 @@ const Controls = props => {
 }
 
 const Posts = props => {
+    console.log(props)
     return props.posts ? (
         <Card className="text-dim">
-            <Card.Body>
+            <Card.Body className="py-3">
                 {props.posts.result.map(post => {
                     return (
-                        <>
-                            <Card.Title as={"h6"}>{post.title}</Card.Title>
-                            <Card.Text>{post.content}</Card.Text>
+                        <div key={post._id}>
+                            <Row>
+                                <div className="pl-3">
+                                    <Card.Title as={"h6"}>{post.title}</Card.Title>
+                                    <Card.Text>{post.content}</Card.Text>
+                                    <Form.Text>
+                                        by {post.author.name} {post.author.surname}
+                                    </Form.Text>
+                                </div>
+
+                                <div className="ml-auto pr-3">
+                                    <Badge pill variant="secondary">
+                                        {post.category}
+                                    </Badge>
+                                </div>
+                            </Row>
+                            {props.user && props.user._id === post.author._id && (
+                                <div>
+                                    <Button className="border rounded mr-1 text-dim" variant="light">
+                                        <Icon.Pen />
+                                    </Button>
+                                    <Button className="border rounded mr-1 text-danger" variant="light">
+                                        <Icon.Trash />
+                                    </Button>
+                                </div>
+                            )}
                             <hr />
-                        </>
+                        </div>
                     )
                 })}
             </Card.Body>

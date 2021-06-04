@@ -13,17 +13,16 @@ import HTTP501 from "./pages/HTTP501"
 
 class App extends React.Component {
     state = {
-        user: {
-            avatar: "https://res.cloudinary.com/tomsdata/image/upload/v1622731605/avatars/epwg29ixrcxuzwuvh5kh.png",
-            _id: "60b8e485ed3bcb0015e42f7f",
-            name: "Tom-Lennart",
-            surname: "Sætran",
-            description:
-                "MERN Stack Student🎓, Digital Technician💻, Computer Wizard🖥, Market Maker💹, Automated Trading Enthusiast💱, Avid Lexica Reader📖, Fast Googler🔎, Alter Ego🦊",
-            createdAt: "2021-06-03T14:17:41.683Z",
-            updatedAt: "2021-06-03T14:46:45.693Z",
-            __v: 0
-        }
+        user: null,
+        load: "60b8e485ed3bcb0015e42f7f"
+    }
+
+    componentDidMount = async () => {
+        if (this.state.load) this.setState({ user: await this.crud.users.get(this.state.load) })
+    }
+
+    componentDidUpdate = (_previousProps, _previousState) => {
+        //
     }
 
     crud = {
@@ -282,14 +281,6 @@ class App extends React.Component {
                 return await results
             }
         }
-    }
-
-    componentDidMount = () => {
-        //
-    }
-
-    componentDidUpdate = (_previousProps, _previousState) => {
-        //
     }
 
     render() {
