@@ -20,23 +20,35 @@ class NaviBar extends React.Component {
         return (
             <Navbar className="border-bottom" bg="light" expand="sm">
                 <Link to="/">
-                    <Navbar.Brand>
-                        <Icon.HddNetwork /> Tom's Data
+                    <Navbar.Brand className="">
+                        <Icon.HddNetwork fill="dimgray" /> <span className="text-dim">Tom's Data</span>
                     </Navbar.Brand>
                 </Link>
 
-                <Navbar.Toggle children={<LoggedInAvatar {...this.props} />} aria-controls="navbar-scroll" />
+                <Navbar.Toggle />
 
                 <Navbar.Collapse id="navbar-scroll">
                     <Nav className="mr-auto">
-                        <Nav.Link to="/" as={Link} active={this.props.location === "Home"}>
+                        <Link className="px-1 link" to="/">
                             Home
-                        </Nav.Link>
-                        <Nav.Link to="/support" as={Link} active={this.props.location === "Support"}>
+                        </Link>
+                        <Link className="px-1 link" to="/blogs">
+                            Blog
+                        </Link>
+                        <Link className="px-1 link" to="/support">
                             Support
-                        </Nav.Link>
+                        </Link>
                     </Nav>
-
+                    {!this.props.user && (
+                        <Nav>
+                            <Link to="/" className="pr-2 link">
+                                Create User
+                            </Link>
+                            <Link to="/" className="pr-2 link">
+                                Log In
+                            </Link>
+                        </Nav>
+                    )}
                     <Form className="pr-2">
                         <InputGroup>
                             <FormControl placeholder="Search..." />
@@ -48,9 +60,12 @@ class NaviBar extends React.Component {
                         </InputGroup>
                     </Form>
 
-                    {this.props.avatar && (
+                    {this.props.user && (
                         <Nav className="d-none d-sm-block">
-                            <NavDropdown title={<img className="bg-dim navbar-avatar" alt="" src={this.props.avatar} />} alignRight>
+                            <NavDropdown
+                                title={<img className="bg-dim navbar-avatar" alt="" src={this.props.user.avatar} />}
+                                alignRight
+                            >
                                 <NavDropdown.Item as={Link} to="/">
                                     Action
                                 </NavDropdown.Item>
@@ -66,38 +81,6 @@ class NaviBar extends React.Component {
                     )}
                 </Navbar.Collapse>
             </Navbar>
-        )
-    }
-}
-
-class LoggedInAvatar extends React.Component {
-    render() {
-        return (
-            <>
-                {this.props.avatar && (
-                    <div className="center">
-                        <NavDropdown
-                            style={{
-                                height: "100px",
-                                width: "100px"
-                            }}
-                            title={<img className="bg-dim navbar-avatar" alt="" src={this.props.avatar} />}
-                            alignRight
-                        >
-                            <NavDropdown.Item as={Link} to="/">
-                                Action
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/">
-                                Another action
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item as={Link} to="/">
-                                Log out
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                    </div>
-                )}
-            </>
         )
     }
 }

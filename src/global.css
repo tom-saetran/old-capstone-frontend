@@ -1,10 +1,19 @@
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar space */
+    background: transparent; /* Optional: just make scrollbar invisible */
+}
+
 /* NAVBAR */
 .dropdown-toggle::after {
     display: none !important; /* Removes Caret */
 }
 
 .navbar-avatar {
-    border: 1px solid dimgray;
+    border: 1px solid lightgray;
     border-radius: 50%;
     object-fit: cover;
     height: 36px;
@@ -16,19 +25,31 @@
     transform: scale(1.25);
 }
 
+.card-avatar {
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    object-fit: cover;
+    height: 144px;
+    width: 144px;
+}
+
 .bg-dim {
     background-color: lightgrey;
 }
 
-/* FOOTER */
-.footer-link {
-    text-decoration: none;
-    color: #212529;
+.text-dim {
+    color: dimgray;
 }
 
-.footer-link:hover {
+/* FOOTER */
+.link {
     text-decoration: none;
     color: dimgray;
+}
+
+.link:hover {
+    text-decoration: none;
+    color: darkgray;
 }
 
 .center {

@@ -11,17 +11,25 @@ import Blogs from "./pages/Blogs"
 import HTTP404 from "./pages/HTTP404"
 import HTTP501 from "./pages/HTTP501"
 
-const tempAvatar = "https://res.cloudinary.com/tomsdata/image/upload/v1621955597/avatars/taechviyngxbwmnvwbiy.png"
-
 class App extends React.Component {
     state = {
-        posts: null
+        user: {
+            avatar: "https://res.cloudinary.com/tomsdata/image/upload/v1622731605/avatars/epwg29ixrcxuzwuvh5kh.png",
+            _id: "60b8e485ed3bcb0015e42f7f",
+            name: "Tom-Lennart",
+            surname: "Sætran",
+            description:
+                "MERN Stack Student🎓, Digital Technician💻, Computer Wizard🖥, Market Maker💹, Automated Trading Enthusiast💱, Avid Lexica Reader📖, Fast Googler🔎, Alter Ego🦊",
+            createdAt: "2021-06-03T14:17:41.683Z",
+            updatedAt: "2021-06-03T14:46:45.693Z",
+            __v: 0
+        }
     }
 
     crud = {
         endpoint: process.env.REACT_APP_ENDPOINT,
 
-        user: {
+        users: {
             // Create new User
             post: async data => {
                 let results
@@ -146,6 +154,133 @@ class App extends React.Component {
                 }
                 return await results
             }
+        },
+
+        blogs: {
+            // Create new Blog
+            post: async data => {
+                let results
+                try {
+                    if (typeof data !== "object") throw new Error("data must be an object")
+
+                    results = await fetch(this.stcrudate.endpoint + "/blogs/", {
+                        method: "POST",
+                        headers: {
+                            //Authorization: this.state.authtoken,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    })
+
+                    if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
+                    results = await results.json()
+                } catch (error) {
+                    console.error(error)
+                    return null
+                }
+                return await results
+            },
+            // Get all Blogs
+            getAll: async () => {
+                let results
+                try {
+                    results = await fetch(this.crud.endpoint + "/blogs/", {
+                        headers: {
+                            //Authorization: this.state.authtoken
+                        }
+                    })
+
+                    if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
+                    results = await results.json()
+                } catch (error) {
+                    console.error(error)
+                    return null
+                }
+                return await results
+            },
+            // Get Blog with ID
+            get: async id => {
+                let results
+                try {
+                    results = await fetch(this.crud.endpoint + "/blogs/" + id, {
+                        headers: {
+                            //Authorization: this.state.authtoken
+                        }
+                    })
+
+                    if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
+                    results = await results.json()
+                } catch (error) {
+                    console.error(error)
+                    return null
+                }
+                return await results
+            },
+            // Edit Blog with ID
+            put: async (id, data) => {
+                let results
+                try {
+                    if (typeof data !== "object") throw new Error("data must be an object")
+
+                    results = await fetch(this.crud.endpoint + "/blogs/" + id, {
+                        method: "PUT",
+                        headers: {
+                            //Authorization: this.state.authtoken,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    })
+
+                    if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
+                    results = await results.json()
+                } catch (error) {
+                    console.error(error)
+                    return null
+                }
+                return await results
+            },
+            // Delete Blog with ID
+            delete: async id => {
+                let results
+                try {
+                    if (id === "" || id === undefined || id === null) throw new Error("id must be present")
+                    results = await fetch(this.state.endpoint + "/blogs/" + id, {
+                        method: "DELETE",
+                        headers: {
+                            //Authorization: this.state.authtoken,
+                            "Content-Type": "application/json"
+                        }
+                    })
+
+                    if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
+                    results = await results.json()
+                } catch (error) {
+                    console.error(error)
+                    return null
+                }
+                return await results
+            },
+            // Upload Cover to Blog with ID
+            cover: async (id, data) => {
+                let results
+                try {
+                    if (id === "" || id === undefined || id === null) throw new Error("id must be present")
+                    if (data === "" || data === undefined || data === null) throw new Error("data must be present")
+
+                    results = await fetch(this.crud.endpoint + "/blogs/" + id + "/cover", {
+                        method: "POST",
+                        body: data
+                    })
+
+                    if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
+                    if (results.status !== 201) return false
+                    results = await results.json()
+                } catch (error) {
+                    console.error(error)
+                    return null
+                }
+                return await results
+            }
         }
     }
 
@@ -160,11 +295,14 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                <Route render={routeProps => <NaviBar location="Support" avatar={tempAvatar} {...routeProps} />} />
+                <Route render={routeProps => <NaviBar user={this.state.user} {...routeProps} />} />
                 <Switch>
                     <Route render={routeProps => <Home {...routeProps} />} exact path="/" />
-
-                    <Route render={routeProps => <Blogs {...routeProps} crud={this.crud} />} exact path="/blogs" />
+                    <Route
+                        render={routeProps => <Blogs {...routeProps} user={this.state.user} crud={this.crud} />}
+                        exact
+                        path="/blogs"
+                    />
                     <Route render={routeProps => <HTTP501 {...routeProps} />} exact path="/user" />
                     <Route render={routeProps => <HTTP501 {...routeProps} />} exact path="/user/settings" />
                     <Route render={routeProps => <Out {...routeProps} />} exact path="/out/:id" />
