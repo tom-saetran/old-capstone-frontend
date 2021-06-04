@@ -28,7 +28,7 @@ class App extends React.Component {
                 try {
                     if (typeof data !== "object") throw new Error("data must be an object")
 
-                    results = await fetch(this.stcrudate.endpoint + "users/", {
+                    results = await fetch(this.stcrudate.endpoint + "/users/", {
                         method: "POST",
                         headers: {
                             //Authorization: this.state.authtoken,
@@ -49,7 +49,7 @@ class App extends React.Component {
             getAll: async () => {
                 let results
                 try {
-                    results = await fetch(this.crud.endpoint + "users/", {
+                    results = await fetch(this.crud.endpoint + "/users/", {
                         headers: {
                             //Authorization: this.state.authtoken
                         }
@@ -67,7 +67,7 @@ class App extends React.Component {
             get: async id => {
                 let results
                 try {
-                    results = await fetch(this.crud.endpoint + "users/" + id, {
+                    results = await fetch(this.crud.endpoint + "/users/" + id, {
                         headers: {
                             //Authorization: this.state.authtoken
                         }
@@ -87,7 +87,7 @@ class App extends React.Component {
                 try {
                     if (typeof data !== "object") throw new Error("data must be an object")
 
-                    results = await fetch(this.crud.endpoint + "users/" + id, {
+                    results = await fetch(this.crud.endpoint + "/users/" + id, {
                         method: "PUT",
                         headers: {
                             //Authorization: this.state.authtoken,
@@ -109,7 +109,7 @@ class App extends React.Component {
                 let results
                 try {
                     if (id === "" || id === undefined || id === null) throw new Error("id must be present")
-                    results = await fetch(this.state.endpoint + "users/" + id, {
+                    results = await fetch(this.state.endpoint + "/users/" + id, {
                         method: "DELETE",
                         headers: {
                             //Authorization: this.state.authtoken,
@@ -132,7 +132,7 @@ class App extends React.Component {
                     if (id === "" || id === undefined || id === null) throw new Error("id must be present")
                     if (data === "" || data === undefined || data === null) throw new Error("data must be present")
 
-                    results = await fetch(this.crud.endpoint + "user/" + id + "/avatar", {
+                    results = await fetch(this.crud.endpoint + "/user/" + id + "/avatar", {
                         method: "POST",
                         body: data
                     })
