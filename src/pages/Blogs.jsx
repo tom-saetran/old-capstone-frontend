@@ -191,20 +191,15 @@ const Posts = props => {
     return props.posts ? (
         <Card className="text-dim">
             <Card.Body>
-                <Card.Title as={"h6"}>Secondary Card Title</Card.Title>
-                <Card.Text>Some quick example text</Card.Text>
-                <hr />
-                <Card.Title as={"h6"}>Secondary Card Title</Card.Title>
-                <Card.Text>Some quick example text</Card.Text>
-                <hr />
-                <Card.Title as={"h6"}>Secondary Card Title</Card.Title>
-                <Card.Text>Some quick example text</Card.Text>
-                <hr />
-                <Card.Title as={"h6"}>Secondary Card Title</Card.Title>
-                <Card.Text>Some quick example text</Card.Text>
-                <hr />
-                <Card.Title as={"h6"}>Secondary Card Title</Card.Title>
-                <Card.Text>Some quick example text</Card.Text>
+                {props.posts.result.map(post => {
+                    return (
+                        <>
+                            <Card.Title as={"h6"}>{post.title}</Card.Title>
+                            <Card.Text>{post.content}</Card.Text>
+                            <hr />
+                        </>
+                    )
+                })}
             </Card.Body>
         </Card>
     ) : props.loading ? (
