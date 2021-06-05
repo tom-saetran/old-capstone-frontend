@@ -177,7 +177,7 @@ const Neighbourhood = props => {
 const Controls = props => {
     return (
         <Card className="text-dim">
-            <Card.Body className="pt-0 pb-3 px-3">
+            <Card.Body className="pt-1 pb-3 px-3">
                 <Form>
                     <Form.Group controlId="blogForm">
                         <Form.Text>Whats on your mind?</Form.Text>
