@@ -55,16 +55,6 @@ class Users extends React.Component {
             </Container>
         )
     }
-
-    /*render() {
-        return this.state.user ? (
-            <div>User Data Here.</div>
-        ) : this.state.loading ? (
-            <div>Loading Data...</div>
-        ) : (
-            <div>Error Loading Data</div>
-        )
-    }*/
 }
 
 const User = props => {
