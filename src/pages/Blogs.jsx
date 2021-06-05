@@ -181,7 +181,7 @@ const Controls = props => {
             <Card.Body className="pt-1 pb-3 px-3">
                 <Form>
                     <Form.Group controlId="blogForm">
-                        <Form.Text>Whats on your mind?</Form.Text>
+                        <Form.Text className="pl-1">Whats on your mind?</Form.Text>
                         <Form.Control as="textarea" rows={3} placeholder="Type here..." />
                     </Form.Group>
                     <Row>
