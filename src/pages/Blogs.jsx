@@ -189,9 +189,6 @@ const Controls = props => {
                             <ButtonToolbar>
                                 <ButtonGroup className="mr-2 border rounded">
                                     <Button className="pb-2" variant="light">
-                                        <Icon.Paperclip fill="dimgrey" />
-                                    </Button>
-                                    <Button className="pb-2 border-left" variant="light">
                                         <Icon.Image fill="dimgrey" />
                                     </Button>
                                     <Button className="pb-2 border-left" variant="light">
@@ -206,8 +203,7 @@ const Controls = props => {
                             </ButtonToolbar>
                         </div>
                         <div className="pt-2 pl-2">
-                            <span>Cover Image Selected: {props.cover ? props.cover : "..."} </span>
-                            <span>File Selected: ...</span>
+                            {props.cover && <span>Cover Image Selected: {props.cover} </span>}
                         </div>
                     </Row>
                 </Form>
