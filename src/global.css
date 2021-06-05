@@ -29,8 +29,16 @@ html {
     border: 1px solid lightgray;
     border-radius: 50%;
     object-fit: cover;
-    height: 144px;
-    width: 144px;
+    height: 120px;
+    width: 120px;
+}
+
+.friend-avatar {
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    object-fit: cover;
+    height: 48px;
+    width: 48px;
 }
 
 .bg-dim {

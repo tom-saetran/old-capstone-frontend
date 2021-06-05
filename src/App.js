@@ -11,6 +11,10 @@ import Blogs from "./pages/Blogs"
 import HTTP404 from "./pages/HTTP404"
 import HTTP501 from "./pages/HTTP501"
 
+import TimeAgo from "javascript-time-ago"
+import en from "javascript-time-ago/locale/en"
+TimeAgo.addLocale(en)
+
 class App extends React.Component {
     state = {
         user: null,
@@ -139,7 +143,7 @@ class App extends React.Component {
                     if (id === "" || id === undefined || id === null) throw new Error("id must be present")
                     if (data === "" || data === undefined || data === null) throw new Error("data must be present")
 
-                    results = await fetch(this.crud.endpoint + "/user/" + id + "/avatar", {
+                    results = await fetch(this.crud.endpoint + "/users/" + id + "/avatar", {
                         method: "POST",
                         body: data
                     })
@@ -183,7 +187,7 @@ class App extends React.Component {
             getAll: async () => {
                 let results
                 try {
-                    results = await fetch(this.crud.endpoint + "/blogs/", {
+                    results = await fetch(this.crud.endpoint + "/blogs?sort=-createdAt", {
                         headers: {
                             //Authorization: this.state.authtoken
                         }
