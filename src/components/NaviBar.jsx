@@ -33,7 +33,7 @@ class NaviBar extends React.Component {
                             Home
                         </Link>
                         <Link className="px-1 link" to="/blogs">
-                            Blog
+                            Blogs
                         </Link>
                         <Link className="px-1 link" to="/support">
                             Support

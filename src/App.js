@@ -7,6 +7,7 @@ import Footer from "./components/Footer"
 import NaviBar from "./components/NaviBar"
 
 import Home from "./pages/Home"
+import Users from "./pages/Users"
 import Blogs from "./pages/Blogs"
 import HTTP404 from "./pages/HTTP404"
 import HTTP501 from "./pages/HTTP501"
@@ -298,8 +299,12 @@ class App extends React.Component {
                         exact
                         path="/blogs"
                     />
-                    <Route render={routeProps => <HTTP501 {...routeProps} />} exact path="/user" />
-                    <Route render={routeProps => <HTTP501 {...routeProps} />} exact path="/user/settings" />
+                    <Route
+                        render={routeProps => <Users {...routeProps} user={this.state.user} crud={this.crud} />}
+                        exact
+                        path="/users/:id"
+                    />
+                    <Route render={routeProps => <HTTP501 {...routeProps} />} exact path="/signup" />
                     <Route render={routeProps => <Out {...routeProps} />} exact path="/out/:id" />
                     <Route render={routeProps => <HTTP404 {...routeProps} />} exact path="/404" />
                     <Route render={routeProps => <HTTP404 {...routeProps} />} />
@@ -318,16 +323,9 @@ class Out extends React.Component {
         telegram: "https://t.me/zingo_fox"
     }
 
-    componentWillUnmount = () => {
-        // Run logger
-    }
-
     render() {
         return this.knownRoutes[this.props.match.params.id] ? (
-            <>
-                <h1 className="text-center">Redirecting...</h1>
-                <Redirect to={{ pathname: window.location.assign(this.knownRoutes[this.props.match.params.id]) }} />
-            </>
+            <Redirect to={{ pathname: window.location.assign(this.knownRoutes[this.props.match.params.id]) }} />
         ) : (
             <Redirect to={"/404"} />
         )

@@ -16,18 +16,18 @@ import {
 import { Link } from "react-router-dom"
 import * as Icon from "react-bootstrap-icons"
 import ReactTimeAgo from "react-time-ago"
+import Ads from "../components/Ads"
+import Neighbourhood from "../components/Neighbours"
 
 class Blogs extends React.Component {
     state = {
         posts: null,
-        users: null,
         loading: true,
         cover: null
     }
 
     componentDidMount = async () => {
         this.setState({ posts: await this.props.crud.blogs.getAll() })
-        this.setState({ users: await this.props.crud.users.getAll() })
     }
 
     componentDidUpdate(_previousProps, _previousState) {
@@ -51,7 +51,7 @@ class Blogs extends React.Component {
                     <Col xs={2}>
                         <Tools />
                         <hr />
-                        <Neighbourhood user={this.props.user} users={this.state.users} />
+                        <Neighbourhood crud={this.props.crud} user={this.props.user} />
                     </Col>
                 </Row>
             </Container>
@@ -59,64 +59,32 @@ class Blogs extends React.Component {
     }
 }
 
-const Ads = () => {
-    return (
-        <Card className="border text-dim">
-            <Card.Header className="text-center py-1 bg-white">Ads</Card.Header>
-            <Card.Body>
-                <Card.Title as={"h6"}>BUY 🐕 DOGE!</Card.Title>
-                <Card.Text>
-                    <Link className="link" to="/out/ads/DOGE">
-                        CLICK HERE! 🐕🐩🐕‍🦺
-                    </Link>
-                </Card.Text>
-                <hr />
-                <Card.Title as={"h6"}>Is your 🍆 floppy?</Card.Title>
-                <Card.Text>
-                    <Link className="link" to="/out/ads/Viagra">
-                        Click Here To Fix It Now!👀
-                    </Link>
-                </Card.Text>
-                <hr />
-                <Card.Title as={"h6"}>Medical Cannabis 🍀🔞</Card.Title>
-                <Card.Text>
-                    <Link className="link" to="/out/ads/420">
-                        Click here to see our potent selection! (ID REQUIRED)
-                    </Link>
-                </Card.Text>
-                <hr />
-                <Card.Title as={"h6"}>Research Chemicals 🧪 Wholesale! 📦</Card.Title>
-                <Card.Text>
-                    <Link className="link" to="/out/ads/RC">
-                        Almost out of stock! CLICK HERE NOW!
-                    </Link>
-                </Card.Text>
-            </Card.Body>
-            <Card.Footer className="text-center py-1 bg-white">
-                <Link className="link" to="/advertise">
-                    Advertise Here?
-                </Link>
-            </Card.Footer>
-        </Card>
-    )
-}
-
 const User = props => {
     return props.user ? (
         <Card className="border text-dim">
             <Card.Header className="text-center py-1 bg-white">{props.user.name}</Card.Header>
             <Card.Body>
-                <Row className="justify-content-center pb-3">
-                    <Card.Img className="card-avatar" alt="" src={props.user.avatar} />
-                </Row>
-                <Card.Title as={"h6"} className="text-center">
-                    {props.user.name} {props.user.surname}
-                </Card.Title>
+                <Link className="link" to={"users/" + props.user._id}>
+                    <Row className="justify-content-center pb-3">
+                        <Card.Img className="card-avatar" alt="" src={props.user.avatar} />
+                    </Row>
+                </Link>
+                <Link className="link" to={"users/" + props.user._id}>
+                    <Card.Title as={"h6"} className="text-center">
+                        {props.user.name} {props.user.surname}
+                    </Card.Title>
+                </Link>
                 <hr />
                 <Card.Text>{props.user.description}</Card.Text>
             </Card.Body>
         </Card>
-    ) : null
+    ) : (
+        <Card className="text-dim text-center">
+            <Card.Body>
+                <Spinner animation="border" />
+            </Card.Body>
+        </Card>
+    )
 }
 
 const Tools = () => {
@@ -144,38 +112,6 @@ const Tools = () => {
     )
 }
 
-const Neighbourhood = props => {
-    return props.users ? (
-        <Card className="text-dim">
-            <Card.Header className="text-center py-1 bg-white">People you may know</Card.Header>
-            <Card.Body>
-                {props.users.result.map(user => {
-                    if (user._id === props.user._id) return null
-                    return (
-                        <div key={user._id}>
-                            <Card.Title as={"h6"}>
-                                <Card.Img className="friend-avatar mr-2" alt="" src={user.avatar} />
-                                {user.name} {user.surname}
-                            </Card.Title>
-                            <Card.Text>
-                                {user.description.slice(0, 42)}
-                                {user.description.length > 42 ? "..." : ""}
-                            </Card.Text>
-                            <hr />
-                        </div>
-                    )
-                })}
-            </Card.Body>
-        </Card>
-    ) : (
-        <Card className="text-dim text-center">
-            <Card.Body>
-                <Spinner animation="border" />
-            </Card.Body>
-        </Card>
-    )
-}
-
 const Controls = props => {
     return (
         <Card className="text-dim">
@@ -183,7 +119,7 @@ const Controls = props => {
                 <Form>
                     <Form.Group controlId="blogForm">
                         <Form.Text className="pl-1">Whats on your mind?</Form.Text>
-                        <Form.Control as="textarea" rows={3} placeholder="Type here..." />
+                        <Form.Control className="border text-dim" as="textarea" rows={2} placeholder="Type here..." />
                     </Form.Group>
                     <Row>
                         <div className="pl-3">
@@ -221,7 +157,7 @@ const Posts = props => {
                     return (
                         <Accordion key={post._id}>
                             <Accordion.Toggle as="div" eventKey="0">
-                                <div key={post._id}>
+                                <div>
                                     <Row>
                                         <div className="pl-3">
                                             <Card.Title as={"h6"}>{post.title}</Card.Title>
@@ -254,7 +190,11 @@ const Posts = props => {
                                     {props.user && props.user._id === post.author._id && (
                                         <div className="pt-3">
                                             <ButtonGroup className="border rounded">
-                                                <Button className="text-dim pb-2" variant="white">
+                                                <Button
+                                                    className="text-dim pb-2"
+                                                    variant="white"
+                                                    onClick={e => editPost(e)}
+                                                >
                                                     <Icon.Pen className="mb-1" />
                                                 </Button>
                                                 <Button className="text-danger pb-2 border-left" variant="white">
@@ -284,7 +224,7 @@ const Posts = props => {
                                     <hr />
                                     {post.comments.map(comment => {
                                         return (
-                                            <>
+                                            <div key={comment._id}>
                                                 <Card.Text className="mb-0">{comment.comment}</Card.Text>
                                                 <div className="d-flex justify-content-between">
                                                     <Form.Text>
@@ -307,7 +247,7 @@ const Posts = props => {
                                                     </div>
                                                 )}
                                                 <hr />
-                                            </>
+                                            </div>
                                         )
                                     })}
                                 </Card.Body>
@@ -328,6 +268,10 @@ const Posts = props => {
             <Card.Body className="text-center text-dim p-5">Failed to fetch content!</Card.Body>
         </Card>
     )
+}
+
+const editPost = e => {
+    e.preventDefault()
 }
 
 export default Blogs
