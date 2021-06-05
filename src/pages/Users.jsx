@@ -47,9 +47,9 @@ class Users extends React.Component {
                         />
                     </Col>
                     <Col xs={2}>
-                        <Neighbourhood crud={this.props.crud} user={this.props.user} />
-                        <hr />
                         <Ads />
+                        <hr />
+                        <Neighbourhood crud={this.props.crud} user={this.props.user} />
                     </Col>
                 </Row>
             </Container>

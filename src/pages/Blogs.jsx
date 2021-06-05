@@ -163,7 +163,9 @@ const Posts = props => {
                                             <Card.Title as={"h6"}>{post.title}</Card.Title>
                                             <Card.Text>{post.content}</Card.Text>
                                             <Form.Text>
-                                                by {post.author.name} {post.author.surname}
+                                                <Link className="link" to={"users/" + post.author._id}>
+                                                    by {post.author.name} {post.author.surname}
+                                                </Link>
                                             </Form.Text>
                                         </div>
 
@@ -228,7 +230,9 @@ const Posts = props => {
                                                 <Card.Text className="mb-0">{comment.comment}</Card.Text>
                                                 <div className="d-flex justify-content-between">
                                                     <Form.Text>
-                                                        by {comment.author.name} {comment.author.surname}
+                                                        <Link className="link" to={"users/" + comment.author._id}>
+                                                            by {comment.author.name} {comment.author.surname}
+                                                        </Link>
                                                     </Form.Text>
                                                     <Form.Text>
                                                         Posted: <ReactTimeAgo date={new Date(comment.createdAt)} />
