@@ -111,6 +111,7 @@ const User = props => {
                 <Card.Title as={"h6"} className="text-center">
                     {props.user.name} {props.user.surname}
                 </Card.Title>
+                <hr />
                 <Card.Text>{props.user.description}</Card.Text>
             </Card.Body>
         </Card>
