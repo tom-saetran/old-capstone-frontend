@@ -268,33 +268,31 @@ const Posts = props => {
                                     <hr />
                                 </div>
                             </Accordion.Toggle>
-                            <Accordion.Collapse eventKey="0">
-                                <Card.Body className="border rounded">
-                                    {post.comments.map(comment => {
-                                        return (
-                                            <div key={comment._id}>
-                                                <div>{comment.comment}</div>
-                                                <Form.Text>
-                                                    by {comment.author.name} {comment.author.surname}
-                                                </Form.Text>
-                                                {props.user._id === comment.author._id && (
-                                                    <div className="pt-3">
-                                                        <ButtonGroup className="border rounded">
-                                                            <Button className="text-dim" variant="light">
-                                                                <Icon.Pen />
-                                                            </Button>
-                                                            <Button className="text-danger border-left" variant="light">
-                                                                <Icon.Trash />
-                                                            </Button>
-                                                        </ButtonGroup>
-                                                    </div>
-                                                )}
-                                                <hr />
-                                            </div>
-                                        )
-                                    })}
-                                </Card.Body>
-                            </Accordion.Collapse>
+                            {post.comments.map(comment => {
+                                return (
+                                    <Accordion.Collapse key={comment._id} eventKey="0">
+                                        <Card.Body className="py-0">
+                                            <div>{comment.comment}</div>
+                                            <Form.Text>
+                                                by {comment.author.name} {comment.author.surname}
+                                            </Form.Text>
+                                            {props.user._id === comment.author._id && (
+                                                <div className="pt-3">
+                                                    <ButtonGroup className="border rounded">
+                                                        <Button className="text-dim" variant="light">
+                                                            <Icon.Pen />
+                                                        </Button>
+                                                        <Button className="text-danger border-left" variant="light">
+                                                            <Icon.Trash />
+                                                        </Button>
+                                                    </ButtonGroup>
+                                                </div>
+                                            )}
+                                            <hr />
+                                        </Card.Body>
+                                    </Accordion.Collapse>
+                                )
+                            })}
                         </Accordion>
                     )
                 })}
