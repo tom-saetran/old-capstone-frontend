@@ -119,21 +119,26 @@ const Controls = props => {
                 <Form>
                     <Form.Group controlId="blogForm">
                         <Form.Text className="pl-1">Whats on your mind?</Form.Text>
-                        <Form.Control className="border text-dim" as="textarea" rows={2} placeholder="Type here..." />
+                        <Form.Control
+                            className="border text-dim cursor-text no-active-outline"
+                            as="textarea"
+                            rows={2}
+                            placeholder="Type here..."
+                        />
                     </Form.Group>
                     <Row>
                         <div className="pl-3">
                             <ButtonToolbar>
                                 <ButtonGroup className="mr-2 border rounded">
-                                    <Button className="pb-2" variant="white">
+                                    <Button className="pb-2 no-active-outline" variant="white">
                                         <Icon.Image fill="dimgrey" />
                                     </Button>
-                                    <Button className="pb-2 border-left" variant="white">
+                                    <Button className="pb-2 border-left no-active-outline" variant="white">
                                         <Icon.EmojiLaughing fill="dimgrey" />
                                     </Button>
                                 </ButtonGroup>
                                 <ButtonGroup>
-                                    <Button className="border rounded text-dim" variant="white" type="submit">
+                                    <Button className="border rounded text-dim no-active-outline" variant="white">
                                         Send
                                     </Button>
                                 </ButtonGroup>
@@ -156,67 +161,84 @@ const Posts = props => {
                 {props.posts.result.map(post => {
                     return (
                         <Accordion key={post._id}>
-                            <Accordion.Toggle as="div" eventKey="0">
+                            <div>
                                 <div>
-                                    <Row>
-                                        <div className="pl-3">
-                                            <Card.Title as={"h6"}>{post.title}</Card.Title>
-                                            <Card.Text>{post.content}</Card.Text>
+                                    <div className="d-flex">
+                                        <Card.Title as={"h6"}>{post.title}</Card.Title>
+                                        <div className="ml-auto">
+                                            <Badge pill className="text-dim bg-white border">
+                                                {post.category}
+                                            </Badge>
+                                        </div>
+                                    </div>
+                                    <Card.Text>{post.content}</Card.Text>
+
+                                    <div className="d-flex justify-content-between">
+                                        <Col className="p-0">
                                             <Form.Text>
                                                 <Link className="link" to={"users/" + post.author._id}>
                                                     by {post.author.name} {post.author.surname}
                                                 </Link>
                                             </Form.Text>
-                                        </div>
-
-                                        {post.comments.length > 0 && (
-                                            <Form.Text className="d-flex flex-column justify-content-end">
-                                                <span>
-                                                    {post.comments.length} Comment
-                                                    {post.comments.length > 1 ? "s" : ""} <Icon.ChatText />
-                                                </span>
-                                            </Form.Text>
-                                        )}
-
-                                        <div className="ml-auto pr-3 d-flex flex-column justify-content-between">
-                                            <div className="ml-auto">
-                                                <Badge pill className="text-dim bg-white border">
-                                                    {post.category}
-                                                </Badge>
-                                            </div>
+                                        </Col>
+                                        <Col className="d-flex justify-content-end p-0">
+                                            <Accordion.Toggle as="div" eventKey="0">
+                                                <Form.Text className="border rounded px-1 cursor-pointer">
+                                                    <span>
+                                                        {post.comments.length} Comment
+                                                        {post.comments.length === 0 ? "s" : ""}
+                                                        {post.comments.length > 1 ? "s" : ""}{" "}
+                                                        <Icon.ChatText className="mb-1" />
+                                                    </span>
+                                                </Form.Text>
+                                            </Accordion.Toggle>
+                                        </Col>
+                                        <Col className="d-flex justify-content-end p-0">
                                             <Form.Text>
                                                 Posted: <ReactTimeAgo date={new Date(post.createdAt)} />
                                             </Form.Text>
-                                        </div>
-                                    </Row>
-                                    {props.user && props.user._id === post.author._id && (
-                                        <div className="pt-3">
-                                            <ButtonGroup className="border rounded">
-                                                <Button
-                                                    className="text-dim pb-2"
-                                                    variant="white"
-                                                    onClick={e => editPost(e)}
-                                                >
-                                                    <Icon.Pen className="mb-1" />
-                                                </Button>
-                                                <Button className="text-danger pb-2 border-left" variant="white">
-                                                    <Icon.Trash className="mb-1" />
-                                                </Button>
-                                            </ButtonGroup>
-                                        </div>
-                                    )}
-                                    <hr />
+                                        </Col>
+                                    </div>
                                 </div>
-                            </Accordion.Toggle>
+
+                                {props.user && props.user._id === post.author._id && (
+                                    <div className="pt-3">
+                                        <ButtonGroup className="border rounded">
+                                            <Button
+                                                className="text-dim pb-2 no-active-outline"
+                                                variant="white"
+                                                onClick={e => editPost(e)}
+                                            >
+                                                <Icon.Pen className="mb-1" />
+                                            </Button>
+                                            <Button
+                                                className="text-danger pb-2 border-left no-active-outline"
+                                                variant="white"
+                                            >
+                                                <Icon.Trash className="mb-1" />
+                                            </Button>
+                                        </ButtonGroup>
+                                    </div>
+                                )}
+                                <hr />
+                            </div>
                             <Accordion.Collapse eventKey="0">
                                 <Card.Body className="py-0">
                                     <Form>
                                         <Form.Text className="pl-1">Add a comment to {post.title}</Form.Text>
                                         <div className="d-flex">
                                             <InputGroup>
-                                                <Form.Control as="input" placeholder="Comment..." />
+                                                <Form.Control
+                                                    className="border no-active-outline"
+                                                    as="input"
+                                                    placeholder="Comment..."
+                                                />
                                                 <InputGroup.Append>
-                                                    <InputGroup.Text>
+                                                    <InputGroup.Text
+                                                        as={Button}
+                                                        variant="white"
+                                                        className="bg-white text-dim no-active-outline"
+                                                    >
                                                         <Icon.ChatText />
                                                     </InputGroup.Text>
                                                 </InputGroup.Append>
@@ -224,36 +246,45 @@ const Posts = props => {
                                         </div>
                                     </Form>
                                     <hr />
-                                    {post.comments.map(comment => {
-                                        return (
-                                            <div key={comment._id}>
-                                                <Card.Text className="mb-0">{comment.comment}</Card.Text>
-                                                <div className="d-flex justify-content-between">
-                                                    <Form.Text>
-                                                        <Link className="link" to={"users/" + comment.author._id}>
-                                                            by {comment.author.name} {comment.author.surname}
-                                                        </Link>
-                                                    </Form.Text>
-                                                    <Form.Text>
-                                                        Posted: <ReactTimeAgo date={new Date(comment.createdAt)} />
-                                                    </Form.Text>
-                                                </div>
-                                                {props.user._id === comment.author._id && (
-                                                    <div className="pt-3">
-                                                        <ButtonGroup className="border rounded">
-                                                            <Button className="text-dim" variant="white">
-                                                                <Icon.Pen />
-                                                            </Button>
-                                                            <Button className="text-danger border-left" variant="white">
-                                                                <Icon.Trash />
-                                                            </Button>
-                                                        </ButtonGroup>
+                                    {post.comments
+                                        .slice(0)
+                                        .reverse()
+                                        .map(comment => {
+                                            return (
+                                                <div key={comment._id}>
+                                                    <Card.Text className="mb-0">{comment.comment}</Card.Text>
+                                                    <div className="d-flex justify-content-between">
+                                                        <Form.Text>
+                                                            <Link className="link" to={"users/" + comment.author._id}>
+                                                                by {comment.author.name} {comment.author.surname}
+                                                            </Link>
+                                                        </Form.Text>
+                                                        <Form.Text>
+                                                            Posted: <ReactTimeAgo date={new Date(comment.createdAt)} />
+                                                        </Form.Text>
                                                     </div>
-                                                )}
-                                                <hr />
-                                            </div>
-                                        )
-                                    })}
+                                                    {props.user._id === comment.author._id && (
+                                                        <div className="pt-3">
+                                                            <ButtonGroup className="border rounded">
+                                                                <Button
+                                                                    className="mb-1 text-dim no-active-outline"
+                                                                    variant="white"
+                                                                >
+                                                                    <Icon.Pen />
+                                                                </Button>
+                                                                <Button
+                                                                    className="mb-1 text-danger border-left no-active-outline"
+                                                                    variant="white"
+                                                                >
+                                                                    <Icon.Trash />
+                                                                </Button>
+                                                            </ButtonGroup>
+                                                        </div>
+                                                    )}
+                                                    <hr />
+                                                </div>
+                                            )
+                                        })}
                                 </Card.Body>
                             </Accordion.Collapse>
                         </Accordion>

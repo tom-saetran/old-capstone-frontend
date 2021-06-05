@@ -65,6 +65,7 @@ const User = props => {
                     {props.user.name} {props.user.surname}
                 </Card.Header>
                 <Card.Body>
+                    <Card.Img className="home-avatar" alt="" src={props.user.avatar} />
                     <Card.Title as={"h6"}>
                         {props.user.name} {props.user.surname}
                     </Card.Title>
@@ -121,9 +122,7 @@ const UserBlogs = props => {
         props.user.blogs.length > 0 ? (
             <>
                 <Card className="border text-dim">
-                    <Card.Header className="text-center py-1 bg-white">
-                        Blogs made by {props.user.name} {props.user.surname}
-                    </Card.Header>
+                    <Card.Header className="text-center py-1 bg-white">Blogs</Card.Header>
                     {props.user.blogs.map(blog => {
                         return (
                             <Card.Body key={blog._id}>
@@ -144,10 +143,8 @@ const UserBlogs = props => {
         ) : props.self && props.user._id === props.self._id ? (
             <>
                 <Card className="border text-dim">
-                    <Card.Header className="text-center py-1 bg-white">
-                        Blogs made by {props.user.name} {props.user.surname}
-                    </Card.Header>
-                    <Card.Body className="text-center p-5">No Blogs made yet.</Card.Body>
+                    <Card.Header className="text-center py-1 bg-white">Blogs</Card.Header>
+                    <Card.Body className="text-center p-5">No Blogs added yet.</Card.Body>
                     <Card.Footer className="text-center py-1 bg-white">
                         <Link className="link" to="/blogs">
                             Go to Blogs
@@ -181,9 +178,7 @@ const UserExperiences = props => {
         props.user.experiences.length > 0 ? (
             <>
                 <Card className="border text-dim">
-                    <Card.Header className="text-center py-1 bg-white">
-                        Experiences had by {props.user.name} {props.user.surname}
-                    </Card.Header>
+                    <Card.Header className="text-center py-1 bg-white">Experiences</Card.Header>
                     {props.user.experiences.map(experience => {
                         return (
                             <Card.Body>
@@ -204,10 +199,8 @@ const UserExperiences = props => {
         ) : props.self && props.user._id === props.self._id ? (
             <>
                 <Card className="border text-dim">
-                    <Card.Header className="text-center py-1 bg-white">
-                        Experiences had by {props.user.name} {props.user.surname}
-                    </Card.Header>
-                    <Card.Body className="text-center p-5">No Experiences had yet.</Card.Body>
+                    <Card.Header className="text-center py-1 bg-white">Experiences</Card.Header>
+                    <Card.Body className="text-center p-5">No Experience added yet.</Card.Body>
                     <Card.Footer className="text-center py-1 bg-white">
                         <Link className="link" to="/NYI">
                             Add Experience
@@ -241,9 +234,7 @@ const UserEducation = props => {
         props.user.educations.length > 0 ? (
             <>
                 <Card className="border text-dim">
-                    <Card.Header className="text-center py-1 bg-white">
-                        Education mastered by {props.user.name} {props.user.surname}
-                    </Card.Header>
+                    <Card.Header className="text-center py-1 bg-white">Education</Card.Header>
                     {props.user.educations.map(education => {
                         return (
                             <Card.Body>
@@ -264,10 +255,8 @@ const UserEducation = props => {
         ) : props.self && props.user._id === props.self._id ? (
             <>
                 <Card className="border text-dim">
-                    <Card.Header className="text-center py-1 bg-white">
-                        Education mastered by {props.user.name} {props.user.surname}
-                    </Card.Header>
-                    <Card.Body className="text-center p-5">No Experiences had yet.</Card.Body>
+                    <Card.Header className="text-center py-1 bg-white">Education</Card.Header>
+                    <Card.Body className="text-center p-5">No Education added yet.</Card.Body>
                     <Card.Footer className="text-center py-1 bg-white">
                         <Link className="link" to="/NYI">
                             Add Education
@@ -301,9 +290,7 @@ const UserEmployment = props => {
         props.user.employments.length > 0 ? (
             <>
                 <Card className="border text-dim">
-                    <Card.Header className="text-center py-1 bg-white">
-                        Employments had by {props.user.name} {props.user.surname}
-                    </Card.Header>
+                    <Card.Header className="text-center py-1 bg-white">Employment</Card.Header>
                     {props.user.employments.map(employment => {
                         return (
                             <Card.Body>
@@ -324,10 +311,8 @@ const UserEmployment = props => {
         ) : props.self && props.user._id === props.self._id ? (
             <>
                 <Card className="border text-dim">
-                    <Card.Header className="text-center py-1 bg-white">
-                        Employments had by {props.user.name} {props.user.surname}
-                    </Card.Header>
-                    <Card.Body className="text-center p-5">No Employments had yet.</Card.Body>
+                    <Card.Header className="text-center py-1 bg-white">Employment</Card.Header>
+                    <Card.Body className="text-center p-5">No Employment added yet.</Card.Body>
                     <Card.Footer className="text-center py-1 bg-white">
                         <Link className="link" to="/NYI">
                             Add Employment

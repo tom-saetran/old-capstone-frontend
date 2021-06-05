@@ -8,7 +8,7 @@ import Container from "react-bootstrap/Container"
 class Footer extends React.Component {
     render() {
         return (
-            <Container fluid className="bg-light border-top">
+            <Container fluid className="bg-white border-top">
                 <Row className="text-center pt-3">
                     <Col xs={{ span: 6 }} md={{ span: 2, offset: 2 }} className="d-flex flex-column">
                         <Router.Link to="/latest" className="link pb-3">

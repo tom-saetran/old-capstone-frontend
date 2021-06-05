@@ -33,6 +33,14 @@ html {
     width: 120px;
 }
 
+.home-avatar {
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    object-fit: cover;
+    height: 220px;
+    width: 220px;
+}
+
 .friend-avatar {
     border: 1px solid lightgray;
     border-radius: 50%;
@@ -45,8 +53,24 @@ html {
     background-color: lightgrey;
 }
 
-.text-dim {
+.text-dim,
+.text-dim:hover {
     color: dimgray;
+    cursor: default;
+}
+
+.cursor-text,
+.cursor-text:hover {
+    cursor: text;
+}
+
+.cursor-pointer,
+.cursor-pointer:hover {
+    cursor: pointer;
+}
+
+.no-active-outline {
+    box-shadow: none !important;
 }
 
 /* FOOTER */
