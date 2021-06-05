@@ -63,7 +63,7 @@ class NaviBar extends React.Component {
                     {this.props.user && (
                         <Nav className="d-none d-sm-block">
                             <NavDropdown
-                                title={<img className="bg-dim navbar-avatar" alt="" src={this.props.user.avatar} />}
+                                title={<img className="navbar-avatar" alt="" src={this.props.user.avatar} />}
                                 alignRight
                             >
                                 <NavDropdown.Item as={Link} to="/">
