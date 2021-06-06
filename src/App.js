@@ -14,6 +14,7 @@ import HTTP501 from "./pages/HTTP501"
 
 import TimeAgo from "javascript-time-ago"
 import en from "javascript-time-ago/locale/en"
+import ScrollToTop from "./components/ScrollToTop"
 TimeAgo.addLocale(en)
 
 class App extends React.Component {
@@ -291,6 +292,7 @@ class App extends React.Component {
     render() {
         return (
             <Router>
+                <ScrollToTop />
                 <Route render={routeProps => <NaviBar user={this.state.user} {...routeProps} />} />
                 <Switch>
                     <Route render={routeProps => <Home {...routeProps} />} exact path="/" />

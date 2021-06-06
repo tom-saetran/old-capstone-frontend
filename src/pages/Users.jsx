@@ -19,7 +19,7 @@ class Users extends React.Component {
 
     componentDidUpdate = async (_previousProps, _previousState) => {
         if (this.state.loading && this.state.renderedUser) this.setState({ loading: false })
-        if (this.state.renderedUser._id !== this.props.match.params.id)
+        if (this.state.renderedUser && this.state.renderedUser._id !== this.props.match.params.id)
             this.setState({ renderedUser: await this.props.crud.users.get(this.props.match.params.id) })
     }
 
@@ -47,9 +47,13 @@ class Users extends React.Component {
                         />
                     </Col>
                     <Col xs={2}>
-                        <Ads />
+                        <Ads user={this.props.user} />
                         <hr />
-                        <Neighbourhood crud={this.props.crud} user={this.props.user} />
+                        <Neighbourhood
+                            crud={this.props.crud}
+                            user={this.props.user}
+                            renderedUser={this.state.renderedUser}
+                        />
                     </Col>
                 </Row>
             </Container>

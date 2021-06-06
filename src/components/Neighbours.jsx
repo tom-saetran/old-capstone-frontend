@@ -1,6 +1,6 @@
 import React from "react"
 import { Card, Spinner } from "react-bootstrap"
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 
 class Neighbourhood extends React.Component {
     state = {
@@ -12,8 +12,9 @@ class Neighbourhood extends React.Component {
         this.setState({ users: await this.props.crud.users.getAll() })
     }
 
-    componentDidUpdate = async (_previousState, _previousProps) => {
+    componentDidUpdate = async (_previousProps, _previousState) => {
         if (this.state.mayKnow === null && this.state.users) this.setState({ mayKnow: this.some() })
+        if (_previousProps.match.params.id !== this.props.match.params.id) this.setState({ mayKnow: this.some() })
     }
 
     some = () =>
@@ -32,6 +33,7 @@ class Neighbourhood extends React.Component {
                 <Card.Body>
                     {this.state.mayKnow.map(user => {
                         if (user._id === this.props.user._id) return null
+                        if (user._id === this.props.match.params.id) return null
                         return (
                             <div key={user._id}>
                                 <Link className="link" to={"/users/" + user._id}>
@@ -67,4 +69,4 @@ class Neighbourhood extends React.Component {
     }
 }
 
-export default Neighbourhood
+export default withRouter(Neighbourhood)

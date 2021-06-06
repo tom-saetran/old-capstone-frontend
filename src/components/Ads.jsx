@@ -1,5 +1,5 @@
 import { Card } from "react-bootstrap"
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 
 const Ads = () => {
     return (
@@ -43,4 +43,4 @@ const Ads = () => {
     )
 }
 
-export default Ads
+export default withRouter(Ads)
