@@ -60,7 +60,7 @@ class Neighbourhood extends React.Component {
         ) : (
             <Card className="text-dim text-center">
                 <Card.Body>
-                    <Spinner animation="border" />
+                    <Spinner className="spinner" animation="border" />
                 </Card.Body>
             </Card>
         )

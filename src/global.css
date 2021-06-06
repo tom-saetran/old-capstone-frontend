@@ -69,6 +69,10 @@ html {
     cursor: pointer;
 }
 
+.spinner {
+    border-width: 1px;
+}
+
 .no-active-outline {
     box-shadow: none !important;
 }

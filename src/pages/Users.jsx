@@ -102,7 +102,7 @@ const User = props => {
         <>
             <Card className="border text-dim">
                 <Card.Body className="text-center p-5">
-                    <Spinner animation="border" />
+                    <Spinner className="spinner" animation="border" />
                 </Card.Body>
             </Card>
             <hr />
@@ -158,7 +158,7 @@ const UserBlogs = props => {
         <>
             <Card className="border text-dim">
                 <Card.Body className="text-center p-5">
-                    <Spinner animation="border" />
+                    <Spinner className="spinner" animation="border" />
                 </Card.Body>
             </Card>
             <hr />
@@ -214,7 +214,7 @@ const UserExperiences = props => {
         <>
             <Card className="border text-dim">
                 <Card.Body className="text-center p-5">
-                    <Spinner animation="border" />
+                    <Spinner className="spinner" animation="border" />
                 </Card.Body>
             </Card>
             <hr />
@@ -270,7 +270,7 @@ const UserEducation = props => {
         <>
             <Card className="border text-dim">
                 <Card.Body className="text-center p-5">
-                    <Spinner animation="border" />
+                    <Spinner className="spinner" animation="border" />
                 </Card.Body>
             </Card>
             <hr />
@@ -326,7 +326,7 @@ const UserEmployment = props => {
         <>
             <Card className="border text-dim">
                 <Card.Body className="text-center p-5">
-                    <Spinner animation="border" />
+                    <Spinner className="spinner" animation="border" />
                 </Card.Body>
             </Card>
             <hr />

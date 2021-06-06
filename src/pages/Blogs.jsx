@@ -81,7 +81,7 @@ const User = props => {
     ) : (
         <Card className="text-dim text-center">
             <Card.Body>
-                <Spinner animation="border" />
+                <Spinner className="spinner" animation="border" />
             </Card.Body>
         </Card>
     )
@@ -263,7 +263,7 @@ const Posts = props => {
                                                             Posted: <ReactTimeAgo date={new Date(comment.createdAt)} />
                                                         </Form.Text>
                                                     </div>
-                                                    {props.user._id === comment.author._id && (
+                                                    {props.user && props.user._id === comment.author._id && (
                                                         <div className="pt-3">
                                                             <ButtonGroup className="border rounded">
                                                                 <Button
@@ -295,7 +295,7 @@ const Posts = props => {
     ) : props.loading ? (
         <Card>
             <Card.Body className="text-center text-dim p-5">
-                <Spinner animation="border" />
+                <Spinner className="spinner" animation="border" />
             </Card.Body>
         </Card>
     ) : (
