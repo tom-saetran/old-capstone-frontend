@@ -20,7 +20,7 @@ TimeAgo.addLocale(en)
 class App extends React.Component {
     state = {
         user: null,
-        load: "60bc15a8ae33b80015046cbd"
+        load: "60b8e485ed3bcb0015e42f7f"
     }
 
     componentDidMount = async () => {
@@ -41,7 +41,7 @@ class App extends React.Component {
                 try {
                     if (typeof data !== "object") throw new Error("data must be an object")
 
-                    results = await fetch(this.stcrudate.endpoint + "/users/", {
+                    results = await fetch(this.crud.endpoint + "/users/", {
                         method: "POST",
                         headers: {
                             //Authorization: this.state.authtoken,
@@ -122,7 +122,7 @@ class App extends React.Component {
                 let results
                 try {
                     if (id === "" || id === undefined || id === null) throw new Error("id must be present")
-                    results = await fetch(this.state.endpoint + "/users/" + id, {
+                    results = await fetch(this.crud.endpoint + "/users/" + id, {
                         method: "DELETE",
                         headers: {
                             //Authorization: this.state.authtoken,
@@ -168,7 +168,7 @@ class App extends React.Component {
                 try {
                     if (typeof data !== "object") throw new Error("data must be an object")
 
-                    results = await fetch(this.stcrudate.endpoint + "/blogs/", {
+                    results = await fetch(this.crud.endpoint + "/blogs/", {
                         method: "POST",
                         headers: {
                             //Authorization: this.state.authtoken,
@@ -249,7 +249,7 @@ class App extends React.Component {
                 let results
                 try {
                     if (id === "" || id === undefined || id === null) throw new Error("id must be present")
-                    results = await fetch(this.state.endpoint + "/blogs/" + id, {
+                    results = await fetch(this.crud.endpoint + "/blogs/" + id, {
                         method: "DELETE",
                         headers: {
                             //Authorization: this.state.authtoken,

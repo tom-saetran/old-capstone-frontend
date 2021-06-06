@@ -13,7 +13,7 @@ const Ads = () => {
                     </Link>
                 </Card.Text>
                 <hr />
-                <Card.Title as={"h6"}>Is your 🍆 floppy?</Card.Title>
+                <Card.Title as={"h6"}>Is your 🍆💾?</Card.Title>
                 <Card.Text>
                     <Link className="link" to="/out/ads/Viagra">
                         Click Here To Fix It Now!👀

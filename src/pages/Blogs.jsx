@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import {
     Card,
     Col,
@@ -11,7 +11,8 @@ import {
     Spinner,
     Badge,
     Accordion,
-    InputGroup
+    InputGroup,
+    Modal
 } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import * as Icon from "react-bootstrap-icons"
@@ -44,7 +45,7 @@ class Blogs extends React.Component {
                         <Ads />
                     </Col>
                     <Col xs={6}>
-                        <Controls cover={this.state.cover} />
+                        <Controls crud={this.props.crud} user={this.props.user} cover={this.state.cover} />
                         <hr />
                         <Posts user={this.props.user} posts={this.state.posts} loading={this.state.loading} />
                     </Col>
@@ -57,6 +58,113 @@ class Blogs extends React.Component {
             </Container>
         )
     }
+}
+
+const AddBlogModal = props => {
+    const [show, setShow] = React.useState(false)
+    const [title, setTitle] = React.useState("")
+    const [content, setContent] = React.useState("")
+    const [validated, setValidated] = React.useState(false)
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+    const handleSubmit = e => {
+        const form = e.currentTarget
+        if (form.checkValidity() === false) {
+            e.preventDefault()
+            e.stopPropagation()
+        } else {
+            handleSend()
+            setShow(false)
+        }
+        setValidated(true)
+    }
+
+    useEffect(() => {
+        setContent(props.content)
+    }, [props.content])
+
+    const handleSend = async () => {
+        const body = {
+            title,
+            content,
+            author: props.user._id
+        }
+
+        const result = await props.crud.blogs.post(body)
+        console.log(result)
+    }
+
+    return (
+        <>
+            <Button className="border rounded text-dim no-active-outline" variant="white" onClick={handleShow}>
+                Send
+            </Button>
+
+            <Modal centered show={show} onHide={handleClose}>
+                <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
+                    <Card.Header className="text-center text-dim py-2 bg-white">Add New</Card.Header>
+                    <Modal.Body style={{ height: "280px" }}>
+                        <Form.Group controlId="formTitle">
+                            <Form.Text className="pl-1 text-dim">Title</Form.Text>
+                            <Form.Control
+                                className="border text-dim cursor-text no-active-outline"
+                                type="text"
+                                required
+                                value={title}
+                                onChange={e => setTitle(e.target.value)}
+                            />
+                            <Form.Control.Feedback className="pl-1 text-dim" type="invalid">
+                                Title is required.
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback className="pl-1 text-dim" type="valid">
+                                Thats a nice title!
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group controlId="formContent">
+                            <Form.Text className="pl-1 text-dim">Content</Form.Text>
+                            <Form.Control
+                                className="border text-dim cursor-text no-active-outline"
+                                as="textarea"
+                                rows={2}
+                                required
+                                value={content}
+                                onChange={e => setContent(e.target.value)}
+                            />
+                            <Form.Control.Feedback className="pl-1 text-dim" type="invalid">
+                                Content is required.
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback className="pl-1 text-dim" type="valid">
+                                Thats some quality content!
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Modal.Body>
+
+                    <div className="d-flex justify-content-end pb-3 pr-3">
+                        <ButtonToolbar>
+                            <ButtonGroup className="mr-2 border rounded">
+                                <Button className="pb-2 text-dim no-active-outline" variant="white">
+                                    <Icon.Image fill="dimgrey" />
+                                </Button>
+                                <Button className="pb-2 border-left text-dim no-active-outline" variant="white">
+                                    <Icon.EmojiLaughing fill="dimgrey" />
+                                </Button>
+                            </ButtonGroup>
+                            <ButtonGroup>
+                                <Button
+                                    className="border rounded text-dim no-active-outline"
+                                    variant="white"
+                                    type="submit"
+                                >
+                                    Send
+                                </Button>
+                            </ButtonGroup>
+                        </ButtonToolbar>
+                    </div>
+                </Form>
+            </Modal>
+        </>
+    )
 }
 
 const User = props => {
@@ -113,6 +221,8 @@ const Tools = () => {
 }
 
 const Controls = props => {
+    const [content, setContent] = React.useState("")
+
     return (
         <Card className="text-dim">
             <Card.Body className="pt-1 pb-3 px-3">
@@ -124,6 +234,8 @@ const Controls = props => {
                             as="textarea"
                             rows={2}
                             placeholder="Type here..."
+                            value={content}
+                            onChange={e => setContent(e.target.value)}
                         />
                     </Form.Group>
                     <Row>
@@ -138,9 +250,7 @@ const Controls = props => {
                                     </Button>
                                 </ButtonGroup>
                                 <ButtonGroup>
-                                    <Button className="border rounded text-dim no-active-outline" variant="white">
-                                        Send
-                                    </Button>
+                                    <AddBlogModal crud={props.crud} user={props.user} content={content} />
                                 </ButtonGroup>
                             </ButtonToolbar>
                         </div>
