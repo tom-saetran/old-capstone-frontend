@@ -18,11 +18,11 @@ html {
     object-fit: cover;
     height: 36px;
     width: 36px;
-    transition: transform 0.4s;
+    transition: transform 0.6s;
 }
 
 .navbar-avatar:hover {
-    transform: scale(1.25);
+    transform: scale(1.15);
 }
 
 .card-avatar {
@@ -31,6 +31,11 @@ html {
     object-fit: cover;
     height: 66%;
     width: 66%;
+    transition: transform 0.6s;
+}
+
+.card-avatar:hover {
+    transform: scale(1.06);
 }
 
 .home-avatar {
@@ -47,6 +52,11 @@ html {
     object-fit: cover;
     height: 48px;
     width: 48px;
+    transition: transform 0.6s;
+}
+
+.friend-avatar:hover {
+    transform: scale(1.15);
 }
 
 .bg-dim {
