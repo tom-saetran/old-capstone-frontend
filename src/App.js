@@ -168,7 +168,7 @@ class App extends React.Component {
                 try {
                     if (typeof data !== "object") throw new Error("data must be an object")
 
-                    results = await fetch(this.crud.endpoint + "/blogs/", {
+                    results = await fetch(this.crud.endpoint + "/blogs", {
                         method: "POST",
                         headers: {
                             //Authorization: this.state.authtoken,

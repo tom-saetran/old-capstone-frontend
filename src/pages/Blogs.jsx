@@ -14,7 +14,7 @@ import {
     InputGroup,
     Modal
 } from "react-bootstrap"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 import * as Icon from "react-bootstrap-icons"
 import ReactTimeAgo from "react-time-ago"
 import Ads from "../components/Ads"
@@ -47,7 +47,12 @@ class Blogs extends React.Component {
                     <Col xs={6}>
                         <Controls crud={this.props.crud} user={this.props.user} cover={this.state.cover} />
                         <hr />
-                        <Posts user={this.props.user} posts={this.state.posts} loading={this.state.loading} />
+                        <Posts
+                            crud={this.props.crud}
+                            user={this.props.user}
+                            posts={this.state.posts}
+                            loading={this.state.loading}
+                        />
                     </Col>
                     <Col xs={2}>
                         <Tools />
@@ -60,22 +65,71 @@ class Blogs extends React.Component {
     }
 }
 
+const RemoveBlogModal = props => {
+    const [show, setShow] = React.useState(false)
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+
+    const handleDelete = async () => {
+        await props.crud.blogs.delete(props.id)
+        setShow(false)
+        window.location.reload(false) // TODO: REPLACE! REPLACE! REPLACE!
+    }
+
+    return (
+        <>
+            <Button className="text-danger pb-2 border-left no-active-outline" variant="white" onClick={handleShow}>
+                <Icon.Trash className="mb-1" />
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header className="justify-content-center py-2 text-dim">
+                    This will remove the blog post permanently!
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="d-flex">
+                        <Card.Title as={"h6"}>{props.post.title}</Card.Title>
+                        <div className="ml-auto">
+                            <Badge pill className="text-dim bg-white border">
+                                {props.post.category}
+                            </Badge>
+                        </div>
+                    </div>
+                    <Card.Text>{props.post.content}</Card.Text>
+                </Modal.Body>
+                <Modal.Footer className="justify-content-center align-items-end">
+                    <Button className="border text-dim no-active-outline" variant="white" onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button className="border text-danger no-active-outline" variant="white" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    )
+}
+
 const AddBlogModal = props => {
     const [show, setShow] = React.useState(false)
     const [title, setTitle] = React.useState("")
     const [content, setContent] = React.useState("")
+    const [category, setCategory] = React.useState("")
     const [validated, setValidated] = React.useState(false)
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         const form = e.currentTarget
         if (form.checkValidity() === false) {
             e.preventDefault()
             e.stopPropagation()
         } else {
-            handleSend()
+            e.preventDefault()
+            await handleSend()
             setShow(false)
+            window.location.reload(false) // TODO: REPLACE! REPLACE! REPLACE!
         }
         setValidated(true)
     }
@@ -85,13 +139,14 @@ const AddBlogModal = props => {
     }, [props.content])
 
     const handleSend = async () => {
-        const body = {
+        const data = {
             title,
             content,
+            category,
             author: props.user._id
         }
 
-        const result = await props.crud.blogs.post(body)
+        const result = await props.crud.blogs.post(data)
         console.log(result)
     }
 
@@ -101,10 +156,10 @@ const AddBlogModal = props => {
                 Send
             </Button>
 
-            <Modal centered show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose}>
                 <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
                     <Card.Header className="text-center text-dim py-2 bg-white">Add New</Card.Header>
-                    <Modal.Body style={{ height: "280px" }}>
+                    <Modal.Body style={{ height: "320px" }}>
                         <Form.Group controlId="formTitle">
                             <Form.Text className="pl-1 text-dim">Title</Form.Text>
                             <Form.Control
@@ -136,6 +191,22 @@ const AddBlogModal = props => {
                             </Form.Control.Feedback>
                             <Form.Control.Feedback className="pl-1 text-dim" type="valid">
                                 Thats some quality content!
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group controlId="formCategory">
+                            <Form.Text className="pl-1 text-dim">Category</Form.Text>
+                            <Form.Control
+                                className="border text-dim cursor-text no-active-outline"
+                                type="text"
+                                required
+                                value={category}
+                                onChange={e => setCategory(e.target.value)}
+                            />
+                            <Form.Control.Feedback className="pl-1 text-dim" type="invalid">
+                                Category is required.
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback className="pl-1 text-dim" type="valid">
+                                Thats a nice category!
                             </Form.Control.Feedback>
                         </Form.Group>
                     </Modal.Body>
@@ -250,7 +321,12 @@ const Controls = props => {
                                     </Button>
                                 </ButtonGroup>
                                 <ButtonGroup>
-                                    <AddBlogModal crud={props.crud} user={props.user} content={content} />
+                                    <AddBlogModal
+                                        crud={props.crud}
+                                        user={props.user}
+                                        cover={props.cover}
+                                        content={content}
+                                    />
                                 </ButtonGroup>
                             </ButtonToolbar>
                         </div>
@@ -314,19 +390,10 @@ const Posts = props => {
                                 {props.user && props.user._id === post.author._id && (
                                     <div className="pt-3">
                                         <ButtonGroup className="border rounded">
-                                            <Button
-                                                className="text-dim pb-2 no-active-outline"
-                                                variant="white"
-                                                onClick={e => editPost(e)}
-                                            >
+                                            <Button className="text-dim pb-2 no-active-outline" variant="white">
                                                 <Icon.Pen className="mb-1" />
                                             </Button>
-                                            <Button
-                                                className="text-danger pb-2 border-left no-active-outline"
-                                                variant="white"
-                                            >
-                                                <Icon.Trash className="mb-1" />
-                                            </Button>
+                                            <RemoveBlogModal post={post} crud={props.crud} id={post._id} />
                                         </ButtonGroup>
                                     </div>
                                 )}
@@ -413,10 +480,6 @@ const Posts = props => {
             <Card.Body className="text-center text-dim p-5">Failed to fetch content!</Card.Body>
         </Card>
     )
-}
-
-const editPost = e => {
-    e.preventDefault()
 }
 
 export default Blogs
