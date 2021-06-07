@@ -40,7 +40,7 @@ class Blogs extends React.Component {
         return (
             <Container fluid className="px-0">
                 <Row className="py-3 no-gutters">
-                    <Col className="pl-3 pl-xl-0" xs={12} sm={4} md={3} xl={{ span: 2, offset: 1 }}>
+                    <Col className="pr-3 pr-sm-0 pl-3 pl-xl-0" xs={12} sm={4} md={3} xl={{ span: 2, offset: 1 }}>
                         <User user={this.props.user} />
                         <hr />
                         <div className="d-none d-sm-block">
