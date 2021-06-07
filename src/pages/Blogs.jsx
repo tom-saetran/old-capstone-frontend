@@ -683,8 +683,8 @@ const Posts = props => {
                                                             props.onUpdate()
                                                         }}
                                                     >
-                                                        <span className="pr-1">{post.likes.length}</span>
-                                                        <Icon.HeartFill fill="lightgray" />
+                                                        <span className="pr-1 text-dim">{post.likes.length}</span>
+                                                        <Icon.HeartFill fill="#dc3545" />
                                                     </div>
                                                 ) : (
                                                     <div
@@ -698,7 +698,7 @@ const Posts = props => {
                                                         }}
                                                     >
                                                         <span className="pr-1">{post.likes.length}</span>
-                                                        <Icon.Heart />
+                                                        <Icon.HeartFill fill="lightgray" />
                                                     </div>
                                                 )}
                                             </Form.Text>
