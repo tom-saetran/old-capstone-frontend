@@ -303,12 +303,11 @@ class App extends React.Component {
                     })
 
                     if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
-                    results = await results.json()
                 } catch (error) {
                     console.error(error)
                     return null
                 }
-                return await results
+                return "OK"
             },
             // Unlike Blog with ID
             unlike: async (id, data) => {
@@ -327,12 +326,11 @@ class App extends React.Component {
                     })
 
                     if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
-                    results = await results.json()
                 } catch (error) {
                     console.error(error)
                     return null
                 }
-                return await results
+                return "OK"
             },
 
             comments: {

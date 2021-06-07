@@ -25,15 +25,27 @@ class Blogs extends React.Component {
     state = {
         posts: null,
         loading: true,
-        cover: null
+        cover: null,
+        update: false
     }
 
     componentDidMount = async () => {
         this.setState({ posts: await this.props.crud.blogs.getAll() })
     }
 
-    componentDidUpdate(_previousProps, _previousState) {
-        if (this.state.loading && this.state.posts) this.setState({ loading: false })
+    componentDidUpdate = async (_previousProps, _previousState) => {
+        if (this.state.loading && this.state.posts && !this.state.update) this.setState({ loading: false })
+        if (this.state.loading && this.state.update)
+            this.setState({ posts: await this.props.crud.blogs.getAll(), update: false })
+
+        if (this.state.update !== _previousState.update)
+            this.setState(async state => {
+                return { ...state, update: false, loading: false }
+            })
+    }
+
+    handleUpdate = () => {
+        this.setState({ update: true, loading: true })
     }
 
     render() {
@@ -49,13 +61,19 @@ class Blogs extends React.Component {
                         <hr className="d-sm-none" />
                     </Col>
                     <Col className="px-3" xs={12} sm={8} md={6}>
-                        <Controls crud={this.props.crud} user={this.props.user} cover={this.state.cover} />
+                        <Controls
+                            onUpdate={this.handleUpdate}
+                            crud={this.props.crud}
+                            user={this.props.user}
+                            cover={this.state.cover}
+                        />
                         <hr />
                         <Posts
                             crud={this.props.crud}
                             user={this.props.user}
                             posts={this.state.posts}
                             loading={this.state.loading}
+                            onUpdate={this.handleUpdate}
                         />
                     </Col>
                     <Col className="pr-3 d-none d-md-block pr-xl-0" md={3} xl={2}>
@@ -87,7 +105,7 @@ const AddBlogModal = props => {
             e.preventDefault()
             await handleSend()
             setShow(false)
-            window.location.reload()
+            props.onUpdate()
         }
         setValidated(true)
     }
@@ -213,7 +231,7 @@ const EditBlogModal = props => {
             e.preventDefault()
             await handleSend()
             setShow(false)
-            window.location.reload()
+            props.onUpdate()
         }
         setValidated(true)
     }
@@ -320,7 +338,7 @@ const RemoveBlogModal = props => {
     const handleDelete = async () => {
         await props.crud.blogs.delete(props.post._id)
         setShow(false)
-        window.location.reload()
+        props.onUpdate()
     }
 
     return (
@@ -369,7 +387,8 @@ const AddComment = props => {
         } else {
             e.preventDefault()
             await handleSend()
-            window.location.reload()
+            setComment("")
+            props.onUpdate()
         }
         setValidated(true)
     }
@@ -431,7 +450,7 @@ const EditCommentModal = props => {
             e.preventDefault()
             await handleSend()
             setShow(false)
-            window.location.reload()
+            props.onUpdate()
         }
         setValidated(true)
     }
@@ -493,7 +512,7 @@ const RemoveCommentModal = props => {
     const handleDelete = async () => {
         await props.crud.blogs.comments.delete(props.post._id, props.comment._id)
         setShow(false)
-        window.location.reload()
+        props.onUpdate()
     }
 
     return (
@@ -603,6 +622,7 @@ const Controls = props => {
                                 </ButtonGroup>
                                 <ButtonGroup>
                                     <AddBlogModal
+                                        onUpdate={props.onUpdate}
                                         crud={props.crud}
                                         user={props.user}
                                         cover={props.cover}
@@ -662,7 +682,7 @@ const Posts = props => {
                                                                 id: props.user._id
                                                             })
 
-                                                            window.location.reload()
+                                                            props.onUpdate()
                                                         }}
                                                     />
                                                 ) : (
@@ -672,7 +692,7 @@ const Posts = props => {
                                                                 id: props.user._id
                                                             })
 
-                                                            window.location.reload()
+                                                            props.onUpdate()
                                                         }}
                                                     />
                                                 )}
@@ -707,8 +727,8 @@ const Posts = props => {
                                 {props.user && props.user._id === post.author._id && (
                                     <div className="pt-3">
                                         <ButtonGroup className="border rounded">
-                                            <EditBlogModal post={post} crud={props.crud} />
-                                            <RemoveBlogModal post={post} crud={props.crud} />
+                                            <EditBlogModal onUpdate={props.onUpdate} post={post} crud={props.crud} />
+                                            <RemoveBlogModal onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                         </ButtonGroup>
                                     </div>
                                 )}
@@ -716,7 +736,12 @@ const Posts = props => {
                             </div>
                             <Accordion.Collapse eventKey="0">
                                 <Card.Body className="py-0">
-                                    <AddComment user={props.user} post={post} crud={props.crud} />
+                                    <AddComment
+                                        onUpdate={props.onUpdate}
+                                        user={props.user}
+                                        post={post}
+                                        crud={props.crud}
+                                    />
                                     <hr />
                                     {post.comments
                                         .slice(0)
@@ -750,11 +775,13 @@ const Posts = props => {
                                                                     comment={comment}
                                                                     crud={props.crud}
                                                                     post={post}
+                                                                    onUpdate={props.onUpdate}
                                                                 />
                                                                 <RemoveCommentModal
                                                                     comment={comment}
                                                                     crud={props.crud}
                                                                     post={post}
+                                                                    onUpdate={props.onUpdate}
                                                                 />
                                                             </ButtonGroup>
                                                         </div>
