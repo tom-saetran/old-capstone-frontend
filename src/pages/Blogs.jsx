@@ -672,11 +672,9 @@ const Posts = props => {
                                         </Col>
                                         <Col className="d-flex justify-content-end p-0 px-2">
                                             <Form.Text className="pr-3">
-                                                <span className="pr-1">{post.likes.length}</span>
-
                                                 {post.likes.find(like => like === props.user._id) ? (
-                                                    <Icon.HeartFill
-                                                        fill="lightgray"
+                                                    <div
+                                                        className="cursor-pointer"
                                                         onClick={async e => {
                                                             await props.crud.blogs.unlike(post._id, {
                                                                 id: props.user._id
@@ -684,9 +682,13 @@ const Posts = props => {
 
                                                             props.onUpdate()
                                                         }}
-                                                    />
+                                                    >
+                                                        <span className="pr-1">{post.likes.length}</span>
+                                                        <Icon.HeartFill fill="lightgray" />
+                                                    </div>
                                                 ) : (
-                                                    <Icon.Heart
+                                                    <div
+                                                        className="cursor-pointer"
                                                         onClick={async e => {
                                                             await props.crud.blogs.like(post._id, {
                                                                 id: props.user._id
@@ -694,7 +696,10 @@ const Posts = props => {
 
                                                             props.onUpdate()
                                                         }}
-                                                    />
+                                                    >
+                                                        <span className="pr-1">{post.likes.length}</span>
+                                                        <Icon.Heart />
+                                                    </div>
                                                 )}
                                             </Form.Text>
                                             <Accordion.Toggle as="div" eventKey="0">
