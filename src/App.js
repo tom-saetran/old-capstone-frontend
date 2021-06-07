@@ -285,6 +285,77 @@ class App extends React.Component {
                     return null
                 }
                 return await results
+            },
+
+            comments: {
+                post: async (postId, data) => {
+                    let results
+                    try {
+                        if (typeof postId !== "string") throw new Error("postID must be a string")
+                        if (typeof data !== "object") throw new Error("data must be an object")
+
+                        results = await fetch(this.crud.endpoint + "/blogs/" + postId, {
+                            method: "POST",
+                            headers: {
+                                //Authorization: this.state.authtoken,
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(data)
+                        })
+
+                        if (!results.ok) throw new Error("got data in return but the ok flag is not true!", results)
+                        results = await results.json()
+                    } catch (error) {
+                        console.error(error)
+                        return null
+                    }
+                    return await results
+                },
+
+                put: async (postId, data, commentId) => {
+                    let results
+                    try {
+                        if (typeof postId !== "string") throw new Error("postID must be a string")
+                        if (typeof data !== "object") throw new Error("data must be an object")
+                        if (typeof commentId !== "string") throw new Error("commentID must be a string")
+
+                        results = await fetch(this.crud.endpoint + "/blogs/" + postId + "/comment/" + commentId, {
+                            method: "PUT",
+                            headers: {
+                                //Authorization: this.state.authtoken,
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(data)
+                        })
+
+                        if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
+                        results = await results.json()
+                    } catch (error) {
+                        console.error(error)
+                        return null
+                    }
+                    return await results
+                },
+                delete: async (postId, commentId) => {
+                    let results
+                    try {
+                        if (typeof postId !== "string") throw new Error("postID must be a string")
+                        if (typeof commentId !== "string") throw new Error("commentID must be a string")
+                        results = await fetch(this.crud.endpoint + "/blogs/" + postId + "/comment/" + commentId, {
+                            method: "DELETE",
+                            headers: {
+                                //Authorization: this.state.authtoken,
+                            }
+                        })
+
+                        if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
+                        results = await results.json()
+                    } catch (error) {
+                        console.error(error)
+                        return null
+                    }
+                    return await results
+                }
             }
         }
     }

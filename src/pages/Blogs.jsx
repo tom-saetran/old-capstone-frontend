@@ -12,7 +12,8 @@ import {
     Badge,
     Accordion,
     InputGroup,
-    Modal
+    Modal,
+    FormGroup
 } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import * as Icon from "react-bootstrap-icons"
@@ -65,52 +66,6 @@ class Blogs extends React.Component {
     }
 }
 
-const RemoveBlogModal = props => {
-    const [show, setShow] = React.useState(false)
-
-    const handleClose = () => setShow(false)
-    const handleShow = () => setShow(true)
-
-    const handleDelete = async () => {
-        await props.crud.blogs.delete(props.id)
-        setShow(false)
-        window.location.reload(false) // TODO: REPLACE! REPLACE! REPLACE!
-    }
-
-    return (
-        <>
-            <Button className="text-danger pb-2 border-left no-active-outline" variant="white" onClick={handleShow}>
-                <Icon.Trash className="mb-1" />
-            </Button>
-
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header className="justify-content-center py-2 text-dim">
-                    This will remove the blog post permanently!
-                </Modal.Header>
-                <Modal.Body>
-                    <div className="d-flex">
-                        <Card.Title as={"h6"}>{props.post.title}</Card.Title>
-                        <div className="ml-auto">
-                            <Badge pill className="text-dim bg-white border">
-                                {props.post.category}
-                            </Badge>
-                        </div>
-                    </div>
-                    <Card.Text>{props.post.content}</Card.Text>
-                </Modal.Body>
-                <Modal.Footer className="justify-content-center align-items-end">
-                    <Button className="border text-dim no-active-outline" variant="white" onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button className="border text-danger no-active-outline" variant="white" onClick={handleDelete}>
-                        Delete
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </>
-    )
-}
-
 const AddBlogModal = props => {
     const [show, setShow] = React.useState(false)
     const [title, setTitle] = React.useState("")
@@ -129,7 +84,7 @@ const AddBlogModal = props => {
             e.preventDefault()
             await handleSend()
             setShow(false)
-            window.location.reload(false) // TODO: REPLACE! REPLACE! REPLACE!
+            window.location.reload()
         }
         setValidated(true)
     }
@@ -146,8 +101,7 @@ const AddBlogModal = props => {
             author: props.user._id
         }
 
-        const result = await props.crud.blogs.post(data)
-        console.log(result)
+        await props.crud.blogs.post(data)
     }
 
     return (
@@ -233,6 +187,330 @@ const AddBlogModal = props => {
                         </ButtonToolbar>
                     </div>
                 </Form>
+            </Modal>
+        </>
+    )
+}
+
+const EditBlogModal = props => {
+    const [show, setShow] = React.useState(false)
+    const [title, setTitle] = React.useState("")
+    const [content, setContent] = React.useState("")
+    const [category, setCategory] = React.useState("")
+    const [validated, setValidated] = React.useState(false)
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+    const handleSubmit = async e => {
+        const form = e.currentTarget
+        if (form.checkValidity() === false) {
+            e.preventDefault()
+            e.stopPropagation()
+        } else {
+            e.preventDefault()
+            await handleSend()
+            setShow(false)
+            window.location.reload()
+        }
+        setValidated(true)
+    }
+
+    useEffect(() => {
+        setContent(props.post.content)
+    }, [props.post.content])
+
+    useEffect(() => {
+        setTitle(props.post.title)
+    }, [props.post.title])
+
+    useEffect(() => {
+        setCategory(props.post.category)
+    }, [props.post.category])
+
+    const handleSend = async () => {
+        const data = {
+            title,
+            content,
+            category,
+            author: props.post.author
+        }
+
+        await props.crud.blogs.put(props.post._id, data)
+    }
+
+    return (
+        <>
+            <Button className="text-dim pb-2 no-active-outline" variant="white" onClick={handleShow}>
+                <Icon.Pen className="mb-1" />
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
+                    <Card.Header className="text-center text-dim py-2 bg-white">Edit {props.post.title}</Card.Header>
+                    <Modal.Body style={{ height: "320px" }}>
+                        <Form.Group controlId="formTitle">
+                            <Form.Text className="pl-1 text-dim">Title</Form.Text>
+                            <Form.Control
+                                className="border text-dim cursor-text no-active-outline"
+                                type="text"
+                                required
+                                value={title}
+                                onChange={e => setTitle(e.target.value)}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formContent">
+                            <Form.Text className="pl-1 text-dim">Content</Form.Text>
+                            <Form.Control
+                                className="border text-dim cursor-text no-active-outline"
+                                as="textarea"
+                                rows={2}
+                                required
+                                value={content}
+                                onChange={e => setContent(e.target.value)}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formCategory">
+                            <Form.Text className="pl-1 text-dim">Category</Form.Text>
+                            <Form.Control
+                                className="border text-dim cursor-text no-active-outline"
+                                type="text"
+                                required
+                                value={category}
+                                onChange={e => setCategory(e.target.value)}
+                            />
+                        </Form.Group>
+                    </Modal.Body>
+
+                    <div className="d-flex justify-content-end pb-3 pr-3">
+                        <ButtonToolbar>
+                            <ButtonGroup className="mr-2 border rounded">
+                                <Button className="pb-2 text-dim no-active-outline" variant="white">
+                                    <Icon.Image fill="dimgrey" />
+                                </Button>
+                                <Button className="pb-2 border-left text-dim no-active-outline" variant="white">
+                                    <Icon.EmojiLaughing fill="dimgrey" />
+                                </Button>
+                            </ButtonGroup>
+                            <ButtonGroup>
+                                <Button
+                                    className="border rounded text-dim no-active-outline"
+                                    variant="white"
+                                    type="submit"
+                                >
+                                    Send
+                                </Button>
+                            </ButtonGroup>
+                        </ButtonToolbar>
+                    </div>
+                </Form>
+            </Modal>
+        </>
+    )
+}
+
+const RemoveBlogModal = props => {
+    const [show, setShow] = React.useState(false)
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+
+    const handleDelete = async () => {
+        await props.crud.blogs.delete(props.post._id)
+        setShow(false)
+        window.location.reload()
+    }
+
+    return (
+        <>
+            <Button className="text-danger pb-2 border-left no-active-outline" variant="white" onClick={handleShow}>
+                <Icon.Trash className="mb-1" />
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header className="justify-content-center py-2 text-dim">
+                    This will remove the blog post permanently!
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="d-flex">
+                        <Card.Title as={"h6"}>{props.post.title}</Card.Title>
+                        <div className="ml-auto">
+                            <Badge pill className="text-dim bg-white border">
+                                {props.post.category}
+                            </Badge>
+                        </div>
+                    </div>
+                    <Card.Text>{props.post.content}</Card.Text>
+                </Modal.Body>
+                <Modal.Footer className="justify-content-center align-items-end">
+                    <Button className="border text-dim no-active-outline" variant="white" onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button className="border text-danger no-active-outline" variant="white" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    )
+}
+
+const AddComment = props => {
+    const [comment, setComment] = React.useState("")
+    const [validated, setValidated] = React.useState(false)
+
+    const handleSubmit = async e => {
+        const form = e.currentTarget
+        if (form.checkValidity() === false) {
+            e.preventDefault()
+            e.stopPropagation()
+        } else {
+            e.preventDefault()
+            await handleSend()
+            window.location.reload()
+        }
+        setValidated(true)
+    }
+
+    const handleSend = async () => {
+        const id = props.post._id
+        const data = {
+            comment,
+            author: props.user._id
+        }
+
+        await props.crud.blogs.comments.post(id, data)
+    }
+
+    return (
+        <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
+            <FormGroup controlId="formComment">
+                <Form.Text className="pl-1">Add a comment to {props.post.title}</Form.Text>
+                <div className="d-flex">
+                    <InputGroup>
+                        <Form.Control
+                            className="border no-active-outline"
+                            as="input"
+                            value={comment}
+                            required
+                            onChange={e => setComment(e.target.value)}
+                            placeholder="Comment..."
+                        />
+                        <InputGroup.Append>
+                            <InputGroup.Text
+                                as={Button}
+                                type="submit"
+                                variant="white"
+                                className="bg-white text-dim no-active-outline"
+                            >
+                                <Icon.ChatText />
+                            </InputGroup.Text>
+                        </InputGroup.Append>
+                    </InputGroup>
+                </div>
+            </FormGroup>
+        </Form>
+    )
+}
+
+const EditCommentModal = props => {
+    const [show, setShow] = React.useState(false)
+    const [comment, setComment] = React.useState("")
+    const [validated, setValidated] = React.useState(false)
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+    const handleSubmit = async e => {
+        const form = e.currentTarget
+        if (form.checkValidity() === false) {
+            e.preventDefault()
+            e.stopPropagation()
+        } else {
+            e.preventDefault()
+            await handleSend()
+            setShow(false)
+            window.location.reload()
+        }
+        setValidated(true)
+    }
+
+    useEffect(() => {
+        setComment(props.comment.comment)
+    }, [props.comment.comment])
+
+    const handleSend = async () => {
+        const data = {
+            comment,
+            author: props.comment.author
+        }
+
+        await props.crud.blogs.comments.put(props.post._id, data, props.comment._id)
+    }
+
+    return (
+        <>
+            <Button className="text-dim pb-2 no-active-outline" variant="white" onClick={handleShow}>
+                <Icon.Pen className="mb-1" />
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
+                    <Card.Header className="text-center text-dim py-2 bg-white">
+                        Edit comment in {props.post.title}
+                    </Card.Header>
+                    <Modal.Body style={{ height: "140px" }}>
+                        <Form.Group controlId="formComment">
+                            <Form.Text className="pl-1 text-dim">Comment</Form.Text>
+                            <Form.Control
+                                className="border text-dim cursor-text no-active-outline"
+                                type="text"
+                                required
+                                value={comment}
+                                onChange={e => setComment(e.target.value)}
+                            />
+                        </Form.Group>
+                    </Modal.Body>
+
+                    <div className="d-flex justify-content-end pb-3 pr-3">
+                        <Button className="border rounded text-dim no-active-outline" variant="white" type="submit">
+                            Send
+                        </Button>
+                    </div>
+                </Form>
+            </Modal>
+        </>
+    )
+}
+
+const RemoveCommentModal = props => {
+    const [show, setShow] = React.useState(false)
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+
+    const handleDelete = async () => {
+        await props.crud.blogs.comments.delete(props.post._id, props.comment._id)
+        setShow(false)
+        window.location.reload()
+    }
+
+    return (
+        <>
+            <Button className="mb-1 text-danger border-left no-active-outline" variant="white" onClick={handleShow}>
+                <Icon.Trash />
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header className="justify-content-center py-2 text-dim">
+                    This will remove the comment permanently!
+                </Modal.Header>
+                <Modal.Footer className="justify-content-center align-items-end">
+                    <Button className="border text-dim no-active-outline" variant="white" onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button className="border text-danger no-active-outline" variant="white" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
             </Modal>
         </>
     )
@@ -390,10 +668,8 @@ const Posts = props => {
                                 {props.user && props.user._id === post.author._id && (
                                     <div className="pt-3">
                                         <ButtonGroup className="border rounded">
-                                            <Button className="text-dim pb-2 no-active-outline" variant="white">
-                                                <Icon.Pen className="mb-1" />
-                                            </Button>
-                                            <RemoveBlogModal post={post} crud={props.crud} id={post._id} />
+                                            <EditBlogModal post={post} crud={props.crud} />
+                                            <RemoveBlogModal post={post} crud={props.crud} />
                                         </ButtonGroup>
                                     </div>
                                 )}
@@ -401,27 +677,7 @@ const Posts = props => {
                             </div>
                             <Accordion.Collapse eventKey="0">
                                 <Card.Body className="py-0">
-                                    <Form>
-                                        <Form.Text className="pl-1">Add a comment to {post.title}</Form.Text>
-                                        <div className="d-flex">
-                                            <InputGroup>
-                                                <Form.Control
-                                                    className="border no-active-outline"
-                                                    as="input"
-                                                    placeholder="Comment..."
-                                                />
-                                                <InputGroup.Append>
-                                                    <InputGroup.Text
-                                                        as={Button}
-                                                        variant="white"
-                                                        className="bg-white text-dim no-active-outline"
-                                                    >
-                                                        <Icon.ChatText />
-                                                    </InputGroup.Text>
-                                                </InputGroup.Append>
-                                            </InputGroup>
-                                        </div>
-                                    </Form>
+                                    <AddComment user={props.user} post={post} crud={props.crud} />
                                     <hr />
                                     {post.comments
                                         .slice(0)
@@ -443,18 +699,16 @@ const Posts = props => {
                                                     {props.user && props.user._id === comment.author._id && (
                                                         <div className="pt-3">
                                                             <ButtonGroup className="border rounded">
-                                                                <Button
-                                                                    className="mb-1 text-dim no-active-outline"
-                                                                    variant="white"
-                                                                >
-                                                                    <Icon.Pen />
-                                                                </Button>
-                                                                <Button
-                                                                    className="mb-1 text-danger border-left no-active-outline"
-                                                                    variant="white"
-                                                                >
-                                                                    <Icon.Trash />
-                                                                </Button>
+                                                                <EditCommentModal
+                                                                    comment={comment}
+                                                                    crud={props.crud}
+                                                                    post={post}
+                                                                />
+                                                                <RemoveCommentModal
+                                                                    comment={comment}
+                                                                    crud={props.crud}
+                                                                    post={post}
+                                                                />
                                                             </ButtonGroup>
                                                         </div>
                                                     )}
