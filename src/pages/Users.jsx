@@ -127,15 +127,18 @@ const UserBlogs = props => {
             <>
                 <Card className="border text-dim">
                     <Card.Header className="text-center py-1 bg-white">Blogs</Card.Header>
-                    {props.user.blogs.map(blog => {
-                        return (
-                            <Card.Body key={blog._id}>
-                                <Card.Title as={"h6"}>{blog.title}</Card.Title>
-                                <Card.Text>{blog.content}</Card.Text>
-                                <hr />
-                            </Card.Body>
-                        )
-                    })}
+                    {props.user.blogs
+                        .slice(0)
+                        .reverse()
+                        .map(blog => {
+                            return (
+                                <Card.Body key={blog._id}>
+                                    <Card.Title as={"h6"}>{blog.title}</Card.Title>
+                                    <Card.Text>{blog.content}</Card.Text>
+                                    <hr />
+                                </Card.Body>
+                            )
+                        })}
                     <Card.Footer className="text-center py-1 bg-white">
                         <Link className="link" to="/blogs">
                             Go to Blogs
