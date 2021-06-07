@@ -731,9 +731,17 @@ const Posts = props => {
                                                                 by {comment.author.name} {comment.author.surname}
                                                             </Link>
                                                         </Form.Text>
-                                                        <Form.Text>
-                                                            Posted: <ReactTimeAgo date={new Date(comment.createdAt)} />
-                                                        </Form.Text>
+                                                        {comment.createdAt === comment.updatedAt ? (
+                                                            <Form.Text>
+                                                                Posted:{" "}
+                                                                <ReactTimeAgo date={new Date(comment.createdAt)} />
+                                                            </Form.Text>
+                                                        ) : (
+                                                            <Form.Text>
+                                                                Edited:{" "}
+                                                                <ReactTimeAgo date={new Date(comment.updatedAt)} />
+                                                            </Form.Text>
+                                                        )}
                                                     </div>
                                                     {props.user && props.user._id === comment.author._id && (
                                                         <div className="pt-3">
