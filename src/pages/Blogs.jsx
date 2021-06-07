@@ -14,7 +14,7 @@ import {
     InputGroup,
     Modal
 } from "react-bootstrap"
-import { Link, Redirect } from "react-router-dom"
+import { Link } from "react-router-dom"
 import * as Icon from "react-bootstrap-icons"
 import ReactTimeAgo from "react-time-ago"
 import Ads from "../components/Ads"
