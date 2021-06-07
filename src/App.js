@@ -189,7 +189,7 @@ class App extends React.Component {
             getAll: async () => {
                 let results
                 try {
-                    results = await fetch(this.crud.endpoint + "/blogs?sort=-createdAt", {
+                    results = await fetch(this.crud.endpoint + "/blogs?sort=-updatedAt", {
                         headers: {
                             //Authorization: this.state.authtoken
                         }

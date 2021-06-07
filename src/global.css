@@ -106,3 +106,7 @@ html {
     -webkit-transform: translate(-50%, 22.5%);
     transform: translate(-50%, 22.5%);
 }
+
+#userNav {
+    padding: 0;
+}

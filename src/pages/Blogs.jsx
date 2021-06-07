@@ -661,9 +661,15 @@ const Posts = props => {
                                             </Accordion.Toggle>
                                         </Col>
                                         <Col className="d-flex justify-content-end p-0">
-                                            <Form.Text>
-                                                Posted: <ReactTimeAgo date={new Date(post.createdAt)} />
-                                            </Form.Text>
+                                            {post.createdAt === post.updatedAt ? (
+                                                <Form.Text>
+                                                    Posted: <ReactTimeAgo date={new Date(post.createdAt)} />
+                                                </Form.Text>
+                                            ) : (
+                                                <Form.Text>
+                                                    Edited: <ReactTimeAgo date={new Date(post.updatedAt)} />
+                                                </Form.Text>
+                                            )}
                                         </Col>
                                     </div>
                                 </div>
