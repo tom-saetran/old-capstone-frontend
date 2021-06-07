@@ -38,14 +38,17 @@ class Blogs extends React.Component {
 
     render() {
         return (
-            <Container fluid>
-                <Row className="py-4">
-                    <Col xs={{ span: 2, offset: 1 }}>
+            <Container fluid className="px-0">
+                <Row className="py-3 no-gutters">
+                    <Col className="pl-3 pl-xl-0" xs={12} sm={4} md={3} xl={{ span: 2, offset: 1 }}>
                         <User user={this.props.user} />
                         <hr />
-                        <Ads />
+                        <div className="d-none d-sm-block">
+                            <Ads />
+                        </div>
+                        <hr className="d-sm-none" />
                     </Col>
-                    <Col xs={6}>
+                    <Col className="px-3" xs={12} sm={8} md={6}>
                         <Controls crud={this.props.crud} user={this.props.user} cover={this.state.cover} />
                         <hr />
                         <Posts
@@ -55,7 +58,7 @@ class Blogs extends React.Component {
                             loading={this.state.loading}
                         />
                     </Col>
-                    <Col xs={2}>
+                    <Col className="pr-3 d-none d-md-block pr-xl-0" md={3} xl={2}>
                         <Tools />
                         <hr />
                         <Neighbourhood crud={this.props.crud} user={this.props.user} />
@@ -645,7 +648,7 @@ const Posts = props => {
                                                 </Link>
                                             </Form.Text>
                                         </Col>
-                                        <Col className="d-flex justify-content-end p-0">
+                                        <Col className="d-flex justify-content-end p-0 px-2">
                                             <Accordion.Toggle as="div" eventKey="0">
                                                 <Form.Text className="border rounded px-1 cursor-pointer">
                                                     <span>

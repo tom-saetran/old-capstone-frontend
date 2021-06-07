@@ -26,7 +26,7 @@ class Users extends React.Component {
     render() {
         return (
             <Container fluid>
-                <Row className="py-4">
+                <Row className="py-3">
                     <Col xs={{ span: 8, offset: 1 }}>
                         <User self={this.props.user} user={this.state.renderedUser} loading={this.state.loading} />
                         <UserBlogs self={this.props.user} user={this.state.renderedUser} loading={this.state.loading} />

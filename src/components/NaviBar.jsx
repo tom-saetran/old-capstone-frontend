@@ -18,26 +18,26 @@ class NaviBar extends React.Component {
 
     render() {
         return (
-            <Navbar className="border-bottom" bg="white" expand="sm">
-                <Link to="/">
-                    <Navbar.Brand className="">
-                        <Icon.HddNetwork fill="dimgray" /> <span className="text-dim">Tom's Data</span>
-                    </Navbar.Brand>
-                </Link>
+            <>
+                <Navbar sticky={"top"} className="border-bottom" bg="white" style={{ height: "5rem" }}>
+                    <Link to="/">
+                        <Navbar.Brand className="pb-2">
+                            <Icon.HddNetwork fill="dimgray" /> <span className="ml-2 text-dim">Tom's Data</span>
+                        </Navbar.Brand>
+                    </Link>
 
-                <Navbar.Toggle />
-
-                <Navbar.Collapse id="navbar-scroll">
                     <Nav className="mr-auto">
-                        <Link className="px-1 link" to="/">
-                            Home
-                        </Link>
-                        <Link className="px-1 link" to="/blogs">
-                            Blogs
-                        </Link>
-                        <Link className="px-1 link" to="/support">
-                            Support
-                        </Link>
+                        <div className="d-none d-sm-block">
+                            <Link className="pr-1 link" to="/">
+                                Home
+                            </Link>
+                            <Link className="px-1 link" to="/blogs">
+                                Blogs
+                            </Link>
+                            <Link className="pl-1 link" to="/support">
+                                Support
+                            </Link>
+                        </div>
                     </Nav>
                     {!this.props.user && (
                         <Nav>
@@ -49,7 +49,7 @@ class NaviBar extends React.Component {
                             </Link>
                         </Nav>
                     )}
-                    <Form className="pr-2">
+                    <Form className="pl-2 d-none d-sm-block">
                         <InputGroup>
                             <FormControl className="no-active-outline text-dim border" placeholder="Search..." />
                             <InputGroup.Append>
@@ -65,26 +65,26 @@ class NaviBar extends React.Component {
                     </Form>
 
                     {this.props.user && (
-                        <Nav className="d-none d-sm-block">
+                        <Nav>
                             <NavDropdown
                                 title={<img className="navbar-avatar" alt="" src={this.props.user.avatar} />}
                                 alignRight
                             >
-                                <NavDropdown.Item as={Link} to="/">
-                                    Action
+                                <NavDropdown.Item as={Link} to={"/users/" + this.props.user._id}>
+                                    Profile
                                 </NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/">
-                                    Another action
+                                <NavDropdown.Item as={Link} to="/settings">
+                                    Settings
                                 </NavDropdown.Item>
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item as={Link} to="/">
+                                <NavDropdown.Item as={Link} to="/logout">
                                     Log out
                                 </NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                     )}
-                </Navbar.Collapse>
-            </Navbar>
+                </Navbar>
+            </>
         )
     }
 }

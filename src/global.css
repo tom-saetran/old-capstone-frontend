@@ -29,8 +29,8 @@ html {
     border: 1px solid lightgray;
     border-radius: 50%;
     object-fit: cover;
-    height: 120px;
-    width: 120px;
+    height: 66%;
+    width: 66%;
 }
 
 .home-avatar {
