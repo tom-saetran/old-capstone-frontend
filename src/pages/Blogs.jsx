@@ -630,8 +630,10 @@ const Posts = props => {
                         <Accordion key={post._id}>
                             <div>
                                 <div>
-                                    <div className="d-flex">
-                                        <Card.Title as={"h6"}>{post.title}</Card.Title>
+                                    <div className="d-flex align-items-baseline">
+                                        <Card.Title className="pr-1" as={"h6"}>
+                                            {post.title}
+                                        </Card.Title>
                                         <div className="ml-auto">
                                             <Badge pill className="text-dim bg-white border">
                                                 {post.category}
@@ -649,18 +651,46 @@ const Posts = props => {
                                             </Form.Text>
                                         </Col>
                                         <Col className="d-flex justify-content-end p-0 px-2">
+                                            <Form.Text className="pr-3">
+                                                <span className="pr-1">{post.likes.length}</span>
+
+                                                {post.likes.find(like => like === props.user._id) ? (
+                                                    <Icon.HeartFill
+                                                        fill="lightgray"
+                                                        onClick={async e => {
+                                                            await props.crud.blogs.unlike(post._id, {
+                                                                id: props.user._id
+                                                            })
+
+                                                            window.location.reload()
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <Icon.Heart
+                                                        onClick={async e => {
+                                                            await props.crud.blogs.like(post._id, {
+                                                                id: props.user._id
+                                                            })
+
+                                                            window.location.reload()
+                                                        }}
+                                                    />
+                                                )}
+                                            </Form.Text>
                                             <Accordion.Toggle as="div" eventKey="0">
-                                                <Form.Text className="border rounded px-1 cursor-pointer">
-                                                    <span>
-                                                        {post.comments.length} Comment
-                                                        {post.comments.length === 0 ? "s" : ""}
-                                                        {post.comments.length > 1 ? "s" : ""}{" "}
-                                                        <Icon.ChatText className="mb-1" />
-                                                    </span>
-                                                </Form.Text>
+                                                <div className="d-flex">
+                                                    <Form.Text className="border rounded px-1 cursor-pointer">
+                                                        <span>
+                                                            {post.comments.length} Comment
+                                                            {post.comments.length === 0 ? "s" : ""}
+                                                            {post.comments.length > 1 ? "s" : ""}{" "}
+                                                            <Icon.ChatText className="mb-1" />
+                                                        </span>
+                                                    </Form.Text>
+                                                </div>
                                             </Accordion.Toggle>
                                         </Col>
-                                        <Col className="d-flex justify-content-end p-0">
+                                        <Col className="d-none d-lg-block text-end p-0">
                                             {post.createdAt === post.updatedAt ? (
                                                 <Form.Text>
                                                     Posted: <ReactTimeAgo date={new Date(post.createdAt)} />

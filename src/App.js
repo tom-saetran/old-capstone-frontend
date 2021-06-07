@@ -286,6 +286,54 @@ class App extends React.Component {
                 }
                 return await results
             },
+            // Like Blog with ID
+            like: async (id, data) => {
+                let results
+                try {
+                    if (typeof id !== "string") throw new Error("id must be a string")
+                    if (typeof data !== "object") throw new Error("data must be an object")
+
+                    results = await fetch(this.crud.endpoint + "/blogs/" + id + "/like", {
+                        method: "POST",
+                        headers: {
+                            //Authorization: this.state.authtoken,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    })
+
+                    if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
+                    results = await results.json()
+                } catch (error) {
+                    console.error(error)
+                    return null
+                }
+                return await results
+            },
+            // Unlike Blog with ID
+            unlike: async (id, data) => {
+                let results
+                try {
+                    if (typeof id !== "string") throw new Error("id must be a string")
+                    if (typeof data !== "object") throw new Error("data must be an object")
+
+                    results = await fetch(this.crud.endpoint + "/blogs/" + id + "/unlike", {
+                        method: "POST",
+                        headers: {
+                            //Authorization: this.state.authtoken,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    })
+
+                    if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
+                    results = await results.json()
+                } catch (error) {
+                    console.error(error)
+                    return null
+                }
+                return await results
+            },
 
             comments: {
                 post: async (postId, data) => {
