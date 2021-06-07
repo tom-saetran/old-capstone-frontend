@@ -19,7 +19,7 @@ class NaviBar extends React.Component {
     render() {
         return (
             <div className="border-bottom">
-                <Col xl={{ span: 10, offset: 1 }}>
+                <Col className="px-xl-0" xl={{ span: 10, offset: 1 }}>
                     <Navbar sticky={"top"} className="p-0" bg="white" style={{ height: "4.5rem" }}>
                         <Link to="/">
                             <Navbar.Brand className="pb-2">
