@@ -20,6 +20,7 @@ import * as Icon from "react-bootstrap-icons"
 import ReactTimeAgo from "react-time-ago"
 import Ads from "../components/Ads"
 import Neighbourhood from "../components/Neighbours"
+import uniqid from "uniqid"
 
 class Blogs extends React.Component {
     state = {
@@ -190,10 +191,10 @@ const AddBlogModal = props => {
                         <ButtonToolbar>
                             <ButtonGroup className="mr-2 border rounded">
                                 <Button className="pb-2 text-dim no-active-outline" variant="white">
-                                    <Icon.Image fill="dimgrey" />
+                                    <Icon.Image />
                                 </Button>
                                 <Button className="pb-2 border-left text-dim no-active-outline" variant="white">
-                                    <Icon.EmojiLaughing fill="dimgrey" />
+                                    <Icon.EmojiLaughing />
                                 </Button>
                             </ButtonGroup>
                             <ButtonGroup>
@@ -261,7 +262,15 @@ const EditBlogModal = props => {
 
     return (
         <>
-            <Button className="text-dim pb-2 no-active-outline" variant="white" onClick={handleShow}>
+            <Button
+                className={
+                    props.admin
+                        ? "text-dim pb-2 bg-pink no-active-outline border-right-danger"
+                        : "text-dim pb-2 no-active-outline"
+                }
+                variant="white"
+                onClick={handleShow}
+            >
                 <Icon.Pen className="mb-1" />
             </Button>
 
@@ -306,10 +315,10 @@ const EditBlogModal = props => {
                         <ButtonToolbar>
                             <ButtonGroup className="mr-2 border rounded">
                                 <Button className="pb-2 text-dim no-active-outline" variant="white">
-                                    <Icon.Image fill="dimgrey" />
+                                    <Icon.Image />
                                 </Button>
                                 <Button className="pb-2 border-left text-dim no-active-outline" variant="white">
-                                    <Icon.EmojiLaughing fill="dimgrey" />
+                                    <Icon.EmojiLaughing />
                                 </Button>
                             </ButtonGroup>
                             <ButtonGroup>
@@ -343,7 +352,15 @@ const RemoveBlogModal = props => {
 
     return (
         <>
-            <Button className="text-danger pb-2 border-left no-active-outline" variant="white" onClick={handleShow}>
+            <Button
+                className={
+                    props.admin
+                        ? "text-danger pb-2 bg-pink border-left-danger no-active-outline"
+                        : "text-danger pb-2 border-left no-active-outline"
+                }
+                variant="white"
+                onClick={handleShow}
+            >
                 <Icon.Trash className="mb-1" />
             </Button>
 
@@ -404,33 +421,43 @@ const AddComment = props => {
     }
 
     return (
-        <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
-            <FormGroup controlId="formComment">
-                <Form.Text className="pl-1">Add a comment to {props.post.title}</Form.Text>
-                <div className="d-flex">
-                    <InputGroup>
-                        <Form.Control
-                            className="border no-active-outline"
-                            as="input"
-                            value={comment}
-                            required
-                            onChange={e => setComment(e.target.value)}
-                            placeholder="Comment..."
-                        />
-                        <InputGroup.Append>
-                            <InputGroup.Text
-                                as={Button}
-                                type="submit"
-                                variant="white"
-                                className="bg-white text-dim no-active-outline"
-                            >
-                                <Icon.ChatText />
-                            </InputGroup.Text>
-                        </InputGroup.Append>
-                    </InputGroup>
-                </div>
-            </FormGroup>
-        </Form>
+        <>
+            <hr />
+            <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
+                <FormGroup controlId="formComment">
+                    <Form.Text className="pl-1">Add a comment to {props.post.title}</Form.Text>
+                    <div className="d-flex">
+                        <InputGroup>
+                            <Form.Control
+                                className="border no-active-outline"
+                                as="input"
+                                value={comment}
+                                required
+                                onChange={e => setComment(e.target.value)}
+                                placeholder="Comment..."
+                            />
+                            <InputGroup.Append>
+                                <InputGroup.Text
+                                    as={Button}
+                                    variant="white"
+                                    className="bg-white text-dim no-active-outline"
+                                >
+                                    <Icon.EmojiLaughing />
+                                </InputGroup.Text>
+                                <InputGroup.Text
+                                    as={Button}
+                                    type="submit"
+                                    variant="white"
+                                    className="bg-white text-dim no-active-outline"
+                                >
+                                    <Icon.ChatText />
+                                </InputGroup.Text>
+                            </InputGroup.Append>
+                        </InputGroup>
+                    </div>
+                </FormGroup>
+            </Form>
+        </>
     )
 }
 
@@ -470,8 +497,14 @@ const EditCommentModal = props => {
 
     return (
         <>
-            <Button className="text-dim pb-2 no-active-outline" variant="white" onClick={handleShow}>
-                <Icon.Pen className="mb-1" />
+            <Button
+                className={
+                    props.admin ? "pb-2 bg-pink no-active-outline border-right-danger" : "pb-2 no-active-outline"
+                }
+                variant="white"
+                onClick={handleShow}
+            >
+                <Icon.Pen fill="dimgrey" className="mb-1" />
             </Button>
 
             <Modal show={show} onHide={handleClose}>
@@ -517,8 +550,16 @@ const RemoveCommentModal = props => {
 
     return (
         <>
-            <Button className="mb-1 text-danger border-left no-active-outline" variant="white" onClick={handleShow}>
-                <Icon.Trash />
+            <Button
+                className={
+                    props.admin
+                        ? "text-danger border-left-danger bg-pink no-active-outline"
+                        : "text-danger border-left no-active-outline"
+                }
+                variant="white"
+                onClick={handleShow}
+            >
+                <Icon.Trash className="mb-1" />
             </Button>
 
             <Modal show={show} onHide={handleClose}>
@@ -645,161 +686,217 @@ const Posts = props => {
     return props.posts ? (
         <Card className="text-dim">
             <Card.Body>
-                {props.posts.result.map(post => {
-                    return (
-                        <Accordion key={post._id}>
-                            <div>
+                {props.posts.result
+                    .map(post => {
+                        return (
+                            <Accordion key={post._id}>
                                 <div>
-                                    <div className="d-flex align-items-baseline">
-                                        <Card.Title className="pr-1" as={"h6"}>
-                                            {post.title}
-                                        </Card.Title>
-                                        <div className="ml-auto">
-                                            <Badge pill className="text-dim bg-white border">
-                                                {post.category}
-                                            </Badge>
+                                    <div>
+                                        <div className="d-flex align-items-baseline">
+                                            <Card.Title className="pr-1" as={"h6"}>
+                                                {post.title}
+                                            </Card.Title>
+                                            <div className="ml-auto">
+                                                <Badge pill className="text-dim bg-white border">
+                                                    {post.category}
+                                                </Badge>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <Card.Text>{post.content}</Card.Text>
+                                        <Card.Text>{post.content}</Card.Text>
 
-                                    <div className="d-flex justify-content-between">
-                                        <Col className="p-0">
-                                            <Form.Text>
-                                                <Link className="link" to={"users/" + post.author._id}>
-                                                    by {post.author.name} {post.author.surname}
-                                                </Link>
-                                            </Form.Text>
-                                        </Col>
-                                        <Col className="d-flex justify-content-end p-0 px-2">
-                                            <Form.Text className="pr-3">
-                                                {post.likes.find(like => like === props.user._id) ? (
-                                                    <div
-                                                        className="cursor-pointer"
-                                                        onClick={async e => {
-                                                            await props.crud.blogs.unlike(post._id, {
-                                                                id: props.user._id
-                                                            })
-
-                                                            props.onUpdate()
-                                                        }}
-                                                    >
-                                                        <span className="pr-1 text-dim">{post.likes.length}</span>
-                                                        <Icon.HeartFill fill="#dc3545" />
-                                                    </div>
-                                                ) : (
-                                                    <div
-                                                        className="cursor-pointer"
-                                                        onClick={async e => {
-                                                            await props.crud.blogs.like(post._id, {
-                                                                id: props.user._id
-                                                            })
-
-                                                            props.onUpdate()
-                                                        }}
-                                                    >
-                                                        <span className="pr-1">{post.likes.length}</span>
-                                                        <Icon.HeartFill fill="lightgray" />
-                                                    </div>
-                                                )}
-                                            </Form.Text>
-                                            <Accordion.Toggle as="div" eventKey="0">
-                                                <div className="d-flex">
-                                                    <Form.Text className="border rounded px-1 cursor-pointer">
-                                                        <span>
-                                                            {post.comments.length} Comment
-                                                            {post.comments.length === 0 ? "s" : ""}
-                                                            {post.comments.length > 1 ? "s" : ""}{" "}
-                                                            <Icon.ChatText className="mb-1" />
-                                                        </span>
-                                                    </Form.Text>
-                                                </div>
-                                            </Accordion.Toggle>
-                                        </Col>
-                                        <Col className="d-none d-lg-block text-end p-0">
-                                            {post.createdAt === post.updatedAt ? (
+                                        <div className="d-flex justify-content-between">
+                                            <Col className="p-0">
                                                 <Form.Text>
-                                                    Posted: <ReactTimeAgo date={new Date(post.createdAt)} />
+                                                    <Link className="link" to={"users/" + post.author._id}>
+                                                        by {post.author.name} {post.author.surname}
+                                                    </Link>
                                                 </Form.Text>
-                                            ) : (
-                                                <Form.Text>
-                                                    Edited: <ReactTimeAgo date={new Date(post.updatedAt)} />
-                                                </Form.Text>
-                                            )}
-                                        </Col>
-                                    </div>
-                                </div>
+                                            </Col>
+                                            <Col className="d-flex justify-content-end p-0 px-2">
+                                                <Form.Text className="pr-3">
+                                                    {post.likes.find(like => like === props.user._id) ? (
+                                                        <div
+                                                            className="cursor-pointer"
+                                                            onClick={async e => {
+                                                                await props.crud.blogs.unlike(post._id, {
+                                                                    id: props.user._id
+                                                                })
 
-                                {props.user && props.user._id === post.author._id && (
-                                    <div className="pt-3">
-                                        <ButtonGroup className="border rounded">
-                                            <EditBlogModal onUpdate={props.onUpdate} post={post} crud={props.crud} />
-                                            <RemoveBlogModal onUpdate={props.onUpdate} post={post} crud={props.crud} />
-                                        </ButtonGroup>
-                                    </div>
-                                )}
-                                <hr />
-                            </div>
-                            <Accordion.Collapse eventKey="0">
-                                <Card.Body className="py-0">
-                                    <AddComment
-                                        onUpdate={props.onUpdate}
-                                        user={props.user}
-                                        post={post}
-                                        crud={props.crud}
-                                    />
-                                    <hr />
-                                    {post.comments
-                                        .slice(0)
-                                        .reverse()
-                                        .map(comment => {
-                                            return (
-                                                <div key={comment._id}>
-                                                    <Card.Text className="mb-0">{comment.comment}</Card.Text>
-                                                    <div className="d-flex justify-content-between">
-                                                        <Form.Text>
-                                                            <Link className="link" to={"users/" + comment.author._id}>
-                                                                by {comment.author.name} {comment.author.surname}
-                                                            </Link>
-                                                        </Form.Text>
-                                                        {comment.createdAt === comment.updatedAt ? (
-                                                            <Form.Text>
-                                                                Posted:{" "}
-                                                                <ReactTimeAgo date={new Date(comment.createdAt)} />
-                                                            </Form.Text>
-                                                        ) : (
-                                                            <Form.Text>
-                                                                Edited:{" "}
-                                                                <ReactTimeAgo date={new Date(comment.updatedAt)} />
-                                                            </Form.Text>
-                                                        )}
-                                                    </div>
-                                                    {props.user && props.user._id === comment.author._id && (
-                                                        <div className="pt-3">
-                                                            <ButtonGroup className="border rounded">
-                                                                <EditCommentModal
-                                                                    comment={comment}
-                                                                    crud={props.crud}
-                                                                    post={post}
-                                                                    onUpdate={props.onUpdate}
-                                                                />
-                                                                <RemoveCommentModal
-                                                                    comment={comment}
-                                                                    crud={props.crud}
-                                                                    post={post}
-                                                                    onUpdate={props.onUpdate}
-                                                                />
-                                                            </ButtonGroup>
+                                                                props.onUpdate()
+                                                            }}
+                                                        >
+                                                            <span className="pr-1 text-dim">{post.likes.length}</span>
+                                                            <Icon.HeartFill fill="#dc3545" />
+                                                        </div>
+                                                    ) : (
+                                                        <div
+                                                            className="cursor-pointer"
+                                                            onClick={async e => {
+                                                                await props.crud.blogs.like(post._id, {
+                                                                    id: props.user._id
+                                                                })
+
+                                                                props.onUpdate()
+                                                            }}
+                                                        >
+                                                            <span className="pr-1">{post.likes.length}</span>
+                                                            <Icon.HeartFill fill="lightgrey" />
                                                         </div>
                                                     )}
-                                                    <hr />
-                                                </div>
-                                            )
-                                        })}
-                                </Card.Body>
-                            </Accordion.Collapse>
-                        </Accordion>
-                    )
-                })}
+                                                </Form.Text>
+                                                <Accordion.Toggle as="div" eventKey="0">
+                                                    <div className="d-flex">
+                                                        <Form.Text className="border rounded px-1 cursor-pointer text-dim">
+                                                            <span>
+                                                                {post.comments.length} Comment
+                                                                {post.comments.length === 0 ? "s" : ""}
+                                                                {post.comments.length > 1 ? "s" : ""}{" "}
+                                                                <Icon.ChatText className="mb-1" />
+                                                            </span>
+                                                        </Form.Text>
+                                                    </div>
+                                                </Accordion.Toggle>
+                                            </Col>
+                                            <Col className="d-none d-lg-block text-end p-0">
+                                                {post.createdAt === post.updatedAt ? (
+                                                    <Form.Text>
+                                                        Posted: <ReactTimeAgo date={new Date(post.createdAt)} />
+                                                    </Form.Text>
+                                                ) : (
+                                                    <Form.Text>
+                                                        Edited: <ReactTimeAgo date={new Date(post.updatedAt)} />
+                                                    </Form.Text>
+                                                )}
+                                            </Col>
+                                        </div>
+                                    </div>
+
+                                    {props.user && props.user._id === post.author._id && (
+                                        <div className="pt-3">
+                                            <ButtonGroup className="border rounded">
+                                                <EditBlogModal
+                                                    onUpdate={props.onUpdate}
+                                                    post={post}
+                                                    crud={props.crud}
+                                                />
+                                                <RemoveBlogModal
+                                                    onUpdate={props.onUpdate}
+                                                    post={post}
+                                                    crud={props.crud}
+                                                />
+                                            </ButtonGroup>
+                                        </div>
+                                    )}
+
+                                    {props.user &&
+                                        props.user._id !== post.author._id &&
+                                        props.user.roles.isAdministrator && (
+                                            <div className="pt-3">
+                                                <ButtonGroup className="border border-danger rounded">
+                                                    <EditBlogModal
+                                                        admin={true}
+                                                        onUpdate={props.onUpdate}
+                                                        post={post}
+                                                        crud={props.crud}
+                                                    />
+                                                    <RemoveBlogModal
+                                                        admin={true}
+                                                        onUpdate={props.onUpdate}
+                                                        post={post}
+                                                        crud={props.crud}
+                                                    />
+                                                </ButtonGroup>
+                                            </div>
+                                        )}
+                                </div>
+                                <Accordion.Collapse eventKey="0">
+                                    <Card.Body className="py-0">
+                                        <AddComment
+                                            onUpdate={props.onUpdate}
+                                            user={props.user}
+                                            post={post}
+                                            crud={props.crud}
+                                        />
+                                        <hr />
+                                        {post.comments
+                                            .slice(0)
+                                            .reverse()
+                                            .map(comment => {
+                                                return (
+                                                    <div key={comment._id}>
+                                                        <Card.Text className="mb-0">{comment.comment}</Card.Text>
+                                                        <div className="d-flex justify-content-between">
+                                                            <Form.Text>
+                                                                <Link
+                                                                    className="link"
+                                                                    to={"users/" + comment.author._id}
+                                                                >
+                                                                    by {comment.author.name} {comment.author.surname}
+                                                                </Link>
+                                                            </Form.Text>
+                                                            {comment.createdAt === comment.updatedAt ? (
+                                                                <Form.Text>
+                                                                    Posted:{" "}
+                                                                    <ReactTimeAgo date={new Date(comment.createdAt)} />
+                                                                </Form.Text>
+                                                            ) : (
+                                                                <Form.Text>
+                                                                    Edited:{" "}
+                                                                    <ReactTimeAgo date={new Date(comment.updatedAt)} />
+                                                                </Form.Text>
+                                                            )}
+                                                        </div>
+                                                        {props.user && props.user._id === comment.author._id && (
+                                                            <div className="pt-3">
+                                                                <ButtonGroup className="border rounded">
+                                                                    <EditCommentModal
+                                                                        comment={comment}
+                                                                        crud={props.crud}
+                                                                        post={post}
+                                                                        onUpdate={props.onUpdate}
+                                                                    />
+                                                                    <RemoveCommentModal
+                                                                        comment={comment}
+                                                                        crud={props.crud}
+                                                                        post={post}
+                                                                        onUpdate={props.onUpdate}
+                                                                    />
+                                                                </ButtonGroup>
+                                                            </div>
+                                                        )}
+
+                                                        {props.user &&
+                                                            props.user._id !== comment.author._id &&
+                                                            props.user.roles.isAdministrator && (
+                                                                <div className="pt-3">
+                                                                    <ButtonGroup className="border border-danger rounded">
+                                                                        <EditCommentModal
+                                                                            admin={true}
+                                                                            comment={comment}
+                                                                            crud={props.crud}
+                                                                            post={post}
+                                                                            onUpdate={props.onUpdate}
+                                                                        />
+                                                                        <RemoveCommentModal
+                                                                            admin={true}
+                                                                            comment={comment}
+                                                                            crud={props.crud}
+                                                                            post={post}
+                                                                            onUpdate={props.onUpdate}
+                                                                        />
+                                                                    </ButtonGroup>
+                                                                </div>
+                                                            )}
+                                                        <hr />
+                                                    </div>
+                                                )
+                                            })}
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Accordion>
+                        )
+                    })
+                    .reduce((prev, curr) => [prev, <hr key={uniqid()} />, curr])}
             </Card.Body>
         </Card>
     ) : props.loading ? (

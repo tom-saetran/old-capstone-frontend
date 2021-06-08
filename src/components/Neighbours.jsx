@@ -1,6 +1,7 @@
 import React from "react"
 import { Card, Spinner } from "react-bootstrap"
 import { Link, withRouter } from "react-router-dom"
+import uniqid from "uniqid"
 
 class Neighbourhood extends React.Component {
     state = {
@@ -31,28 +32,28 @@ class Neighbourhood extends React.Component {
             <Card className="text-dim">
                 <Card.Header className="text-center py-1 bg-white">People you may know</Card.Header>
                 <Card.Body>
-                    {this.state.mayKnow.map(user => {
-                        if (user._id === this.props.user._id) return null
-                        if (user._id === this.props.match.params.id) return null
-                        return (
-                            <div key={user._id}>
-                                <Card.Title as={"h6"}>
-                                    <Link className="link" to={"/users/" + user._id}>
-                                        <Card.Img className="friend-avatar mr-2" alt="" src={user.avatar} />
-                                    </Link>
-                                    <Link className="link" to={"/users/" + user._id}>
-                                        {user.name} {user.surname}
-                                    </Link>
-                                </Card.Title>
-                                <Card.Text>
-                                    {user.description.slice(0, 42)}
-                                    {user.description.length > 42 ? "..." : ""}
-                                </Card.Text>
-
-                                <hr />
-                            </div>
-                        )
-                    })}
+                    {this.state.mayKnow
+                        .map(user => {
+                            if (user._id === this.props.user._id) return null
+                            if (user._id === this.props.match.params.id) return null
+                            return (
+                                <div key={user._id}>
+                                    <Card.Title as={"h6"}>
+                                        <Link className="link" to={"/users/" + user._id}>
+                                            <Card.Img className="friend-avatar mr-2" alt="" src={user.avatar} />
+                                        </Link>
+                                        <Link className="link" to={"/users/" + user._id}>
+                                            {user.name} {user.surname}
+                                        </Link>
+                                    </Card.Title>
+                                    <Card.Text>
+                                        {user.description.slice(0, 42)}
+                                        {user.description.length > 42 ? "..." : ""}
+                                    </Card.Text>
+                                </div>
+                            )
+                        })
+                        .reduce((prev, curr) => [prev, <hr key={uniqid()} />, curr])}
                 </Card.Body>
                 <Card.Footer className="text-center py-1 bg-white">
                     <Link className="link" to="/">

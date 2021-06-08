@@ -20,7 +20,7 @@ class NaviBar extends React.Component {
         return (
             <div className="border-bottom">
                 <Col className="px-xl-0" xl={{ span: 10, offset: 1 }}>
-                    <Navbar sticky={"top"} className="p-0" bg="white" style={{ height: "4.5rem" }}>
+                    <Navbar className="p-0" bg="white" style={{ height: "4.5rem" }}>
                         <Link to="/">
                             <Navbar.Brand className="pb-2">
                                 <Icon.HddNetwork fill="dimgray" className="mb-1" />

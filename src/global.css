@@ -63,6 +63,10 @@ html {
     background-color: lightgrey;
 }
 
+.bg-pink {
+    background-color: #ffeeee;
+}
+
 .text-end {
     text-align: end !important;
 }
@@ -83,13 +87,28 @@ html {
     cursor: pointer;
 }
 
+.border-left-danger {
+    border-left: 1px solid #dc3545 !important;
+}
+
+.border-right-danger {
+    border-right: 1px solid #dc3545 !important;
+}
+
 .spinner {
     border-width: 1px;
 }
 
 .no-active-outline,
-.no-active-outline:focus {
+.no-active-outline:focus,
+.no-active-outline:hover {
     box-shadow: none !important;
+}
+
+.no-border,
+.no-border:hover,
+.no-border:focus {
+    border: none !important;
 }
 
 /* FOOTER */
