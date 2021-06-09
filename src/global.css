@@ -67,6 +67,10 @@ html {
     background-color: #ffeeee;
 }
 
+.bg-yellow {
+    background-color: #ffeecc;
+}
+
 .text-end {
     text-align: end !important;
 }
@@ -93,6 +97,14 @@ html {
 
 .border-right-danger {
     border-right: 1px solid #dc3545 !important;
+}
+
+.border-left-warning {
+    border-left: 1px solid #ffc107 !important;
+}
+
+.border-right-warning {
+    border-right: 1px solid #ffc107 !important;
 }
 
 .spinner {

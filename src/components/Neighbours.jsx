@@ -46,10 +46,7 @@ class Neighbourhood extends React.Component {
                                             {user.name} {user.surname}
                                         </Link>
                                     </Card.Title>
-                                    <Card.Text>
-                                        {user.description.slice(0, 42)}
-                                        {user.description.length > 42 ? "..." : ""}
-                                    </Card.Text>
+                                    <Card.Text className="text-truncate">{user.description}</Card.Text>
                                 </div>
                             )
                         })
