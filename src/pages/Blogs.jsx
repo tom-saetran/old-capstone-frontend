@@ -790,6 +790,7 @@ const Posts = props => {
 
                                     {props.user &&
                                         props.user._id !== post.author._id &&
+                                        props.user.roles &&
                                         props.user.roles.isAdministrator && (
                                             <div className="pt-3">
                                                 <ButtonGroup className="border border-danger rounded">
@@ -867,6 +868,7 @@ const Posts = props => {
 
                                                         {props.user &&
                                                             props.user._id !== comment.author._id &&
+                                                            props.user.rols &&
                                                             props.user.roles.isAdministrator && (
                                                                 <div className="pt-3">
                                                                     <ButtonGroup className="border border-danger rounded">
