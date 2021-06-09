@@ -499,7 +499,11 @@ const EditCommentModal = props => {
         <>
             <Button
                 className={
-                    props.admin ? "pb-2 bg-pink no-active-outline border-right-danger" : "pb-2 no-active-outline"
+                    props.admin
+                        ? "pb-2 bg-pink no-active-outline border-right-danger"
+                        : props.moderator
+                        ? "pb-2 bg-yellow no-active-outline border-right-warning"
+                        : "pb-2 no-active-outline"
                 }
                 variant="white"
                 onClick={handleShow}
@@ -554,6 +558,8 @@ const RemoveCommentModal = props => {
                 className={
                     props.admin
                         ? "text-danger border-left-danger bg-pink no-active-outline"
+                        : props.moderator
+                        ? "text-danger border-left-warning bg-yellow no-active-outline"
                         : "text-danger border-left no-active-outline"
                 }
                 variant="white"
@@ -809,6 +815,29 @@ const Posts = props => {
                                                 </ButtonGroup>
                                             </div>
                                         )}
+
+                                    {props.user &&
+                                        props.user._id !== post.author._id &&
+                                        props.user.roles &&
+                                        props.user.roles.isModerator &&
+                                        !props.user.roles.isAdministrator && (
+                                            <div className="pt-3">
+                                                <ButtonGroup className="border border-warning rounded">
+                                                    <EditBlogModal
+                                                        moderator={true}
+                                                        onUpdate={props.onUpdate}
+                                                        post={post}
+                                                        crud={props.crud}
+                                                    />
+                                                    <RemoveBlogModal
+                                                        moderator={true}
+                                                        onUpdate={props.onUpdate}
+                                                        post={post}
+                                                        crud={props.crud}
+                                                    />
+                                                </ButtonGroup>
+                                            </div>
+                                        )}
                                 </div>
                                 <Accordion.Collapse eventKey="0">
                                     <Card.Body className="py-0">
@@ -881,6 +910,31 @@ const Posts = props => {
                                                                         />
                                                                         <RemoveCommentModal
                                                                             admin={true}
+                                                                            comment={comment}
+                                                                            crud={props.crud}
+                                                                            post={post}
+                                                                            onUpdate={props.onUpdate}
+                                                                        />
+                                                                    </ButtonGroup>
+                                                                </div>
+                                                            )}
+
+                                                        {props.user &&
+                                                            props.user._id !== comment.author._id &&
+                                                            props.user.roles &&
+                                                            props.user.roles.isModerator &&
+                                                            !props.user.roles.isAdministrator && (
+                                                                <div className="pt-3">
+                                                                    <ButtonGroup className="border border-warning rounded">
+                                                                        <EditCommentModal
+                                                                            moderator={true}
+                                                                            comment={comment}
+                                                                            crud={props.crud}
+                                                                            post={post}
+                                                                            onUpdate={props.onUpdate}
+                                                                        />
+                                                                        <RemoveCommentModal
+                                                                            moderator={true}
                                                                             comment={comment}
                                                                             crud={props.crud}
                                                                             post={post}
