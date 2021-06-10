@@ -33,9 +33,8 @@ class Neighbourhood extends React.Component {
                 <Card.Header className="text-center py-1 bg-white">People you may know</Card.Header>
                 <Card.Body>
                     {this.state.mayKnow
+                        .filter(user => user._id !== this.props.user._id && user._id !== this.props.match.params.id)
                         .map(user => {
-                            if (user._id === this.props.user._id) return null
-                            if (user._id === this.props.match.params.id) return null
                             return (
                                 <div key={user._id}>
                                     <Card.Title as={"h6"}>

@@ -61,7 +61,7 @@ class Blogs extends React.Component {
                         <div className="d-none d-sm-block">
                             <Ads />
                         </div>
-                        <hr className="d-sm-none" />
+                        <hr className="d-none d-sm-block" />
                     </Col>
                     <Col className="px-3" xs={12} sm={8} md={6}>
                         <Controls
@@ -922,7 +922,7 @@ const Comments = props => {
     return props.post.comments
         .slice(0)
         .reverse()
-        .map(comment => {
+        .map((comment, index) => {
             return (
                 <div key={comment._id}>
                     <Card.Text className="mb-0">{comment.comment}</Card.Text>
@@ -1009,7 +1009,7 @@ const Comments = props => {
                                 </ButtonGroup>
                             </div>
                         )}
-                    <hr />
+                    {props.post.comments.length - 1 !== index && <hr />}
                 </div>
             )
         })
