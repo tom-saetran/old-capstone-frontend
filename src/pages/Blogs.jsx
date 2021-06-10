@@ -767,7 +767,7 @@ const Posts = props => {
                                             </Col>
                                             <Col className="d-flex justify-content-between pl-2 pr-0">
                                                 <Form.Text className="pr-3">
-                                                    {post.likes.find(like => like === props.user._id) ? (
+                                                    {post.likes.find(like => props.user && like === props.user._id) ? (
                                                         <div
                                                             className="d-flex align-items-center cursor-pointer"
                                                             onClick={async e => {
