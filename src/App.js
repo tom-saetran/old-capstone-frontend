@@ -404,6 +404,26 @@ class App extends React.Component {
                     return await results
                 }
             }
+        },
+
+        ads: {
+            getAll: async () => {
+                let results
+                try {
+                    results = await fetch(this.crud.endpoint + "/ads/", {
+                        headers: {
+                            //Authorization: this.state.authtoken
+                        }
+                    })
+
+                    if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
+                    results = await results.json()
+                } catch (error) {
+                    console.error(error)
+                    return null
+                }
+                return await results
+            }
         }
     }
 
@@ -435,7 +455,7 @@ class App extends React.Component {
     }
 }
 
-class Out extends React.Component {
+export class Out extends React.Component {
     knownRoutes = {
         linkedin: "https://www.linkedin.com/in/tom-lennart-saetran/",
         github: "https://github.com/tom-saetran",
