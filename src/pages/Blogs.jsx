@@ -676,12 +676,12 @@ const Controls = props => {
         stageImage(image)
     }
 
-    return (
+    return props.user ? (
         <Card className="text-dim">
-            <Card.Body className="pt-1 pb-3 px-3">
+            <Card.Body style={{ height: "11rem" }} className="pt-1 pb-3 px-3">
                 <Form>
                     <Form.Group controlId="blogForm">
-                        <Form.Text className="pl-1">Whats on your mind?</Form.Text>
+                        <Form.Text className="pl-1">Whats on your mind {props.user.name}?</Form.Text>
                         <Form.Control
                             className="border text-dim cursor-text no-active-outline"
                             as="textarea"
@@ -723,6 +723,12 @@ const Controls = props => {
                         {image && <div className="pt-2 pl-2">Selected: {image.name}</div>}
                     </ButtonToolbar>
                 </Form>
+            </Card.Body>
+        </Card>
+    ) : (
+        <Card style={{ height: "11rem" }}>
+            <Card.Body className="d-flex justify-content-center align-items-center">
+                <Spinner className="spinner" animation="border" />
             </Card.Body>
         </Card>
     )

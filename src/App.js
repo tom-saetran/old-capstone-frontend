@@ -423,6 +423,24 @@ class App extends React.Component {
                     return null
                 }
                 return await results
+            },
+
+            getSome: async () => {
+                let results
+                try {
+                    results = await fetch(this.crud.endpoint + "/ads/some", {
+                        headers: {
+                            //Authorization: this.state.authtoken
+                        }
+                    })
+
+                    if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
+                    results = await results.json()
+                } catch (error) {
+                    console.error(error)
+                    return null
+                }
+                return await results
             }
         }
     }
@@ -445,7 +463,7 @@ class App extends React.Component {
                         path="/users/:id"
                     />
                     <Route render={routeProps => <HTTP501 {...routeProps} />} exact path="/signup" />
-                    <Route render={routeProps => <Out {...routeProps} />} exact path="/out/:id" />
+                    <Route render={routeProps => <Out {...routeProps} crud={this.crud} />} exact path="/out/:id" />
                     <Route render={routeProps => <HTTP404 {...routeProps} />} exact path="/404" />
                     <Route render={routeProps => <HTTP404 {...routeProps} />} />
                 </Switch>
@@ -456,19 +474,40 @@ class App extends React.Component {
 }
 
 class Out extends React.Component {
-    knownRoutes = {
-        linkedin: "https://www.linkedin.com/in/tom-lennart-saetran/",
-        github: "https://github.com/tom-saetran",
-        twitter: "https://twitter.com/tom_saetran",
-        telegram: "https://t.me/zingo_fox"
+    state = {
+        loaded: false,
+        knownRoutes: {
+            linkedin: "https://www.linkedin.com/in/tom-lennart-saetran/",
+            github: "https://github.com/tom-saetran",
+            twitter: "https://twitter.com/tom_saetran",
+            telegram: "https://t.me/zingo_fox"
+        }
     }
 
-    render() {
-        return this.knownRoutes[this.props.match.params.id] ? (
-            <Redirect to={{ pathname: window.location.assign(this.knownRoutes[this.props.match.params.id]) }} />
-        ) : (
-            <Redirect to={"/404"} />
-        )
+    componentDidMount = async () => {
+        const ads = await this.props.crud.ads.getAll()
+        let obj = {}
+        ads.forEach(ad => {
+            obj[ad.outId] = ad.outLink
+        })
+
+        this.setState({ knownRoutes: { ...this.state.knownRoutes, ...obj } })
+    }
+
+    componentDidUpdate = (_previousProps, _previousState) => {
+        if (_previousState.knownRoutes !== this.state.knownRoutes) this.setState({ loaded: true })
+    }
+
+    render = () => {
+        return this.state.loaded ? (
+            this.state.knownRoutes[this.props.match.params.id] ? (
+                <Redirect
+                    to={{ pathname: window.location.assign(this.state.knownRoutes[this.props.match.params.id]) }}
+                />
+            ) : (
+                <Redirect to={"/404"} />
+            )
+        ) : null
     }
 }
 
