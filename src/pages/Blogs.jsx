@@ -61,7 +61,6 @@ class Blogs extends React.Component {
                         <div className="d-none d-sm-block">
                             <Ads />
                         </div>
-                        <hr className="d-none d-sm-block" />
                     </Col>
                     <Col className="px-3" xs={12} sm={8} md={6}>
                         <Controls
