@@ -24,7 +24,7 @@ class Neighbourhood extends React.Component {
             .sort((a, b) => {
                 return a[1] < b[1] ? -1 : 1
             })
-            .slice(0, 2 + Math.random() * 4)
+            .slice(0, 3 + Math.random() * 3)
             .map(a => a[0])
 
     render() {

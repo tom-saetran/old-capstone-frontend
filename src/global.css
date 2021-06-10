@@ -16,8 +16,8 @@ html {
     border: 1px solid lightgray;
     border-radius: 50%;
     object-fit: cover;
-    height: 36px;
-    width: 36px;
+    height: 3rem;
+    width: 3rem;
     transition: transform 0.6s;
 }
 
@@ -29,8 +29,8 @@ html {
     border: 1px solid lightgray;
     border-radius: 50%;
     object-fit: cover;
-    height: 66%;
-    width: 66%;
+    height: 8rem;
+    width: 8rem;
     transition: transform 0.6s;
 }
 
@@ -38,20 +38,29 @@ html {
     transform: scale(1.06);
 }
 
+.blog-avatar {
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    object-fit: cover;
+    height: 1.25rem;
+    width: 1.25rem;
+    transition: transform 0.6s;
+}
+
 .home-avatar {
     border: 1px solid lightgray;
     border-radius: 50%;
     object-fit: cover;
-    height: 220px;
-    width: 220px;
+    height: 16rem;
+    width: 16rem;
 }
 
 .friend-avatar {
     border: 1px solid lightgray;
     border-radius: 50%;
     object-fit: cover;
-    height: 48px;
-    width: 48px;
+    height: 3rem;
+    width: 3rem;
     transition: transform 0.6s;
 }
 

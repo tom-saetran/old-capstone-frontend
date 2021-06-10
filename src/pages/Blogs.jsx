@@ -754,11 +754,16 @@ const Posts = props => {
                                         <div className="d-flex justify-content-between">
                                             <Col className="d-flex p-0">
                                                 <Form.Text>
-                                                    <Link className="link" to={"users/" + post.author._id}>
-                                                        <span className="d-flex">
-                                                            by {post.author.name} {post.author.surname}
-                                                        </span>
-                                                    </Link>
+                                                    <span className="d-flex">
+                                                        <Link className="link" to={"users/" + post.author._id}>
+                                                            <Card.Img
+                                                                className="border blog-avatar mb-1 mr-2"
+                                                                alt=""
+                                                                src={post.author.avatar}
+                                                            />
+                                                            {post.author.name} {post.author.surname}
+                                                        </Link>
+                                                    </span>
                                                 </Form.Text>
                                             </Col>
                                             <Col className="d-flex justify-content-between pl-2 pr-0">
@@ -925,12 +930,19 @@ const Comments = props => {
         .map((comment, index) => {
             return (
                 <div key={comment._id}>
-                    <Card.Text className="mb-0">{comment.comment}</Card.Text>
+                    <Card.Text className="mb-2">{comment.comment}</Card.Text>
                     <div className="d-flex justify-content-between">
                         <Form.Text>
-                            <Link className="link" to={"users/" + comment.author._id}>
-                                by {comment.author.name} {comment.author.surname}
-                            </Link>
+                            <span className="d-flex">
+                                <Link className="link" to={"users/" + comment.author._id}>
+                                    <Card.Img
+                                        className="border blog-avatar mb-1 mr-2"
+                                        alt=""
+                                        src={comment.author.avatar}
+                                    />
+                                    {comment.author.name} {comment.author.surname}
+                                </Link>
+                            </span>
                         </Form.Text>
                         {comment.createdAt === comment.updatedAt ? (
                             <Form.Text>
@@ -943,7 +955,7 @@ const Comments = props => {
                         )}
                     </div>
                     {props.user && props.user._id === comment.author._id && (
-                        <div className="pt-3">
+                        <div className="pt-2">
                             <ButtonGroup className="border rounded">
                                 <EditCommentModal
                                     comment={comment}
