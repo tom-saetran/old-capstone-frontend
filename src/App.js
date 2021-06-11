@@ -20,8 +20,8 @@ TimeAgo.addLocale(en)
 class App extends React.Component {
     state = {
         user: null,
-        load: "60b8e485ed3bcb0015e42f7f",
-        _load: process.env.REACT_APP_CURRENT || "60bc15a8ae33b80015046cbd"
+        _load: "60b8e485ed3bcb0015e42f7f",
+        load: process.env.REACT_APP_CURRENT || "60bc15a8ae33b80015046cbd"
     }
 
     componentDidMount = async () => {
