@@ -20,8 +20,8 @@ TimeAgo.addLocale(en)
 class App extends React.Component {
     state = {
         user: null,
-        _load: "60bb6c1c3168d1001543624e",
-        load: process.env.REACT_APP_CURRENT || "60bc15a8ae33b80015046cbd"
+        load: "60b8e485ed3bcb0015e42f7f",
+        _load: process.env.REACT_APP_CURRENT || "60bc15a8ae33b80015046cbd"
     }
 
     componentDidMount = async () => {
@@ -452,16 +452,8 @@ class App extends React.Component {
                 <Route render={routeProps => <NaviBar user={this.state.user} {...routeProps} />} />
                 <Switch>
                     <Route render={routeProps => <Home {...routeProps} />} exact path="/" />
-                    <Route
-                        render={routeProps => <Blogs {...routeProps} user={this.state.user} crud={this.crud} />}
-                        exact
-                        path="/blogs"
-                    />
-                    <Route
-                        render={routeProps => <Users {...routeProps} user={this.state.user} crud={this.crud} />}
-                        exact
-                        path="/users/:id"
-                    />
+                    <Route render={routeProps => <Blogs {...routeProps} user={this.state.user} crud={this.crud} />} exact path="/blogs" />
+                    <Route render={routeProps => <Users {...routeProps} user={this.state.user} crud={this.crud} />} exact path="/users/:id" />
                     <Route render={routeProps => <HTTP501 {...routeProps} />} exact path="/signup" />
                     <Route render={routeProps => <Out {...routeProps} crud={this.crud} />} exact path="/out/:id" />
                     <Route render={routeProps => <HTTP404 {...routeProps} />} exact path="/404" />
@@ -501,9 +493,7 @@ class Out extends React.Component {
     render = () => {
         return this.state.loaded ? (
             this.state.knownRoutes[this.props.match.params.id] ? (
-                <Redirect
-                    to={{ pathname: window.location.assign(this.state.knownRoutes[this.props.match.params.id]) }}
-                />
+                <Redirect to={{ pathname: window.location.assign(this.state.knownRoutes[this.props.match.params.id]) }} />
             ) : (
                 <Redirect to={"/404"} />
             )

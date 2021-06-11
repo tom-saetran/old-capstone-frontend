@@ -38,8 +38,7 @@ class Blogs extends React.Component {
 
     componentDidUpdate = async (_previousProps, _previousState) => {
         if (this.state.loading && this.state.posts && !this.state.update) this.setState({ loading: false })
-        if (this.state.loading && this.state.update)
-            this.setState({ posts: await this.props.crud.blogs.getAll(), update: false })
+        if (this.state.loading && this.state.update) this.setState({ posts: await this.props.crud.blogs.getAll(), update: false })
 
         if (this.state.update !== _previousState.update)
             this.setState(async state => {
@@ -63,12 +62,7 @@ class Blogs extends React.Component {
                         </div>
                     </Col>
                     <Col className="px-3" xs={12} sm={8} md={6}>
-                        <Controls
-                            onUpdate={this.handleUpdate}
-                            crud={this.props.crud}
-                            user={this.props.user}
-                            cover={this.state.cover}
-                        />
+                        <Controls onUpdate={this.handleUpdate} crud={this.props.crud} user={this.props.user} cover={this.state.cover} />
                         <hr />
                         <Posts
                             crud={this.props.crud}
@@ -207,28 +201,14 @@ const AddBlogModal = props => {
                         <div>{image && <div className="pt-2 pl-3">Selected: {image.name}</div>}</div>
                         <ButtonToolbar>
                             <ButtonGroup className="mr-2 border rounded">
-                                <Button
-                                    className="pb-2 text-dim border-right no-active-outline"
-                                    variant="white"
-                                    onClick={selectImage}
-                                >
+                                <Button className="pb-2 text-dim border-right no-active-outline" variant="white" onClick={selectImage}>
                                     <Icon.Image fill="dimgrey" />
-                                    <input
-                                        onChange={setImage.bind(this)}
-                                        type="file"
-                                        id="file"
-                                        ref={inputRef}
-                                        style={{ display: "none" }}
-                                    />
+                                    <input onChange={setImage.bind(this)} type="file" id="file" ref={inputRef} style={{ display: "none" }} />
                                 </Button>
                                 <EmojiPopOver />
                             </ButtonGroup>
                             <ButtonGroup>
-                                <Button
-                                    className="border rounded text-dim no-active-outline"
-                                    variant="white"
-                                    type="submit"
-                                >
+                                <Button className="border rounded text-dim no-active-outline" variant="white" type="submit">
                                     Send
                                 </Button>
                             </ButtonGroup>
@@ -350,11 +330,7 @@ const EditBlogModal = props => {
                                 </Button>
                             </ButtonGroup>
                             <ButtonGroup>
-                                <Button
-                                    className="border rounded text-dim no-active-outline"
-                                    variant="white"
-                                    type="submit"
-                                >
+                                <Button className="border rounded text-dim no-active-outline" variant="white" type="submit">
                                     Send
                                 </Button>
                             </ButtonGroup>
@@ -395,9 +371,7 @@ const RemoveBlogModal = props => {
             </Button>
 
             <Modal show={show} onHide={handleClose}>
-                <Modal.Header className="justify-content-center py-2 text-dim">
-                    This will remove the blog post permanently!
-                </Modal.Header>
+                <Modal.Header className="justify-content-center py-2 text-dim">This will remove the blog post permanently!</Modal.Header>
                 <Modal.Body>
                     <div className="d-flex">
                         <Card.Title as={"h6"}>{props.post.title}</Card.Title>
@@ -455,7 +429,7 @@ const AddComment = props => {
             <hr />
             <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
                 <FormGroup controlId="formComment">
-                    <Form.Text className="pl-1">Add a comment to {props.post.title}</Form.Text>
+                    <Form.Text className="pl-1 text-truncate">Add a comment to {props.post.title}</Form.Text>
                     <div className="d-flex">
                         <InputGroup>
                             <Form.Control
@@ -468,12 +442,7 @@ const AddComment = props => {
                             />
                             <InputGroup.Append>
                                 <EmojiPopOver append={true} />
-                                <InputGroup.Text
-                                    as={Button}
-                                    type="submit"
-                                    variant="white"
-                                    className="bg-white border text-dim no-active-outline"
-                                >
+                                <InputGroup.Text as={Button} type="submit" variant="white" className="bg-white border text-dim no-active-outline">
                                     <Icon.ChatText />
                                 </InputGroup.Text>
                             </InputGroup.Append>
@@ -537,9 +506,7 @@ const EditCommentModal = props => {
 
             <Modal show={show} onHide={handleClose}>
                 <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
-                    <Card.Header className="text-center text-dim py-2 bg-white">
-                        Edit comment in {props.post.title}
-                    </Card.Header>
+                    <Card.Header className="text-center text-dim py-2 bg-white">Edit comment in {props.post.title}</Card.Header>
                     <Modal.Body style={{ height: "140px" }}>
                         <Form.Group controlId="formComment">
                             <Form.Text className="pl-1 text-dim">Comment</Form.Text>
@@ -593,9 +560,7 @@ const RemoveCommentModal = props => {
             </Button>
 
             <Modal show={show} onHide={handleClose}>
-                <Modal.Header className="justify-content-center py-2 text-dim">
-                    This will remove the comment permanently!
-                </Modal.Header>
+                <Modal.Header className="justify-content-center py-2 text-dim">This will remove the comment permanently!</Modal.Header>
                 <Modal.Footer className="justify-content-center align-items-end">
                     <Button className="border text-dim no-active-outline" variant="white" onClick={handleClose}>
                         Cancel
@@ -694,19 +659,9 @@ const Controls = props => {
 
                     <ButtonToolbar>
                         <ButtonGroup className="mr-2 border rounded">
-                            <Button
-                                className="pb-2 border-right no-active-outline"
-                                variant="white"
-                                onClick={selectImage}
-                            >
+                            <Button className="pb-2 border-right no-active-outline" variant="white" onClick={selectImage}>
                                 <Icon.Image fill="dimgrey" />
-                                <input
-                                    onChange={setImage.bind(this)}
-                                    type="file"
-                                    id="file"
-                                    ref={inputRef}
-                                    style={{ display: "none" }}
-                                />
+                                <input onChange={setImage.bind(this)} type="file" id="file" ref={inputRef} style={{ display: "none" }} />
                             </Button>
                             <EmojiPopOver />
                         </ButtonGroup>
@@ -761,21 +716,17 @@ const Posts = props => {
                                                 <Form.Text>
                                                     <span className="d-flex">
                                                         <Link className="link" to={"users/" + post.author._id}>
-                                                            <Card.Img
-                                                                className="border blog-avatar mb-1 mr-2"
-                                                                alt=""
-                                                                src={post.author.avatar}
-                                                            />
+                                                            <Card.Img className="border blog-avatar mb-1 mr-2" alt="" src={post.author.avatar} />
                                                             {post.author.name} {post.author.surname}
                                                         </Link>
                                                     </span>
                                                 </Form.Text>
                                             </Col>
                                             <Col className="d-flex justify-content-between pl-2 pr-0">
-                                                <Form.Text className="pr-3">
+                                                <Form.Text className="pr-1">
                                                     {post.likes.find(like => props.user && like === props.user._id) ? (
                                                         <div
-                                                            className="d-flex align-items-center cursor-pointer"
+                                                            className="border rounded cursor-pointer"
                                                             onClick={async e => {
                                                                 await props.crud.blogs.unlike(post._id, {
                                                                     id: props.user._id
@@ -784,13 +735,15 @@ const Posts = props => {
                                                                 props.onUpdate()
                                                             }}
                                                         >
-                                                            <Icon.HeartFill className="mt-1" fill="#dc3545" />
-                                                            <span className="pl-1 text-dim">{post.likes.length}</span>
+                                                            <span className="pl-1 pr-1 text-dim cursor-pointer">
+                                                                <Icon.HeartFill style={{ marginBottom: "0.175rem" }} className="mr-1" fill="#dc3545" />
+                                                                {post.likes.length}
+                                                            </span>
                                                         </div>
                                                     ) : (
                                                         <div
-                                                            className="d-flex align-items-center cursor-pointer"
-                                                            onClick={async e => {
+                                                            className="border rounded cursor-pointer"
+                                                            onClick={async () => {
                                                                 await props.crud.blogs.like(post._id, {
                                                                     id: props.user._id
                                                                 })
@@ -798,22 +751,25 @@ const Posts = props => {
                                                                 props.onUpdate()
                                                             }}
                                                         >
-                                                            <Icon.HeartFill className="mt-1" fill="lightgrey" />
-                                                            <span className="pl-1">{post.likes.length}</span>
+                                                            <span className="pl-1 pr-1 text-dim cursor-pointer">
+                                                                <Icon.HeartFill style={{ marginBottom: "0.175rem" }} className="mr-1" fill="lightgrey" />
+                                                                {post.likes.length}
+                                                            </span>
                                                         </div>
                                                     )}
                                                 </Form.Text>
                                                 <Accordion.Toggle as="div" eventKey="0">
-                                                    <div className="">
-                                                        <Form.Text className="border rounded px-1 cursor-pointer text-dim">
-                                                            <span>
-                                                                {post.comments.length} Comment
+                                                    <Form.Text className="border rounded px-1 cursor-pointer text-dim">
+                                                        <span>
+                                                            <span className="pr-1">{post.comments.length}</span>
+                                                            <span className="d-none d-sm-inline-block pr-1">
+                                                                Comment
                                                                 {post.comments.length === 0 ? "s" : ""}
-                                                                {post.comments.length > 1 ? "s" : ""}{" "}
-                                                                <Icon.ChatText className="mb-1" />
+                                                                {post.comments.length > 1 ? "s" : ""}
                                                             </span>
-                                                        </Form.Text>
-                                                    </div>
+                                                            <Icon.ChatText className="mb-1" />
+                                                        </span>
+                                                    </Form.Text>
                                                 </Accordion.Toggle>
                                             </Col>
                                             <Col className="d-none d-lg-block text-end p-0">
@@ -833,41 +789,20 @@ const Posts = props => {
                                     {props.user && props.user._id === post.author._id && (
                                         <div className="pt-3">
                                             <ButtonGroup className="border rounded">
-                                                <EditBlogModal
-                                                    onUpdate={props.onUpdate}
-                                                    post={post}
-                                                    crud={props.crud}
-                                                />
-                                                <RemoveBlogModal
-                                                    onUpdate={props.onUpdate}
-                                                    post={post}
-                                                    crud={props.crud}
-                                                />
+                                                <EditBlogModal onUpdate={props.onUpdate} post={post} crud={props.crud} />
+                                                <RemoveBlogModal onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                             </ButtonGroup>
                                         </div>
                                     )}
 
-                                    {props.user &&
-                                        props.user._id !== post.author._id &&
-                                        props.user.roles &&
-                                        props.user.roles.isAdministrator && (
-                                            <div className="pt-3">
-                                                <ButtonGroup className="border border-danger rounded">
-                                                    <EditBlogModal
-                                                        admin={true}
-                                                        onUpdate={props.onUpdate}
-                                                        post={post}
-                                                        crud={props.crud}
-                                                    />
-                                                    <RemoveBlogModal
-                                                        admin={true}
-                                                        onUpdate={props.onUpdate}
-                                                        post={post}
-                                                        crud={props.crud}
-                                                    />
-                                                </ButtonGroup>
-                                            </div>
-                                        )}
+                                    {props.user && props.user._id !== post.author._id && props.user.roles && props.user.roles.isAdministrator && (
+                                        <div className="pt-3">
+                                            <ButtonGroup className="border border-danger rounded">
+                                                <EditBlogModal admin={true} onUpdate={props.onUpdate} post={post} crud={props.crud} />
+                                                <RemoveBlogModal admin={true} onUpdate={props.onUpdate} post={post} crud={props.crud} />
+                                            </ButtonGroup>
+                                        </div>
+                                    )}
 
                                     {props.user &&
                                         props.user._id !== post.author._id &&
@@ -876,37 +811,17 @@ const Posts = props => {
                                         !props.user.roles.isAdministrator && (
                                             <div className="pt-3">
                                                 <ButtonGroup className="border border-warning rounded">
-                                                    <EditBlogModal
-                                                        moderator={true}
-                                                        onUpdate={props.onUpdate}
-                                                        post={post}
-                                                        crud={props.crud}
-                                                    />
-                                                    <RemoveBlogModal
-                                                        moderator={true}
-                                                        onUpdate={props.onUpdate}
-                                                        post={post}
-                                                        crud={props.crud}
-                                                    />
+                                                    <EditBlogModal moderator={true} onUpdate={props.onUpdate} post={post} crud={props.crud} />
+                                                    <RemoveBlogModal moderator={true} onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                                 </ButtonGroup>
                                             </div>
                                         )}
                                 </div>
                                 <Accordion.Collapse eventKey="0">
                                     <Card.Body className="py-0">
-                                        <AddComment
-                                            onUpdate={props.onUpdate}
-                                            user={props.user}
-                                            post={post}
-                                            crud={props.crud}
-                                        />
+                                        <AddComment onUpdate={props.onUpdate} user={props.user} post={post} crud={props.crud} />
                                         <hr />
-                                        <Comments
-                                            onUpdate={props.onUpdate}
-                                            user={props.user}
-                                            crud={props.crud}
-                                            post={post}
-                                        />
+                                        <Comments onUpdate={props.onUpdate} user={props.user} crud={props.crud} post={post} />
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Accordion>
@@ -940,11 +855,7 @@ const Comments = props => {
                         <Form.Text>
                             <span className="d-flex">
                                 <Link className="link" to={"users/" + comment.author._id}>
-                                    <Card.Img
-                                        className="border blog-avatar mb-1 mr-2"
-                                        alt=""
-                                        src={comment.author.avatar}
-                                    />
+                                    <Card.Img className="border blog-avatar mb-1 mr-2" alt="" src={comment.author.avatar} />
                                     {comment.author.name} {comment.author.surname}
                                 </Link>
                             </span>
@@ -962,45 +873,20 @@ const Comments = props => {
                     {props.user && props.user._id === comment.author._id && (
                         <div className="pt-2">
                             <ButtonGroup className="border rounded">
-                                <EditCommentModal
-                                    comment={comment}
-                                    crud={props.crud}
-                                    post={props.post}
-                                    onUpdate={props.onUpdate}
-                                />
-                                <RemoveCommentModal
-                                    comment={comment}
-                                    crud={props.crud}
-                                    post={props.post}
-                                    onUpdate={props.onUpdate}
-                                />
+                                <EditCommentModal comment={comment} crud={props.crud} post={props.post} onUpdate={props.onUpdate} />
+                                <RemoveCommentModal comment={comment} crud={props.crud} post={props.post} onUpdate={props.onUpdate} />
                             </ButtonGroup>
                         </div>
                     )}
 
-                    {props.user &&
-                        props.user._id !== comment.author._id &&
-                        props.user.roles &&
-                        props.user.roles.isAdministrator && (
-                            <div className="pt-3">
-                                <ButtonGroup className="border border-danger rounded">
-                                    <EditCommentModal
-                                        admin={true}
-                                        comment={comment}
-                                        crud={props.crud}
-                                        post={props.post}
-                                        onUpdate={props.onUpdate}
-                                    />
-                                    <RemoveCommentModal
-                                        admin={true}
-                                        comment={comment}
-                                        crud={props.crud}
-                                        post={props.post}
-                                        onUpdate={props.onUpdate}
-                                    />
-                                </ButtonGroup>
-                            </div>
-                        )}
+                    {props.user && props.user._id !== comment.author._id && props.user.roles && props.user.roles.isAdministrator && (
+                        <div className="pt-3">
+                            <ButtonGroup className="border border-danger rounded">
+                                <EditCommentModal admin={true} comment={comment} crud={props.crud} post={props.post} onUpdate={props.onUpdate} />
+                                <RemoveCommentModal admin={true} comment={comment} crud={props.crud} post={props.post} onUpdate={props.onUpdate} />
+                            </ButtonGroup>
+                        </div>
+                    )}
 
                     {props.user &&
                         props.user._id !== comment.author._id &&
@@ -1009,20 +895,8 @@ const Comments = props => {
                         !props.user.roles.isAdministrator && (
                             <div className="pt-3">
                                 <ButtonGroup className="border border-warning rounded">
-                                    <EditCommentModal
-                                        moderator={true}
-                                        comment={comment}
-                                        crud={props.crud}
-                                        post={props.post}
-                                        onUpdate={props.onUpdate}
-                                    />
-                                    <RemoveCommentModal
-                                        moderator={true}
-                                        comment={comment}
-                                        crud={props.crud}
-                                        post={props.post}
-                                        onUpdate={props.onUpdate}
-                                    />
+                                    <EditCommentModal moderator={true} comment={comment} crud={props.crud} post={props.post} onUpdate={props.onUpdate} />
+                                    <RemoveCommentModal moderator={true} comment={comment} crud={props.crud} post={props.post} onUpdate={props.onUpdate} />
                                 </ButtonGroup>
                             </div>
                         )}
@@ -1035,6 +909,7 @@ const Comments = props => {
 const EmojiPopOver = props => {
     return (
         <OverlayTrigger
+            rootClose
             trigger="click"
             key={uniqid()}
             placement={"bottom"}
@@ -1044,9 +919,8 @@ const EmojiPopOver = props => {
                         {"Emoji Panel"}
                     </Popover.Title>
                     <Popover.Content>
-                        Add clickable emojis here. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto nulla
-                        sapiente voluptatem voluptas dolorum porro explicabo aspernatur pariatur sed eveniet placeat
-                        amet vero, ipsam expedita quidem odit adipisci quis facilis!
+                        Add clickable emojis here. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto nulla sapiente voluptatem voluptas dolorum
+                        porro explicabo aspernatur pariatur sed eveniet placeat amet vero, ipsam expedita quidem odit adipisci quis facilis!
                     </Popover.Content>
                 </Popover>
             }

@@ -2,4 +2,4 @@
 
 ## Before Prod Ready
 
-1. Fix ref in comment accordian
+1. Fix ref in comment accordians and reenable strict mode

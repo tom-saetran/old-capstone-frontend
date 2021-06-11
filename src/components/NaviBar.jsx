@@ -56,27 +56,16 @@ class NaviBar extends React.Component {
                             <>
                                 <Form className="d-none d-md-block ml-auto">
                                     <InputGroup>
-                                        <FormControl
-                                            className="no-active-outline text-dim border"
-                                            placeholder="Search..."
-                                        />
+                                        <FormControl className="no-active-outline text-dim border" placeholder="Search..." />
                                         <InputGroup.Append>
-                                            <InputGroup.Text
-                                                className="bg-white no-active-outline text-dim"
-                                                variant="white"
-                                                as={Button}
-                                            >
+                                            <InputGroup.Text className="bg-white no-active-outline text-dim" variant="white" as={Button}>
                                                 <Icon.Search />
                                             </InputGroup.Text>
                                         </InputGroup.Append>
                                     </InputGroup>
                                 </Form>
                                 <Nav className="ml-auto ml-md-0 pl-3">
-                                    <NavDropdown
-                                        id="userNav"
-                                        title={<img className="navbar-avatar" alt="" src={this.props.user.avatar} />}
-                                        alignRight
-                                    >
+                                    <NavDropdown id="userNav" title={<img className="navbar-avatar" alt="" src={this.props.user.avatar} />} alignRight>
                                         <NavDropdown.Item as={Link} to={"/users/" + this.props.user._id}>
                                             Profile
                                         </NavDropdown.Item>

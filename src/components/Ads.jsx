@@ -13,8 +13,7 @@ class Ads extends React.Component {
     }
 
     componentDidUpdate = async (_previousProps, _previousState) => {
-        if (_previousProps.match.params.id !== this.props.match.params.id)
-            this.setState({ ads: await this.props.crud.ads.getSome() })
+        if (_previousProps.match.params.id !== this.props.match.params.id) this.setState({ ads: await this.props.crud.ads.getSome() })
     }
 
     render() {

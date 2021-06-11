@@ -30,30 +30,14 @@ class Users extends React.Component {
                     <Col className="pr-3" xs={{ span: 8, offset: 1 }}>
                         <User self={this.props.user} user={this.state.renderedUser} loading={this.state.loading} />
                         <UserBlogs self={this.props.user} user={this.state.renderedUser} loading={this.state.loading} />
-                        <UserExperiences
-                            self={this.props.user}
-                            user={this.state.renderedUser}
-                            loading={this.state.loading}
-                        />
-                        <UserEducation
-                            self={this.props.user}
-                            user={this.state.renderedUser}
-                            loading={this.state.loading}
-                        />
-                        <UserEmployment
-                            self={this.props.user}
-                            user={this.state.renderedUser}
-                            loading={this.state.loading}
-                        />
+                        <UserExperiences self={this.props.user} user={this.state.renderedUser} loading={this.state.loading} />
+                        <UserEducation self={this.props.user} user={this.state.renderedUser} loading={this.state.loading} />
+                        <UserEmployment self={this.props.user} user={this.state.renderedUser} loading={this.state.loading} />
                     </Col>
                     <Col xs={2}>
                         <Ads crud={this.props.crud} />
                         <hr />
-                        <Neighbourhood
-                            crud={this.props.crud}
-                            user={this.props.user}
-                            renderedUser={this.state.renderedUser}
-                        />
+                        <Neighbourhood crud={this.props.crud} user={this.props.user} renderedUser={this.state.renderedUser} />
                     </Col>
                 </Row>
             </Container>
@@ -84,9 +68,7 @@ const User = props => {
                     {props.user.biography > 0 ? (
                         <Card.Text>{props.user.biography}</Card.Text>
                     ) : props.self && props.user._id === props.self._id ? (
-                        <Card.Text>
-                            No biography is added yet. You can add one by clicking edit profile below.
-                        </Card.Text>
+                        <Card.Text>No biography is added yet. You can add one by clicking edit profile below.</Card.Text>
                     ) : (
                         <Card.Text>
                             {props.user.name} {props.user.surname} haven't added a biography yet.
