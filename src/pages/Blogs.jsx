@@ -166,7 +166,7 @@ const AddBlogModal = props => {
             <Modal show={show} onHide={handleClose}>
                 <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
                     <Card.Header className="text-center text-dim py-2 bg-white">Add New</Card.Header>
-                    <Modal.Body style={{ height: "320px" }}>
+                    <Modal.Body>
                         <Form.Group controlId="formTitle">
                             <Form.Text className="pl-1 text-dim">Title</Form.Text>
                             <Form.Control
@@ -248,6 +248,18 @@ const EditBlogModal = props => {
     const [validated, setValidated] = React.useState(false)
     const [sending, setSending] = React.useState(false)
 
+    const [image, stageImage] = React.useState(false)
+
+    const inputRef = React.useRef(null)
+    const selectImage = () => inputRef.current.click()
+    const setImage = event => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        const image = event.target.files[0]
+        stageImage(image)
+    }
+
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
     const handleSubmit = async e => {
@@ -285,7 +297,12 @@ const EditBlogModal = props => {
         }
         if (!sending) {
             setSending(true)
-            await props.crud.blogs.put(props.post._id, data)
+            const result = await props.crud.blogs.put(props.post._id, data)
+            if (result && image) {
+                let formData = new FormData()
+                formData.append("cover", image)
+                await props.crud.blogs.cover(result._id, formData)
+            }
             setSending(false)
         }
     }
@@ -309,7 +326,7 @@ const EditBlogModal = props => {
             <Modal show={show} onHide={handleClose}>
                 <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
                     <Card.Header className="text-center text-dim py-2 bg-white">Edit {props.post.title}</Card.Header>
-                    <Modal.Body style={{ height: "320px" }}>
+                    <Modal.Body>
                         <Form.Group controlId="formTitle">
                             <Form.Text className="pl-1 text-dim">Title</Form.Text>
                             <Form.Control
@@ -343,15 +360,15 @@ const EditBlogModal = props => {
                         </Form.Group>
                     </Modal.Body>
 
-                    <div className="d-flex justify-content-end pb-3 pr-3">
+                    <div className="d-flex justify-content-between pb-3 pr-3">
+                        <div>{image && <div className="pt-2 pl-3">Selected: {image.name}</div>}</div>
                         <ButtonToolbar>
                             <ButtonGroup className="mr-2 card-border rounded">
-                                <Button className="pb-2 text-dim no-active-outline" variant="white">
-                                    <Icon.Image />
+                                <Button className="pb-2 text-dim card-border-right no-active-outline" variant="white" onClick={selectImage}>
+                                    <Icon.Image fill="dimgrey" />
+                                    <input onChange={setImage.bind(this)} type="file" id="file" ref={inputRef} style={{ display: "none" }} />
                                 </Button>
-                                <Button className="pb-2 card-border-left text-dim no-active-outline" variant="white">
-                                    <Icon.EmojiLaughing />
-                                </Button>
+                                <EmojiPopOver />
                             </ButtonGroup>
                             <ButtonGroup>
                                 <Button className="card-border rounded text-dim no-active-outline" variant="white" type="submit">
@@ -546,7 +563,7 @@ const EditCommentModal = props => {
             <Modal show={show} onHide={handleClose}>
                 <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
                     <Card.Header className="text-center text-dim py-2 bg-white">Edit comment in {props.post.title}</Card.Header>
-                    <Modal.Body style={{ height: "140px" }}>
+                    <Modal.Body>
                         <Form.Group controlId="formComment">
                             <Form.Text className="pl-1 text-dim">Comment</Form.Text>
                             <Form.Control
