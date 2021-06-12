@@ -132,12 +132,11 @@ class App extends React.Component {
                     })
 
                     if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
-                    results = await results.json()
                 } catch (error) {
                     console.error(error)
                     return null
                 }
-                return await results
+                return results
             },
             // Upload Avatar to User with ID
             avatar: async (id, data) => {
@@ -259,12 +258,11 @@ class App extends React.Component {
                     })
 
                     if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
-                    results = await results.json()
                 } catch (error) {
                     console.error(error)
                     return null
                 }
-                return await results
+                return results
             },
             // Upload Cover to Blog with ID
             cover: async (id, data) => {
@@ -395,12 +393,11 @@ class App extends React.Component {
                         })
 
                         if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
-                        results = await results.json()
                     } catch (error) {
                         console.error(error)
                         return null
                     }
-                    return await results
+                    return results
                 }
             }
         },
@@ -454,6 +451,7 @@ class App extends React.Component {
                     <Route render={routeProps => <Blogs {...routeProps} user={this.state.user} crud={this.crud} />} exact path="/blogs" />
                     <Route render={routeProps => <Users {...routeProps} user={this.state.user} crud={this.crud} />} exact path="/users/:id" />
                     <Route render={routeProps => <HTTP501 {...routeProps} />} exact path="/signup" />
+                    <Route render={routeProps => <HTTP501 {...routeProps} />} exact path="/support" />
                     <Route render={routeProps => <Out {...routeProps} crud={this.crud} />} exact path="/out/:id" />
                     <Route render={routeProps => <HTTP404 {...routeProps} />} exact path="/404" />
                     <Route render={routeProps => <HTTP404 {...routeProps} />} />

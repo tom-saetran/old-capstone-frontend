@@ -89,6 +89,7 @@ const AddBlogModal = props => {
     const [content, setContent] = React.useState("")
     const [category, setCategory] = React.useState("")
     const [validated, setValidated] = React.useState(false)
+    const [sending, setSending] = React.useState(false)
 
     const [image, stageImage] = React.useState("")
 
@@ -115,8 +116,18 @@ const AddBlogModal = props => {
             await handleSend()
             setShow(false)
             props.onUpdate()
+            reset()
         }
         setValidated(true)
+    }
+
+    const reset = () => {
+        setTitle("")
+        setContent("")
+        props.setContent("")
+        setCategory("")
+        stageImage(null)
+        props.stageImage(null)
     }
 
     useEffect(() => {
@@ -134,11 +145,15 @@ const AddBlogModal = props => {
             author: props.user._id
         }
 
-        const result = await props.crud.blogs.post(data)
-        if (result && image) {
-            let formData = new FormData()
-            formData.append("cover", image)
-            await props.crud.blogs.cover(result, formData)
+        if (!sending) {
+            setSending(true)
+            const result = await props.crud.blogs.post(data)
+            if (result && image) {
+                let formData = new FormData()
+                formData.append("cover", image)
+                await props.crud.blogs.cover(result, formData)
+            }
+            setSending(false)
         }
     }
 
@@ -231,6 +246,7 @@ const EditBlogModal = props => {
     const [content, setContent] = React.useState("")
     const [category, setCategory] = React.useState("")
     const [validated, setValidated] = React.useState(false)
+    const [sending, setSending] = React.useState(false)
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
@@ -267,8 +283,11 @@ const EditBlogModal = props => {
             category,
             author: props.post.author
         }
-
-        await props.crud.blogs.put(props.post._id, data)
+        if (!sending) {
+            setSending(true)
+            await props.crud.blogs.put(props.post._id, data)
+            setSending(false)
+        }
     }
 
     return (
@@ -349,14 +368,19 @@ const EditBlogModal = props => {
 
 const RemoveBlogModal = props => {
     const [show, setShow] = React.useState(false)
+    const [sending, setSending] = React.useState(false)
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
     const handleDelete = async () => {
-        await props.crud.blogs.delete(props.post._id)
-        setShow(false)
-        props.onUpdate()
+        if (!sending) {
+            setSending(true)
+            await props.crud.blogs.delete(props.post._id)
+            setShow(false)
+            props.onUpdate()
+            setSending(false)
+        }
     }
 
     return (
@@ -404,6 +428,7 @@ const RemoveBlogModal = props => {
 const AddComment = props => {
     const [comment, setComment] = React.useState("")
     const [validated, setValidated] = React.useState(false)
+    const [sending, setSending] = React.useState(false)
 
     const handleSubmit = async e => {
         const form = e.currentTarget
@@ -426,7 +451,11 @@ const AddComment = props => {
             author: props.user._id
         }
 
-        await props.crud.blogs.comments.post(id, data)
+        if (!sending) {
+            setSending(true)
+            await props.crud.blogs.comments.post(id, data)
+            setSending(false)
+        }
     }
 
     return (
@@ -463,6 +492,7 @@ const EditCommentModal = props => {
     const [show, setShow] = React.useState(false)
     const [comment, setComment] = React.useState("")
     const [validated, setValidated] = React.useState(false)
+    const [sending, setSending] = React.useState(false)
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
@@ -473,9 +503,13 @@ const EditCommentModal = props => {
             e.stopPropagation()
         } else {
             e.preventDefault()
-            await handleSend()
-            setShow(false)
-            props.onUpdate()
+            if (!sending) {
+                setSending(true)
+                await handleSend()
+                setShow(false)
+                props.onUpdate()
+                setSending(false)
+            }
         }
         setValidated(true)
     }
@@ -538,14 +572,19 @@ const EditCommentModal = props => {
 
 const RemoveCommentModal = props => {
     const [show, setShow] = React.useState(false)
+    const [sending, setSending] = React.useState(false)
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
     const handleDelete = async () => {
-        await props.crud.blogs.comments.delete(props.post._id, props.comment._id)
-        setShow(false)
-        props.onUpdate()
+        if (!sending) {
+            setSending(true)
+            await props.crud.blogs.comments.delete(props.post._id, props.comment._id)
+            setShow(false)
+            props.onUpdate()
+            setSending(false)
+        }
     }
 
     return (
@@ -677,6 +716,7 @@ const Controls = props => {
                                 user={props.user}
                                 image={image}
                                 stageImage={stageImage}
+                                setContent={setContent}
                                 content={content}
                             />
                         </ButtonGroup>
@@ -821,7 +861,7 @@ const Posts = props => {
 
                                     {props.user && props.user._id !== post.author._id && props.user.roles && props.user.roles.isAdministrator && (
                                         <div className="pt-3">
-                                            <ButtonGroup className="card-border border-danger rounded">
+                                            <ButtonGroup className="border border-danger rounded">
                                                 <EditBlogModal admin={true} onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                                 <RemoveBlogModal admin={true} onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                             </ButtonGroup>
@@ -834,7 +874,7 @@ const Posts = props => {
                                         props.user.roles.isModerator &&
                                         !props.user.roles.isAdministrator && (
                                             <div className="pt-3">
-                                                <ButtonGroup className="card-border border-warning rounded">
+                                                <ButtonGroup className="border border-warning rounded">
                                                     <EditBlogModal moderator={true} onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                                     <RemoveBlogModal moderator={true} onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                                 </ButtonGroup>
