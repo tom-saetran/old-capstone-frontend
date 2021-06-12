@@ -51,6 +51,31 @@ html {
     padding: 1rem !important;
 }
 
+.card-border,
+.card-border:focus {
+    border: 1px solid rgba(0, 0, 0, 0.125) !important;
+}
+
+.card-border-bottom,
+.card-border-bottom:focus {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
+}
+
+.card-border-top,
+.card-border-top:focus {
+    border-top: 1px solid rgba(0, 0, 0, 0.125) !important;
+}
+
+.card-border-left,
+.card-border-left:focus {
+    border-left: 1px solid rgba(0, 0, 0, 0.125) !important;
+}
+
+.card-border-right,
+.card-border-right:focus {
+    border-right: 1px solid rgba(0, 0, 0, 0.125) !important;
+}
+
 .home-avatar {
     border: 1px solid lightgray;
     border-radius: 50%;

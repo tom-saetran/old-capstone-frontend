@@ -20,8 +20,8 @@ TimeAgo.addLocale(en)
 class App extends React.Component {
     state = {
         user: null,
-        _load: "60b8e485ed3bcb0015e42f7f",
-        load: process.env.REACT_APP_CURRENT || "60bc15a8ae33b80015046cbd"
+        load: "60bb67d73168d10015436242",
+        _load: process.env.REACT_APP_CURRENT || "60bc15a8ae33b80015046cbd"
     }
 
     componentDidMount = async () => {
@@ -358,7 +358,6 @@ class App extends React.Component {
                     }
                     return await results
                 },
-
                 put: async (postId, data, commentId) => {
                     let results
                     try {

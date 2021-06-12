@@ -134,12 +134,17 @@ const AddBlogModal = props => {
             author: props.user._id
         }
 
-        await props.crud.blogs.post(data)
+        const result = await props.crud.blogs.post(data)
+        if (result && image) {
+            let formData = new FormData()
+            formData.append("cover", image)
+            await props.crud.blogs.cover(result, formData)
+        }
     }
 
     return (
         <>
-            <Button className="border rounded text-dim no-active-outline" variant="white" onClick={handleShow}>
+            <Button className="card-border rounded text-dim no-active-outline" variant="white" onClick={handleShow}>
                 Send
             </Button>
 
@@ -150,7 +155,7 @@ const AddBlogModal = props => {
                         <Form.Group controlId="formTitle">
                             <Form.Text className="pl-1 text-dim">Title</Form.Text>
                             <Form.Control
-                                className="border text-dim cursor-text no-active-outline"
+                                className="card-border text-dim cursor-text no-active-outline"
                                 type="text"
                                 required
                                 value={title}
@@ -166,7 +171,7 @@ const AddBlogModal = props => {
                         <Form.Group controlId="formContent">
                             <Form.Text className="pl-1 text-dim">Content</Form.Text>
                             <Form.Control
-                                className="border text-dim cursor-text no-active-outline"
+                                className="card-border text-dim cursor-text no-active-outline"
                                 as="textarea"
                                 rows={2}
                                 required
@@ -183,7 +188,7 @@ const AddBlogModal = props => {
                         <Form.Group controlId="formCategory">
                             <Form.Text className="pl-1 text-dim">Category</Form.Text>
                             <Form.Control
-                                className="border text-dim cursor-text no-active-outline"
+                                className="card-border text-dim cursor-text no-active-outline"
                                 type="text"
                                 required
                                 value={category}
@@ -200,15 +205,15 @@ const AddBlogModal = props => {
                     <div className="d-flex justify-content-between pb-3 pr-3">
                         <div>{image && <div className="pt-2 pl-3">Selected: {image.name}</div>}</div>
                         <ButtonToolbar>
-                            <ButtonGroup className="mr-2 border rounded">
-                                <Button className="pb-2 text-dim border-right no-active-outline" variant="white" onClick={selectImage}>
+                            <ButtonGroup className="mr-2 card-border rounded">
+                                <Button className="pb-2 text-dim card-border-right no-active-outline" variant="white" onClick={selectImage}>
                                     <Icon.Image fill="dimgrey" />
                                     <input onChange={setImage.bind(this)} type="file" id="file" ref={inputRef} style={{ display: "none" }} />
                                 </Button>
                                 <EmojiPopOver />
                             </ButtonGroup>
                             <ButtonGroup>
-                                <Button className="border rounded text-dim no-active-outline" variant="white" type="submit">
+                                <Button className="card-border rounded text-dim no-active-outline" variant="white" type="submit">
                                     Send
                                 </Button>
                             </ButtonGroup>
@@ -289,7 +294,7 @@ const EditBlogModal = props => {
                         <Form.Group controlId="formTitle">
                             <Form.Text className="pl-1 text-dim">Title</Form.Text>
                             <Form.Control
-                                className="border text-dim cursor-text no-active-outline"
+                                className="card-border text-dim cursor-text no-active-outline"
                                 type="text"
                                 required
                                 value={title}
@@ -299,7 +304,7 @@ const EditBlogModal = props => {
                         <Form.Group controlId="formContent">
                             <Form.Text className="pl-1 text-dim">Content</Form.Text>
                             <Form.Control
-                                className="border text-dim cursor-text no-active-outline"
+                                className="card-border text-dim cursor-text no-active-outline"
                                 as="textarea"
                                 rows={2}
                                 required
@@ -310,7 +315,7 @@ const EditBlogModal = props => {
                         <Form.Group controlId="formCategory">
                             <Form.Text className="pl-1 text-dim">Category</Form.Text>
                             <Form.Control
-                                className="border text-dim cursor-text no-active-outline"
+                                className="card-border text-dim cursor-text no-active-outline"
                                 type="text"
                                 required
                                 value={category}
@@ -321,16 +326,16 @@ const EditBlogModal = props => {
 
                     <div className="d-flex justify-content-end pb-3 pr-3">
                         <ButtonToolbar>
-                            <ButtonGroup className="mr-2 border rounded">
+                            <ButtonGroup className="mr-2 card-border rounded">
                                 <Button className="pb-2 text-dim no-active-outline" variant="white">
                                     <Icon.Image />
                                 </Button>
-                                <Button className="pb-2 border-left text-dim no-active-outline" variant="white">
+                                <Button className="pb-2 card-border-left text-dim no-active-outline" variant="white">
                                     <Icon.EmojiLaughing />
                                 </Button>
                             </ButtonGroup>
                             <ButtonGroup>
-                                <Button className="border rounded text-dim no-active-outline" variant="white" type="submit">
+                                <Button className="card-border rounded text-dim no-active-outline" variant="white" type="submit">
                                     Send
                                 </Button>
                             </ButtonGroup>
@@ -362,7 +367,7 @@ const RemoveBlogModal = props => {
                         ? "text-danger pb-2 bg-pink border-left-danger no-active-outline"
                         : props.moderator
                         ? "text-danger pb-2 bg-yellow border-left-warning no-active-outline"
-                        : "text-danger pb-2 border-left no-active-outline"
+                        : "text-danger pb-2 card-border-left no-active-outline"
                 }
                 variant="white"
                 onClick={handleShow}
@@ -376,7 +381,7 @@ const RemoveBlogModal = props => {
                     <div className="d-flex">
                         <Card.Title as={"h6"}>{props.post.title}</Card.Title>
                         <div className="ml-auto">
-                            <Badge pill className="text-dim bg-white border">
+                            <Badge pill className="text-dim bg-white card-border">
                                 {props.post.category}
                             </Badge>
                         </div>
@@ -384,10 +389,10 @@ const RemoveBlogModal = props => {
                     <Card.Text>{props.post.content}</Card.Text>
                 </Modal.Body>
                 <Modal.Footer className="justify-content-center align-items-end">
-                    <Button className="border text-dim no-active-outline" variant="white" onClick={handleClose}>
+                    <Button className="card-border text-dim no-active-outline" variant="white" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button className="border text-danger no-active-outline" variant="white" onClick={handleDelete}>
+                    <Button className="card-border text-danger no-active-outline" variant="white" onClick={handleDelete}>
                         Delete
                     </Button>
                 </Modal.Footer>
@@ -433,7 +438,7 @@ const AddComment = props => {
                     <div className="d-flex">
                         <InputGroup>
                             <Form.Control
-                                className="border no-active-outline"
+                                className="card-border no-active-outline"
                                 as="input"
                                 value={comment}
                                 required
@@ -442,7 +447,7 @@ const AddComment = props => {
                             />
                             <InputGroup.Append>
                                 <EmojiPopOver append={true} />
-                                <InputGroup.Text as={Button} type="submit" variant="white" className="bg-white border text-dim no-active-outline">
+                                <InputGroup.Text as={Button} type="submit" variant="white" className="bg-white card-border text-dim no-active-outline">
                                     <Icon.ChatText />
                                 </InputGroup.Text>
                             </InputGroup.Append>
@@ -511,7 +516,7 @@ const EditCommentModal = props => {
                         <Form.Group controlId="formComment">
                             <Form.Text className="pl-1 text-dim">Comment</Form.Text>
                             <Form.Control
-                                className="border text-dim cursor-text no-active-outline"
+                                className="card-border text-dim cursor-text no-active-outline"
                                 type="text"
                                 required
                                 value={comment}
@@ -521,7 +526,7 @@ const EditCommentModal = props => {
                     </Modal.Body>
 
                     <div className="d-flex justify-content-end pb-3 pr-3">
-                        <Button className="border rounded text-dim no-active-outline" variant="white" type="submit">
+                        <Button className="card-border rounded text-dim no-active-outline" variant="white" type="submit">
                             Send
                         </Button>
                     </div>
@@ -551,7 +556,7 @@ const RemoveCommentModal = props => {
                         ? "text-danger border-left-danger bg-pink no-active-outline"
                         : props.moderator
                         ? "text-danger border-left-warning bg-yellow no-active-outline"
-                        : "text-danger border-left no-active-outline"
+                        : "text-danger card-border-left no-active-outline"
                 }
                 variant="white"
                 onClick={handleShow}
@@ -562,10 +567,10 @@ const RemoveCommentModal = props => {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header className="justify-content-center py-2 text-dim">This will remove the comment permanently!</Modal.Header>
                 <Modal.Footer className="justify-content-center align-items-end">
-                    <Button className="border text-dim no-active-outline" variant="white" onClick={handleClose}>
+                    <Button className="card-border text-dim no-active-outline" variant="white" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button className="border text-danger no-active-outline" variant="white" onClick={handleDelete}>
+                    <Button className="card-border text-danger no-active-outline" variant="white" onClick={handleDelete}>
                         Delete
                     </Button>
                 </Modal.Footer>
@@ -576,7 +581,7 @@ const RemoveCommentModal = props => {
 
 const User = props => {
     return props.user ? (
-        <Card className="border text-dim">
+        <Card className="text-dim">
             <Card.Header className="text-center py-1 bg-white">{props.user.name}</Card.Header>
             <Card.Body>
                 <Link className="link" to={"users/" + props.user._id}>
@@ -604,7 +609,7 @@ const User = props => {
 
 const Tools = () => {
     return (
-        <Card className="border text-dim">
+        <Card className="card-border text-dim">
             <Card.Body className="py-3">
                 <Link className="link" to="/profile">
                     Profile
@@ -648,7 +653,7 @@ const Controls = props => {
                     <Form.Group controlId="blogForm">
                         <Form.Text className="pl-1">Whats on your mind {props.user.name}?</Form.Text>
                         <Form.Control
-                            className="border text-dim cursor-text no-active-outline"
+                            className="card-border text-dim cursor-text no-active-outline"
                             as="textarea"
                             rows={2}
                             placeholder="Type here..."
@@ -658,8 +663,8 @@ const Controls = props => {
                     </Form.Group>
 
                     <ButtonToolbar>
-                        <ButtonGroup className="mr-2 border rounded">
-                            <Button className="pb-2 border-right no-active-outline" variant="white" onClick={selectImage}>
+                        <ButtonGroup className="mr-2 card-border rounded">
+                            <Button className="pb-2 card-border-right no-active-outline" variant="white" onClick={selectImage}>
                                 <Icon.Image fill="dimgrey" />
                                 <input onChange={setImage.bind(this)} type="file" id="file" ref={inputRef} style={{ display: "none" }} />
                             </Button>
@@ -700,15 +705,34 @@ const Posts = props => {
                                 <div>
                                     <div>
                                         <div className="d-flex align-items-baseline">
-                                            <Card.Title className="pr-1" as={"h6"}>
+                                            <Card.Title className="pr-1 mb-0" as={"h6"}>
                                                 {post.title}
                                             </Card.Title>
+
                                             <div className="ml-auto">
-                                                <Badge pill className="text-dim bg-white border">
+                                                <Badge pill className="text-dim bg-white card-border">
                                                     {post.category}
                                                 </Badge>
                                             </div>
                                         </div>
+
+                                        {post.cover && (
+                                            <div className="d-flex justify-content-center">
+                                                <Card.Img
+                                                    style={{
+                                                        width: "auto",
+                                                        maxWidth: "100%",
+                                                        maxHeight: "24rem",
+                                                        minWidth: "4rem",
+                                                        minHeight: "2rem",
+                                                        objectFit: "cover"
+                                                    }}
+                                                    className="my-3"
+                                                    alt="Cover Image"
+                                                    src={post.cover}
+                                                />
+                                            </div>
+                                        )}
                                         <Card.Text>{post.content}</Card.Text>
 
                                         <div className="d-flex justify-content-between">
@@ -716,7 +740,7 @@ const Posts = props => {
                                                 <Form.Text>
                                                     <span className="d-flex">
                                                         <Link className="link" to={"users/" + post.author._id}>
-                                                            <Card.Img className="border blog-avatar mb-1 mr-2" alt="" src={post.author.avatar} />
+                                                            <Card.Img className="card-border blog-avatar mb-1 mr-2" alt="" src={post.author.avatar} />
                                                             {post.author.name} {post.author.surname}
                                                         </Link>
                                                     </span>
@@ -726,7 +750,7 @@ const Posts = props => {
                                                 <Form.Text className="pr-1">
                                                     {post.likes.find(like => props.user && like === props.user._id) ? (
                                                         <div
-                                                            className="border rounded cursor-pointer"
+                                                            className="card-border rounded cursor-pointer"
                                                             onClick={async e => {
                                                                 await props.crud.blogs.unlike(post._id, {
                                                                     id: props.user._id
@@ -742,7 +766,7 @@ const Posts = props => {
                                                         </div>
                                                     ) : (
                                                         <div
-                                                            className="border rounded cursor-pointer"
+                                                            className="card-border rounded cursor-pointer"
                                                             onClick={async () => {
                                                                 await props.crud.blogs.like(post._id, {
                                                                     id: props.user._id
@@ -759,7 +783,7 @@ const Posts = props => {
                                                     )}
                                                 </Form.Text>
                                                 <Accordion.Toggle as="div" eventKey="0">
-                                                    <Form.Text className="border rounded px-1 cursor-pointer text-dim">
+                                                    <Form.Text className="card-border rounded px-1 cursor-pointer text-dim">
                                                         <span>
                                                             <span className="pr-1">{post.comments.length}</span>
                                                             <span className="d-none d-sm-inline-block pr-1">
@@ -788,7 +812,7 @@ const Posts = props => {
 
                                     {props.user && props.user._id === post.author._id && (
                                         <div className="pt-3">
-                                            <ButtonGroup className="border rounded">
+                                            <ButtonGroup className="card-border rounded">
                                                 <EditBlogModal onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                                 <RemoveBlogModal onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                             </ButtonGroup>
@@ -797,7 +821,7 @@ const Posts = props => {
 
                                     {props.user && props.user._id !== post.author._id && props.user.roles && props.user.roles.isAdministrator && (
                                         <div className="pt-3">
-                                            <ButtonGroup className="border border-danger rounded">
+                                            <ButtonGroup className="card-border border-danger rounded">
                                                 <EditBlogModal admin={true} onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                                 <RemoveBlogModal admin={true} onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                             </ButtonGroup>
@@ -810,7 +834,7 @@ const Posts = props => {
                                         props.user.roles.isModerator &&
                                         !props.user.roles.isAdministrator && (
                                             <div className="pt-3">
-                                                <ButtonGroup className="border border-warning rounded">
+                                                <ButtonGroup className="card-border border-warning rounded">
                                                     <EditBlogModal moderator={true} onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                                     <RemoveBlogModal moderator={true} onUpdate={props.onUpdate} post={post} crud={props.crud} />
                                                 </ButtonGroup>
@@ -855,7 +879,7 @@ const Comments = props => {
                         <Form.Text>
                             <span className="d-flex">
                                 <Link className="link" to={"users/" + comment.author._id}>
-                                    <Card.Img className="border blog-avatar mb-1 mr-2" alt="" src={comment.author.avatar} />
+                                    <Card.Img className="card-border blog-avatar mb-1 mr-2" alt="" src={comment.author.avatar} />
                                     {comment.author.name} {comment.author.surname}
                                 </Link>
                             </span>
@@ -872,7 +896,7 @@ const Comments = props => {
                     </div>
                     {props.user && props.user._id === comment.author._id && (
                         <div className="pt-2">
-                            <ButtonGroup className="border rounded">
+                            <ButtonGroup className="card-border rounded">
                                 <EditCommentModal comment={comment} crud={props.crud} post={props.post} onUpdate={props.onUpdate} />
                                 <RemoveCommentModal comment={comment} crud={props.crud} post={props.post} onUpdate={props.onUpdate} />
                             </ButtonGroup>
@@ -926,7 +950,7 @@ const EmojiPopOver = props => {
             }
         >
             {props.append ? (
-                <InputGroup.Text as={Button} variant="white" className="bg-white border text-dim no-active-outline">
+                <InputGroup.Text as={Button} variant="white" className="bg-white card-border text-dim no-active-outline">
                     <Icon.EmojiLaughing />
                 </InputGroup.Text>
             ) : (
