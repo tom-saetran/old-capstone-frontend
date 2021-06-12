@@ -24,7 +24,7 @@ class NaviBar extends React.Component {
                         <Link to="/">
                             <Navbar.Brand className="pb-2">
                                 <Icon.HddNetwork fill="dimgray" className="mb-1" />
-                                <span className="ml-2 text-dim">Tom's Data</span>
+                                <span className="ml-2 text-dim cursor-pointer">Tom's Data</span>
                             </Navbar.Brand>
                         </Link>
 

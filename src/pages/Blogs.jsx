@@ -762,7 +762,7 @@ const Posts = props => {
                                 <div>
                                     <div>
                                         <div className="d-flex align-items-baseline">
-                                            <Card.Title className="pr-1 mb-0" as={"h6"}>
+                                            <Card.Title className="pr-1 mb-0 text-truncate" as={"h6"}>
                                                 {post.title}
                                             </Card.Title>
 
@@ -804,9 +804,10 @@ const Posts = props => {
                                                 </Form.Text>
                                             </Col>
                                             <Col className="d-flex justify-content-between pl-2 pr-0">
-                                                <Form.Text className="pr-1">
+                                                <div className="pr-1">
                                                     {post.likes.find(like => props.user && like === props.user._id) ? (
-                                                        <div
+                                                        <Form.Text
+                                                            style={{ height: "1.35rem" }}
                                                             className="card-border rounded cursor-pointer"
                                                             onClick={async e => {
                                                                 await props.crud.blogs.unlike(post._id, {
@@ -816,13 +817,14 @@ const Posts = props => {
                                                                 props.onUpdate()
                                                             }}
                                                         >
-                                                            <span className="pl-1 pr-1 text-dim cursor-pointer">
+                                                            <span className="px-1 text-dim cursor-pointer">
                                                                 <Icon.HeartFill style={{ marginBottom: "0.175rem" }} className="mr-1" fill="#dc3545" />
                                                                 {post.likes.length}
                                                             </span>
-                                                        </div>
+                                                        </Form.Text>
                                                     ) : (
-                                                        <div
+                                                        <Form.Text
+                                                            style={{ height: "1.35rem" }}
                                                             className="card-border rounded cursor-pointer"
                                                             onClick={async () => {
                                                                 await props.crud.blogs.like(post._id, {
@@ -836,19 +838,19 @@ const Posts = props => {
                                                                 <Icon.HeartFill style={{ marginBottom: "0.175rem" }} className="mr-1" fill="lightgrey" />
                                                                 {post.likes.length}
                                                             </span>
-                                                        </div>
+                                                        </Form.Text>
                                                     )}
-                                                </Form.Text>
+                                                </div>
                                                 <Accordion.Toggle as="div" eventKey="0">
-                                                    <Form.Text className="card-border rounded px-1 cursor-pointer text-dim">
+                                                    <Form.Text style={{ height: "1.35rem" }} className="card-border rounded pl-1 cursor-pointer text-dim">
                                                         <span>
-                                                            <span className="pr-1">{post.comments.length}</span>
-                                                            <span className="d-none d-sm-inline-block pr-1">
+                                                            <Icon.ChatText className="mb-1" />
+                                                            <span className="mx-1">{post.comments.length}</span>
+                                                            <span className="d-none mr-1 d-sm-inline-block">
                                                                 Comment
                                                                 {post.comments.length === 0 ? "s" : ""}
                                                                 {post.comments.length > 1 ? "s" : ""}
                                                             </span>
-                                                            <Icon.ChatText className="mb-1" />
                                                         </span>
                                                     </Form.Text>
                                                 </Accordion.Toggle>
@@ -899,7 +901,7 @@ const Posts = props => {
                                         )}
                                 </div>
                                 <Accordion.Collapse eventKey="0">
-                                    <Card.Body className="py-0">
+                                    <Card.Body className="p-0 px-3">
                                         <AddComment onUpdate={props.onUpdate} user={props.user} post={post} crud={props.crud} />
                                         <hr />
                                         <Comments onUpdate={props.onUpdate} user={props.user} crud={props.crud} post={post} />
@@ -941,6 +943,7 @@ const Comments = props => {
                                 </Link>
                             </span>
                         </Form.Text>
+
                         {comment.createdAt === comment.updatedAt ? (
                             <Form.Text>
                                 Posted: <ReactTimeAgo date={new Date(comment.createdAt)} />

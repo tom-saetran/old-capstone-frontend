@@ -1,9 +1,10 @@
 import React from "react"
-import { Col, Container, Row, Card, Spinner, Form } from "react-bootstrap"
+import { Col, Container, Row, Card, Spinner, Form, Badge } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import Ads from "../components/Ads"
 import ReactTimeAgo from "react-time-ago"
 import Neighbourhood from "../components/Neighbours"
+import uniqid from "uniqid"
 
 class Users extends React.Component {
     state = {
@@ -114,13 +115,41 @@ const UserBlogs = props => {
                         .reverse()
                         .map((blog, index) => {
                             return (
-                                <Card.Body className="py-0" key={blog._id}>
-                                    <Card.Title as={"h6"}>{blog.title}</Card.Title>
-                                    <Card.Text>{blog.content}</Card.Text>
-                                    {props.user.blogs.length - 1 !== index && <hr />}
-                                </Card.Body>
+                                <div className="mx-3" key={blog._id}>
+                                    <div className="d-flex align-items-baseline">
+                                        <Card.Title className="pr-1 mb-0 text-truncate" as={"h6"}>
+                                            {blog.title}
+                                        </Card.Title>
+
+                                        <div className="ml-auto">
+                                            <Badge pill className="text-dim bg-white card-border">
+                                                {blog.category}
+                                            </Badge>
+                                        </div>
+                                    </div>
+
+                                    {blog.cover && (
+                                        <div className="d-flex justify-content-center">
+                                            <Card.Img
+                                                style={{
+                                                    width: "auto",
+                                                    maxWidth: "100%",
+                                                    maxHeight: "24rem",
+                                                    minWidth: "4rem",
+                                                    minHeight: "2rem",
+                                                    objectFit: "cover"
+                                                }}
+                                                className="mt-3"
+                                                alt="Cover Image"
+                                                src={blog.cover}
+                                            />
+                                        </div>
+                                    )}
+                                    <Card.Text className="pt-3">{blog.content}</Card.Text>
+                                </div>
                             )
-                        })}
+                        })
+                        .reduce((prev, curr) => [prev, <hr className="mx-3" key={uniqid()} />, curr])}
                     <Card.Footer className="text-center mt-3 py-1 bg-white">
                         <Link className="link" to="/blogs">
                             Go to Blogs
