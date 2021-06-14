@@ -5,6 +5,7 @@ import "./global.css"
 
 import Footer from "./components/Footer"
 import NaviBar from "./components/NaviBar"
+import ScrollToTop from "./components/ScrollToTop"
 
 import Home from "./pages/Home"
 import Users from "./pages/Users"
@@ -14,7 +15,6 @@ import HTTP501 from "./pages/HTTP501"
 
 import TimeAgo from "javascript-time-ago"
 import en from "javascript-time-ago/locale/en"
-import ScrollToTop from "./components/ScrollToTop"
 TimeAgo.addLocale(en)
 
 class App extends React.Component {
@@ -86,7 +86,6 @@ class App extends React.Component {
                             //Authorization: this.state.authtoken
                         }
                     })
-
                     if (!results.ok) throw new Error("got data in return but the ok flag is not true!")
                     results = await results.json()
                 } catch (error) {
@@ -476,9 +475,7 @@ class Out extends React.Component {
     componentDidMount = async () => {
         const ads = await this.props.crud.ads.getAll()
         let obj = {}
-        ads.forEach(ad => {
-            obj[ad.outId] = ad.outLink
-        })
+        ads.forEach(ad => (obj[ad.outId] = ad.outLink))
 
         this.setState({ knownRoutes: { ...this.state.knownRoutes, ...obj } })
     }
