@@ -49,8 +49,8 @@ class Users extends React.Component {
 const User = props => {
     return props.user ? (
         <>
-            <Card className="border text-dim">
-                <Card.Header className="text-center py-1 bg-white">
+            <Card className="border ">
+                <Card.Header className="text-center py-1">
                     {props.user.name} {props.user.surname}
                 </Card.Header>
                 <Card.Body>
@@ -88,7 +88,7 @@ const User = props => {
         </>
     ) : props.loading ? (
         <>
-            <Card className="border text-dim">
+            <Card className="border ">
                 <Card.Body className="text-center p-5">
                     <Spinner className="spinner" animation="border" />
                 </Card.Body>
@@ -96,7 +96,7 @@ const User = props => {
         </>
     ) : (
         <>
-            <Card className="border text-dim">
+            <Card className="border ">
                 <Card.Body className="text-center p-5">Failed to fetch content!</Card.Body>
             </Card>
         </>
@@ -108,7 +108,7 @@ const UserBlogs = props => {
         props.user.blogs.length > 0 ? (
             <>
                 <hr />
-                <Card className="border text-dim">
+                <Card className="border ">
                     <Card.Header className="text-center mb-3 py-1 bg-white">Blogs</Card.Header>
                     {props.user.blogs
                         .slice(0)
@@ -122,7 +122,7 @@ const UserBlogs = props => {
                                         </Card.Title>
 
                                         <div className="ml-auto">
-                                            <Badge pill className="text-dim bg-white card-border">
+                                            <Badge pill className=" bg-white card-border">
                                                 {blog.category}
                                             </Badge>
                                         </div>
@@ -160,7 +160,7 @@ const UserBlogs = props => {
         ) : props.self && props.user._id === props.self._id ? (
             <>
                 <hr />
-                <Card className="border text-dim">
+                <Card className="border ">
                     <Card.Header className="text-center py-1 bg-white">Blogs</Card.Header>
                     <Card.Body className="text-center p-5">No Blogs added yet.</Card.Body>
                     <Card.Footer className="text-center py-1 bg-white">
@@ -174,7 +174,7 @@ const UserBlogs = props => {
     ) : props.loading ? (
         <>
             <hr />
-            <Card className="border text-dim">
+            <Card className="border ">
                 <Card.Body className="text-center p-5">
                     <Spinner className="spinner" animation="border" />
                 </Card.Body>
@@ -183,7 +183,7 @@ const UserBlogs = props => {
     ) : (
         <>
             <hr />
-            <Card className="border text-dim">
+            <Card className="border ">
                 <Card.Body className="text-center p-5">Failed to fetch content!</Card.Body>
             </Card>
         </>
@@ -195,7 +195,7 @@ const UserExperiences = props => {
         props.user.experiences.length > 0 ? (
             <>
                 <hr />
-                <Card className="border text-dim">
+                <Card className="border ">
                     <Card.Header className="text-center py-1 bg-white">Experiences</Card.Header>
                     {props.user.experiences.map(experience => {
                         return (
@@ -216,7 +216,7 @@ const UserExperiences = props => {
         ) : props.self && props.user._id === props.self._id ? (
             <>
                 <hr />
-                <Card className="border text-dim">
+                <Card className="border ">
                     <Card.Header className="text-center py-1 bg-white">Experiences</Card.Header>
                     <Card.Body className="text-center p-5">No Experience added yet.</Card.Body>
                     <Card.Footer className="text-center py-1 bg-white">
@@ -230,7 +230,7 @@ const UserExperiences = props => {
     ) : props.loading ? (
         <>
             <hr />
-            <Card className="border text-dim">
+            <Card className="border ">
                 <Card.Body className="text-center p-5">
                     <Spinner className="spinner" animation="border" />
                 </Card.Body>
@@ -239,7 +239,7 @@ const UserExperiences = props => {
     ) : (
         <>
             <hr />
-            <Card className="border text-dim">
+            <Card className="border ">
                 <Card.Body className="text-center p-5">Failed to fetch content!</Card.Body>
             </Card>
         </>
@@ -251,7 +251,7 @@ const UserEducation = props => {
         props.user.educations.length > 0 ? (
             <>
                 <hr />
-                <Card className="border text-dim">
+                <Card className="border ">
                     <Card.Header className="text-center py-1 bg-white">Education</Card.Header>
                     {props.user.educations.map(education => {
                         return (
@@ -272,7 +272,7 @@ const UserEducation = props => {
         ) : props.self && props.user._id === props.self._id ? (
             <>
                 <hr />
-                <Card className="border text-dim">
+                <Card className="border ">
                     <Card.Header className="text-center py-1 bg-white">Education</Card.Header>
                     <Card.Body className="text-center p-5">No Education added yet.</Card.Body>
                     <Card.Footer className="text-center py-1 bg-white">
@@ -286,7 +286,7 @@ const UserEducation = props => {
     ) : props.loading ? (
         <>
             <hr />
-            <Card className="border text-dim">
+            <Card className="border ">
                 <Card.Body className="text-center p-5">
                     <Spinner className="spinner" animation="border" />
                 </Card.Body>
@@ -295,7 +295,7 @@ const UserEducation = props => {
     ) : (
         <>
             <hr />
-            <Card className="border text-dim">
+            <Card className="border ">
                 <Card.Body className="text-center p-5">Failed to fetch content!</Card.Body>
             </Card>
         </>
@@ -307,7 +307,7 @@ const UserEmployment = props => {
         props.user.employments.length > 0 ? (
             <>
                 <hr />
-                <Card className="border text-dim">
+                <Card className="border ">
                     <Card.Header className="text-center py-1 bg-white">Employment</Card.Header>
                     {props.user.employments.map(employment => {
                         return (
@@ -328,7 +328,7 @@ const UserEmployment = props => {
         ) : props.self && props.user._id === props.self._id ? (
             <>
                 <hr />
-                <Card className="border text-dim">
+                <Card className="border ">
                     <Card.Header className="text-center py-1 bg-white">Employment</Card.Header>
                     <Card.Body className="text-center p-5">No Employment added yet.</Card.Body>
                     <Card.Footer className="text-center py-1 bg-white">
@@ -342,7 +342,7 @@ const UserEmployment = props => {
     ) : props.loading ? (
         <>
             <hr />
-            <Card className="border text-dim">
+            <Card className="border ">
                 <Card.Body className="text-center p-5">
                     <Spinner className="spinner" animation="border" />
                 </Card.Body>
@@ -351,7 +351,7 @@ const UserEmployment = props => {
     ) : (
         <>
             <hr />
-            <Card className="border text-dim">
+            <Card className="border ">
                 <Card.Body className="text-center p-5">Failed to fetch content!</Card.Body>
             </Card>
         </>

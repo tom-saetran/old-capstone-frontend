@@ -18,8 +18,8 @@ class Ads extends React.Component {
 
     render() {
         return this.state.ads ? (
-            <Card className="border text-dim">
-                <Card.Header className="text-center py-1 bg-white">Ads</Card.Header>
+            <Card className="border ">
+                <Card.Header className="text-center py-1">Ads</Card.Header>
                 <Card.Body>
                     {this.state.ads
                         .map(ad => {
@@ -36,14 +36,14 @@ class Ads extends React.Component {
                         })
                         .reduce((prev, curr) => [prev, <hr key={uniqid()} />, curr])}
                 </Card.Body>
-                <Card.Footer className="text-center py-1 bg-white">
+                <Card.Footer className="text-center py-1">
                     <Link className="link" to="/advertise">
                         Advertise Here?
                     </Link>
                 </Card.Footer>
             </Card>
         ) : (
-            <Card className="text-dim text-center">
+            <Card className=" text-center">
                 <Card.Body>
                     <Spinner className="spinner" animation="border" />
                 </Card.Body>

@@ -1,3 +1,23 @@
+:root {
+    --activeBackgroundColor: white;
+    --activeBorderColor: lightgrey;
+    --activeFooterBackgroundColor: white;
+    --activeNavBarBackgroundColor: white;
+    --activeCardBackgroundColor: white;
+    --activeButtonBackgroundColor: white;
+    --activeInputBackgroundColor: white;
+
+    --activeTextColor: grey;
+    --activeLinkColor: dimgrey;
+    --activeLinkHoverColor: lightgrey;
+    --activeInputTextColor: grey;
+    --activeInputPlaceholderTextColor: lightgrey;
+
+    --activeIconColor: grey;
+    --activeEditIconColor: yellow;
+    --activeDeleteIconColor: red;
+}
+
 html {
     overflow: scroll;
     overflow-x: hidden;
@@ -7,13 +27,112 @@ html {
     background: transparent; /* Optional: just make scrollbar invisible */
 }
 
-/* NAVBAR */
+.border,
+.input-group-text,
+.input-group-text:focus {
+    border: 1px solid var(--activeBorderColor) !important;
+    background-color: var(--activeButtonBackgroundColor);
+}
+
+body {
+    background-color: var(--activeBackgroundColor);
+    color: var(--activeTextColor);
+}
+
+.icon-delete {
+    color: var(--activeDeleteIconColor);
+}
+
+.icon-edit {
+    color: var(--activeEditIconColor);
+}
+
+.icon {
+    color: var(--activeIconColor) !important;
+}
+
+.dropdown-item,
+.nav-link,
+.navbar-brand {
+    color: var(--activeTextColor) !important;
+}
+
+.btn-primary:not(:disabled) {
+    background-color: var(--activeButtonBackgroundColor);
+    color: var(--activeTextColor);
+    border-color: var(--activeBorderColor);
+}
+
+hr {
+    background-color: var(--activeBorderColor);
+}
+
+.form-control::placeholder {
+    color: var(--activeInputPlaceholderTextColor);
+}
+
+.form-control,
+.form-control:focus {
+    background-color: var(--activeInputBackgroundColor);
+    color: var(--activeInputTextColor);
+}
+
+.arrow::before {
+    border-bottom-color: var(--activeBorderColor) !important;
+}
+
+.arrow::after {
+    border-bottom-color: var(--activeCardBackgroundColor) !important;
+}
+
+.dropdown-menu,
+.popover {
+    border: 1px solid var(--activeBorderColor);
+}
+
+.popover-header::before {
+    border-bottom: none !important;
+}
+
+.dropdown-menu {
+    background-color: var(--activeCardBackgroundColor);
+}
+
+.card-header {
+    background-color: var(--activeCardBackgroundColor);
+}
+
+.card,
+.card-footer,
+.popover-header,
+.popover-body,
+.modal-content {
+    background-color: var(--activeCardBackgroundColor);
+    color: var(--activeTextColor);
+}
+
+.modal-header,
+.popover-header,
+.card-header {
+    border-bottom: 1px solid var(--activeBorderColor);
+}
+
+.dropdown-divider,
+.modal-footer,
+.card-footer {
+    border-top: 1px solid var(--activeBorderColor);
+}
+
 .dropdown-toggle::after {
     display: none !important; /* Removes Caret */
 }
 
+.border-top {
+    border-top: 1px solid var(--activeBorderColor) !important;
+}
+
 .navbar-avatar {
-    border: 1px solid lightgray;
+    border: 1px solid var(--activeBorderColor);
     border-radius: 50%;
     object-fit: cover;
     height: 3rem;
@@ -26,7 +145,7 @@ html {
 }
 
 .card-avatar {
-    border: 1px solid lightgray;
+    border: 1px solid var(--activeBorderColor);
     border-radius: 50%;
     object-fit: cover;
     height: 8rem;
@@ -39,7 +158,7 @@ html {
 }
 
 .blog-avatar {
-    border: 1px solid lightgray;
+    border: 1px solid var(--activeBorderColor);
     border-radius: 50%;
     object-fit: cover;
     height: 1.35rem;
@@ -51,33 +170,34 @@ html {
     padding: 1rem;
 }
 
+.card,
 .card-border,
 .card-border:focus {
-    border: 1px solid rgba(0, 0, 0, 0.125) !important;
+    border: 1px solid var(--activeBorderColor) !important;
 }
 
 .card-border-bottom,
 .card-border-bottom:focus {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
+    border-bottom: 1px solid var(--activeBorderColor) !important;
 }
 
 .card-border-top,
 .card-border-top:focus {
-    border-top: 1px solid rgba(0, 0, 0, 0.125) !important;
+    border-top: 1px solid var(--activeBorderColor) !important;
 }
 
 .card-border-left,
 .card-border-left:focus {
-    border-left: 1px solid rgba(0, 0, 0, 0.125) !important;
+    border-left: 1px solid var(--activeBorderColor) !important;
 }
 
 .card-border-right,
 .card-border-right:focus {
-    border-right: 1px solid rgba(0, 0, 0, 0.125) !important;
+    border-right: 1px solid var(--activeBorderColor) !important;
 }
 
 .home-avatar {
-    border: 1px solid lightgray;
+    border: 1px solid var(--activeBorderColor);
     border-radius: 50%;
     object-fit: cover;
     height: 16rem;
@@ -85,7 +205,7 @@ html {
 }
 
 .friend-avatar {
-    border: 1px solid lightgray;
+    border: 1px solid var(--activeBorderColor);
     border-radius: 50%;
     object-fit: cover;
     height: 3rem;
@@ -162,14 +282,22 @@ html {
 }
 
 /* FOOTER */
+.footer {
+    background-color: var(--activeFooterBackgroundColor);
+}
+
+.navigation {
+    background-color: var(--activeNavBarBackgroundColor);
+}
+
 .link {
     text-decoration: none;
-    color: dimgray;
+    color: var(--activeLinkColor);
 }
 
 .link:hover {
     text-decoration: none;
-    color: darkgray;
+    color: var(--activeLinkHoverColor);
 }
 
 .center {

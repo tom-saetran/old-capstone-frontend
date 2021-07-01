@@ -2,6 +2,7 @@ import React from "react"
 import { Navbar, Nav, Form, NavDropdown, FormControl, InputGroup, Button, Col } from "react-bootstrap"
 import * as Icon from "react-bootstrap-icons"
 import { Link } from "react-router-dom"
+import ThemeProvider from "./ThemeProvider"
 
 class NaviBar extends React.Component {
     state = {
@@ -18,13 +19,13 @@ class NaviBar extends React.Component {
 
     render() {
         return (
-            <div className="card-border-bottom">
+            <div className="navigation card-border-bottom">
                 <Col className="px-xl-0" xl={{ span: 10, offset: 1 }}>
-                    <Navbar className="p-0" bg="white" style={{ height: "4.5rem" }}>
+                    <Navbar className="p-0" style={{ height: "4.5rem" }}>
                         <Link to="/">
                             <Navbar.Brand className="pb-2">
-                                <Icon.HddNetwork fill="dimgray" className="mb-1" />
-                                <span className="ml-2 text-dim cursor-pointer">Tom's Data</span>
+                                <Icon.HddNetwork className="mb-1 icon" />
+                                <span className="ml-2 cursor-pointer">Tom's Data</span>
                             </Navbar.Brand>
                         </Link>
 
@@ -56,10 +57,10 @@ class NaviBar extends React.Component {
                             <>
                                 <Form className="d-none d-md-block ml-auto">
                                     <InputGroup>
-                                        <FormControl className="no-active-outline text-dim border" placeholder="Search..." />
+                                        <FormControl className="no-active-outline border" placeholder="Search..." />
                                         <InputGroup.Append>
-                                            <InputGroup.Text className="bg-white no-active-outline text-dim" variant="white" as={Button}>
-                                                <Icon.Search />
+                                            <InputGroup.Text className="no-active-outline" as={Button}>
+                                                <Icon.Search className="icon" />
                                             </InputGroup.Text>
                                         </InputGroup.Append>
                                     </InputGroup>
@@ -80,6 +81,7 @@ class NaviBar extends React.Component {
                                 </Nav>
                             </>
                         )}
+                        <ThemeProvider />
                     </Navbar>
                 </Col>
             </div>

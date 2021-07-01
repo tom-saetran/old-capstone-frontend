@@ -29,8 +29,8 @@ class Neighbourhood extends React.Component {
 
     render() {
         return this.state.users && this.props.user && this.state.mayKnow ? (
-            <Card className="text-dim">
-                <Card.Header className="text-center py-1 bg-white">People you may know</Card.Header>
+            <Card className="">
+                <Card.Header className="text-center py-1">People you may know</Card.Header>
                 <Card.Body>
                     {this.state.mayKnow
                         .filter(user => user._id !== this.props.user._id && user._id !== this.props.match.params.id)
@@ -45,20 +45,22 @@ class Neighbourhood extends React.Component {
                                             {user.name} {user.surname}
                                         </Link>
                                     </Card.Title>
-                                    <Card.Text className="text-truncate">{user.description}</Card.Text>
+                                    <Card.Text className="text-truncate">
+                                        <span title={user.description}>{user.description}</span>
+                                    </Card.Text>
                                 </div>
                             )
                         })
                         .reduce((prev, curr) => [prev, <hr key={uniqid()} />, curr])}
                 </Card.Body>
-                <Card.Footer className="text-center py-1 bg-white">
+                <Card.Footer className="text-center py-1">
                     <Link className="link" to="/">
                         See more results
                     </Link>
                 </Card.Footer>
             </Card>
         ) : (
-            <Card className="text-dim text-center">
+            <Card className=" text-center">
                 <Card.Body>
                     <Spinner className="spinner" animation="border" />
                 </Card.Body>
