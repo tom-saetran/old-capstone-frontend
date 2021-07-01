@@ -78,7 +78,7 @@ const User = props => {
                 </Card.Body>
 
                 {props.self && props.user._id === props.self._id ? (
-                    <Card.Footer className="text-center py-1 bg-white">
+                    <Card.Footer className="text-center py-1 ">
                         <Link className="link" to="/">
                             Update Profile
                         </Link>
@@ -109,7 +109,7 @@ const UserBlogs = props => {
             <>
                 <hr />
                 <Card className="border ">
-                    <Card.Header className="text-center mb-3 py-1 bg-white">Blogs</Card.Header>
+                    <Card.Header className="text-center mb-3 py-1 ">Blogs</Card.Header>
                     {props.user.blogs
                         .slice(0)
                         .reverse()
@@ -122,7 +122,7 @@ const UserBlogs = props => {
                                         </Card.Title>
 
                                         <div className="ml-auto">
-                                            <Badge pill className=" bg-white card-border">
+                                            <Badge pill className="card-border">
                                                 {blog.category}
                                             </Badge>
                                         </div>
@@ -150,7 +150,7 @@ const UserBlogs = props => {
                             )
                         })
                         .reduce((prev, curr) => [prev, <hr className="mx-3" key={uniqid()} />, curr])}
-                    <Card.Footer className="text-center mt-3 py-1 bg-white">
+                    <Card.Footer className="text-center mt-3 py-1 ">
                         <Link className="link" to="/blogs">
                             Go to Blogs
                         </Link>
@@ -161,9 +161,9 @@ const UserBlogs = props => {
             <>
                 <hr />
                 <Card className="border ">
-                    <Card.Header className="text-center py-1 bg-white">Blogs</Card.Header>
+                    <Card.Header className="text-center py-1 ">Blogs</Card.Header>
                     <Card.Body className="text-center p-5">No Blogs added yet.</Card.Body>
-                    <Card.Footer className="text-center py-1 bg-white">
+                    <Card.Footer className="text-center py-1 ">
                         <Link className="link" to="/blogs">
                             Go to Blogs
                         </Link>
@@ -196,7 +196,7 @@ const UserExperiences = props => {
             <>
                 <hr />
                 <Card className="border ">
-                    <Card.Header className="text-center py-1 bg-white">Experiences</Card.Header>
+                    <Card.Header className="text-center py-1 ">Experiences</Card.Header>
                     {props.user.experiences.map(experience => {
                         return (
                             <Card.Body>
@@ -206,7 +206,7 @@ const UserExperiences = props => {
                             </Card.Body>
                         )
                     })}
-                    <Card.Footer className="text-center py-1 bg-white">
+                    <Card.Footer className="text-center py-1 ">
                         <Link className="link" to="/NYI">
                             Add Experience
                         </Link>
@@ -217,9 +217,9 @@ const UserExperiences = props => {
             <>
                 <hr />
                 <Card className="border ">
-                    <Card.Header className="text-center py-1 bg-white">Experiences</Card.Header>
+                    <Card.Header className="text-center py-1 ">Experiences</Card.Header>
                     <Card.Body className="text-center p-5">No Experience added yet.</Card.Body>
-                    <Card.Footer className="text-center py-1 bg-white">
+                    <Card.Footer className="text-center py-1 ">
                         <Link className="link" to="/NYI">
                             Add Experience
                         </Link>
@@ -252,7 +252,7 @@ const UserEducation = props => {
             <>
                 <hr />
                 <Card className="border ">
-                    <Card.Header className="text-center py-1 bg-white">Education</Card.Header>
+                    <Card.Header className="text-center py-1 ">Education</Card.Header>
                     {props.user.educations.map(education => {
                         return (
                             <Card.Body>
@@ -262,7 +262,7 @@ const UserEducation = props => {
                             </Card.Body>
                         )
                     })}
-                    <Card.Footer className="text-center py-1 bg-white">
+                    <Card.Footer className="text-center py-1 ">
                         <Link className="link" to="/NYI">
                             Add Education
                         </Link>
@@ -273,9 +273,9 @@ const UserEducation = props => {
             <>
                 <hr />
                 <Card className="border ">
-                    <Card.Header className="text-center py-1 bg-white">Education</Card.Header>
+                    <Card.Header className="text-center py-1 ">Education</Card.Header>
                     <Card.Body className="text-center p-5">No Education added yet.</Card.Body>
-                    <Card.Footer className="text-center py-1 bg-white">
+                    <Card.Footer className="text-center py-1 ">
                         <Link className="link" to="/NYI">
                             Add Education
                         </Link>
@@ -308,7 +308,7 @@ const UserEmployment = props => {
             <>
                 <hr />
                 <Card className="border ">
-                    <Card.Header className="text-center py-1 bg-white">Employment</Card.Header>
+                    <Card.Header className="text-center py-1 ">Employment</Card.Header>
                     {props.user.employments.map(employment => {
                         return (
                             <Card.Body>
@@ -318,7 +318,7 @@ const UserEmployment = props => {
                             </Card.Body>
                         )
                     })}
-                    <Card.Footer className="text-center py-1 bg-white">
+                    <Card.Footer className="text-center py-1 ">
                         <Link className="link" to="/NYI">
                             Add Employment
                         </Link>
@@ -329,9 +329,9 @@ const UserEmployment = props => {
             <>
                 <hr />
                 <Card className="border ">
-                    <Card.Header className="text-center py-1 bg-white">Employment</Card.Header>
+                    <Card.Header className="text-center py-1 ">Employment</Card.Header>
                     <Card.Body className="text-center p-5">No Employment added yet.</Card.Body>
-                    <Card.Footer className="text-center py-1 bg-white">
+                    <Card.Footer className="text-center py-1 ">
                         <Link className="link" to="/NYI">
                             Add Employment
                         </Link>
