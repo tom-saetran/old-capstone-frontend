@@ -3,8 +3,12 @@ import { NavDropdown } from "react-bootstrap"
 import * as Theme from "./themes/"
 
 const ThemeProvider = () => {
+    React.useEffect(() => {
+        if (sessionStorage.getItem("theme")) setTheme(sessionStorage.getItem("theme"))
+        else setTheme("lightGreys")
+    }, [])
+
     const setTheme = theme => {
-        console.log(Theme[theme])
         document.documentElement.style.setProperty("--activeBackgroundColor", Theme[theme].activeBackgroundColor)
         document.documentElement.style.setProperty("--activeBorderColor", Theme[theme].activeBorderColor)
         document.documentElement.style.setProperty("--activeFooterBackgroundColor", Theme[theme].activeFooterBackgroundColor)
@@ -20,14 +24,15 @@ const ThemeProvider = () => {
         document.documentElement.style.setProperty("--activeIconColor", Theme[theme].activeIconColor)
         document.documentElement.style.setProperty("--activeEditIconColor", Theme[theme].activeEditIconColor)
         document.documentElement.style.setProperty("--activeDeleteIconColor", Theme[theme].activeDeleteIconColor)
+        sessionStorage.setItem("theme", theme)
     }
 
     return (
         <>
-            <NavDropdown alignRight title="Theme" id="basic-nav-dropdown">
+            <NavDropdown alignRight title="Theme" id="themeDropdown">
                 <NavDropdown.Item onClick={() => setTheme("lightGreys")}>Light - Greys</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => setTheme("lightContrast")}>Light - Contrast</NavDropdown.Item>
-                <NavDropdown.Divider />
+                <hr className="m-0 mx-3" />
                 <NavDropdown.Item onClick={() => setTheme("darkPhosphor")}>Dark - Phosphor</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => setTheme("darkAmber")}>Dark - Amber</NavDropdown.Item>
             </NavDropdown>
