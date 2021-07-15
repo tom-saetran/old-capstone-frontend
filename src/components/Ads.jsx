@@ -18,7 +18,7 @@ class Ads extends React.Component {
 
     render() {
         return this.state.ads ? (
-            <Card className="border ">
+            <Card className="border">
                 <Card.Header className="text-center py-1">Ads</Card.Header>
                 <Card.Body>
                     {this.state.ads

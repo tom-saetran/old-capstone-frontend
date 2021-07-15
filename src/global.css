@@ -12,6 +12,7 @@
     --activeLinkHoverColor: lightgrey;
     --activeInputTextColor: grey;
     --activeInputPlaceholderTextColor: lightgrey;
+    --activeCheckedColor: green;
 
     --activeIconColor: grey;
     --activeEditIconColor: yellow;
@@ -27,11 +28,63 @@ html {
     background: transparent; /* Optional: just make scrollbar invisible */
 }
 
+.custom-control-label {
+    cursor: pointer;
+}
+
+.custom-control-label::before {
+    background-color: var(--activeBackgroundColor) !important;
+    border-color: var(--activeBorderColor) !important;
+}
+
+.custom-control-input:not(:disabled):active ~ .custom-control-label::before {
+    border-color: var(--activeBorderColor);
+    background-color: transparent;
+}
+
+.custom-control-input:focus ~ .custom-control-label::before,
+.custom-control-input:focus:not(:checked) ~ .custom-control-label::before,
+.custom-control-input.is-invalid ~ .custom-control-label::before,
+.was-validated .custom-control-input:invalid ~ .custom-control-label::before {
+    border-color: var(--activeBorderColor);
+    box-shadow: none !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show > .btn-primary.dropdown-toggle:focus .btn-primary.focus,
+.btn-primary:focus,
+.custom-control-input.is-invalid:focus ~ .custom-control-label::before,
+.was-validated .custom-control-input:invalid:focus ~ .custom-control-label::before,
+.form-control.is-invalid:focus,
+.was-validated .form-control:invalid:focus,
+.form-control.is-valid:focus,
+.was-validated .form-control:valid:focus {
+    box-shadow: none;
+}
+
+.custom-control-input.is-valid ~ .custom-control-label::before,
+.was-validated .custom-control-input:valid ~ .custom-control-label::before .custom-control-input.is-invalid:focus:not(:checked) ~ .custom-control-label::before,
+.was-validated .custom-control-input:invalid:focus:not(:checked) ~ .custom-control-label::before {
+    border-color: var(--activeBorderColor) !important;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: var(--activeCheckedColor) !important;
+    border-color: var(--activeBorderColor) !important;
+    box-shadow: none !important;
+}
+
 .border,
 .input-group-text,
 .input-group-text:focus {
     border: 1px solid var(--activeBorderColor) !important;
     background-color: var(--activeButtonBackgroundColor);
+}
+
+.custom-switch .custom-control-label::after,
+.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+    background-color: var(--activeBorderColor);
 }
 
 body {
@@ -51,20 +104,26 @@ body {
     color: var(--activeIconColor) !important;
 }
 
+.custom-control-input.is-valid ~ .custom-control-label,
+.was-validated .custom-control-input:valid ~ .custom-control-label .nav-link,
+.navbar-brand,
+.dropdown-toggle,
 .dropdown-item,
-.nav-link,
-.navbar-brand {
+.custom-control-label {
     color: var(--activeTextColor) !important;
 }
 
-.btn-primary:not(:disabled) {
+.btn-primary:not(:disabled),
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
     background-color: var(--activeButtonBackgroundColor);
     color: var(--activeTextColor);
     border-color: var(--activeBorderColor);
 }
 
 hr {
-    background-color: var(--activeBorderColor);
+    border-top: 1px solid var(--activeBorderColor);
 }
 
 .form-control::placeholder {
@@ -306,6 +365,14 @@ hr {
     top: 100%;
     -webkit-transform: translate(-50%, 22.5%);
     transform: translate(-50%, 22.5%);
+}
+
+.center-horizontal {
+    position: relative;
+    left: 50%;
+    top: 100%;
+    -webkit-transform: translate(-50%);
+    transform: translate(-50%);
 }
 
 #userNav {

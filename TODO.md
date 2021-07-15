@@ -8,3 +8,9 @@
 4. understand redux in ts
 5. show who liked
 6. like comments too
+
+tabbing css missing
+when image uploaded says Edited not Posted!
+newline not observerd in presentation
+content section in modal not resizable
+resize of initial comment area not bound to container

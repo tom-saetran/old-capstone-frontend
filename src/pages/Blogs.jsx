@@ -88,7 +88,6 @@ const AddBlogModal = props => {
     const [title, setTitle] = React.useState("")
     const [content, setContent] = React.useState("")
     const [category, setCategory] = React.useState("")
-    const [validated, setValidated] = React.useState(false)
     const [sending, setSending] = React.useState(false)
 
     const [image, stageImage] = React.useState("")
@@ -118,7 +117,6 @@ const AddBlogModal = props => {
             props.onUpdate()
             reset()
         }
-        setValidated(true)
     }
 
     const reset = () => {
@@ -164,7 +162,7 @@ const AddBlogModal = props => {
             </Button>
 
             <Modal show={show} onHide={handleClose}>
-                <Form noValidate validated={validated} onSubmit={e => handleSubmit(e)}>
+                <Form noValidate validated onSubmit={e => handleSubmit(e)}>
                     <Card.Header className="text-center py-2">Add New</Card.Header>
                     <Modal.Body>
                         <Form.Group controlId="formTitle">
@@ -176,12 +174,6 @@ const AddBlogModal = props => {
                                 value={title}
                                 onChange={e => setTitle(e.target.value)}
                             />
-                            <Form.Control.Feedback className="pl-1 " type="invalid">
-                                Title is required.
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback className="pl-1 " type="valid">
-                                Thats a nice title!
-                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group controlId="formContent">
                             <Form.Text className="pl-1 ">Content</Form.Text>
@@ -193,12 +185,6 @@ const AddBlogModal = props => {
                                 value={content}
                                 onChange={e => setContent(e.target.value)}
                             />
-                            <Form.Control.Feedback className="pl-1 " type="invalid">
-                                Content is required.
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback className="pl-1 " type="valid">
-                                Thats some quality content!
-                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group controlId="formCategory">
                             <Form.Text className="pl-1 ">Category</Form.Text>
@@ -209,12 +195,6 @@ const AddBlogModal = props => {
                                 value={category}
                                 onChange={e => setCategory(e.target.value)}
                             />
-                            <Form.Control.Feedback className="pl-1 " type="invalid">
-                                Category is required.
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback className="pl-1 " type="valid">
-                                Thats a nice category!
-                            </Form.Control.Feedback>
                         </Form.Group>
                     </Modal.Body>
                     <div className="d-flex justify-content-between pb-3 pr-3">

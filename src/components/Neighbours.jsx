@@ -21,9 +21,7 @@ class Neighbourhood extends React.Component {
     some = () =>
         this.state.users.result
             .map(a => [a, Math.random()])
-            .sort((a, b) => {
-                return a[1] < b[1] ? -1 : 1
-            })
+            .sort((a, b) => (a[1] < b[1] ? -1 : 1))
             .slice(0, 3 + Math.random() * 3)
             .map(a => a[0])
 

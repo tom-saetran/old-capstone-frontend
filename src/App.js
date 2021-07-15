@@ -12,6 +12,8 @@ import Users from "./pages/Users"
 import Blogs from "./pages/Blogs"
 import HTTP404 from "./pages/HTTP404"
 import HTTP501 from "./pages/HTTP501"
+import Login from "./pages/Login"
+import Signup from "./pages/Signup"
 
 import TimeAgo from "javascript-time-ago"
 import en from "javascript-time-ago/locale/en"
@@ -444,18 +446,19 @@ class App extends React.Component {
         return (
             <Router>
                 <ScrollToTop />
-                <Route render={routeProps => <NaviBar user={this.state.user} {...routeProps} />} />
+                <Route render={() => <NaviBar user={this.state.user} />} />
                 <Switch>
                     <Route render={routeProps => <Home {...routeProps} />} exact path="/" />
                     <Route render={routeProps => <Blogs {...routeProps} user={this.state.user} crud={this.crud} />} exact path="/blogs" />
                     <Route render={routeProps => <Users {...routeProps} user={this.state.user} crud={this.crud} />} exact path="/users/:id" />
-                    <Route render={routeProps => <HTTP501 {...routeProps} />} exact path="/signup" />
+                    <Route render={routeProps => <Signup {...routeProps} />} exact path="/signup" />
+                    <Route render={routeProps => <Login {...routeProps} />} exact path="/login" />
                     <Route render={routeProps => <HTTP501 {...routeProps} />} exact path="/support" />
                     <Route render={routeProps => <Out {...routeProps} crud={this.crud} />} exact path="/out/:id" />
                     <Route render={routeProps => <HTTP404 {...routeProps} />} exact path="/404" />
                     <Route render={routeProps => <HTTP404 {...routeProps} />} />
                 </Switch>
-                <Route render={routeProps => <Footer {...routeProps} />} />
+                <Route render={() => <Footer />} />
             </Router>
         )
     }
